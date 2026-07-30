@@ -2,10 +2,13 @@ import { describe, expect, it } from 'vitest';
 import { CLIENTS_MOCKS } from '../data/mock-data';
 import { Client } from './client.model';
 import { calculerAge, listerClientsMajeurs, rechercherClientParEmail } from './client.utils';
+import { CONTRATS_MOCKS } from '../data/mock-data';
+import { afficherContratEnConsole } from './contrat.utils'
 
 describe('rechercherClientParEmail', () => {
   it('trouve un client par email exact', () => {
     const resultat = rechercherClientParEmail(CLIENTS_MOCKS, 'jack@gmail.com');
+    afficherContratEnConsole(CONTRATS_MOCKS[0])
     expect(resultat?.id).toBe(2);
   });
 

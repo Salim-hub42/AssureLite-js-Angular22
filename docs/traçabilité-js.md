@@ -17,9 +17,9 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 | `find` | ✅ | `client.utils.ts:5` | Module 1 |
 | `findIndex` | ⏳ | — | Module 2 |
 | `some` | ⏳ | — | Module 1 |
-| `every` | ⏳ | — | Module 1 |
+| `every` | ✅ | `contrat.utils.ts:4` | Module 1 |
 | `reduce` | ⏳ | — | Module 1 |
-| `forEach` | ⏳ | — | Module 1 |
+| `forEach` | ✅ | `contrat.utils.ts:8` | Module 1 |
 | `includes` | ⏳ | — | Module 1 |
 | `slice` | ⏳ | — | Module 2 |
 | `splice` | ⏳ | — | Module 2 |
@@ -43,9 +43,9 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 | Méthode | Statut | Fichier : ligne | Module |
 |---|---|---|---|
-| `Object.keys` | ⏳ | — | Module 1 |
-| `Object.values` | ⏳ | — | Module 1 |
-| `Object.entries` | ⏳ | — | Module 1 |
+| `Object.keys` | ✅ | `contrat.utils.ts:14` | Module 1 |
+| `Object.values` | ✅ | `contrat.utils.ts:4` | Module 1 |
+| `Object.entries` | ✅ | `contrat.utils.ts:8` | Module 1 |
 | `Object.assign` | ⏳ | — | Module 2 |
 | `Object.hasOwn` | ⏳ | — | Module 5 |
 
@@ -93,7 +93,7 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 | `finally` | ⏳ | — | Module 7 |
 | `JSON.parse` | ⏳ | — | Module 7 |
 | `JSON.stringify` | ⏳ | — | Module 7 |
-| `console.log` | ⏳ | — | Module 1 |
+| `console.log` | ✅ | `contrat.utils.ts:10` | Module 1 |
 
 ---
 
@@ -101,6 +101,6 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 - **Leçon** (`docs/01-bases-js.md`) : ✅ rédigée
 - **Exemple générique** (`src/examples/01-tableaux-objets.example.ts`) : ✅ rédigé (ne compte pas dans la traçabilité, cf. remarque en tête de fichier)
-- **Pratique** (modèles `Client`/`Contrat`/`Devis`/`Sinistre` + fonctions métier dans `src/app/`) : 🔄 en cours — `client.model.ts`, `mock-data.ts`, `rechercherClientParEmail` (avec `find`) faits ; reste `filter`, `Object.keys/values/entries`, `Set`, dates, etc., et les modèles `Contrat`/`Devis`/`Sinistre`
+- **Pratique** (modèles `Client`/`Contrat`/`Devis`/`Sinistre` + fonctions métier dans `src/app/`) : 🔄 en cours — `Client` et `Contrat` modélisés, `Object.keys/values/entries` faits ; reste `Set`, `map`/`some`/`reduce`/`includes`/`split`, `toFixed`/`getTime`, et le modèle `Devis`/`Sinistre`
 
-7 / 40 méthodes validées (`find`, `filter`, `trim`, `toLowerCase`, `getFullYear`, `getMonth`, `getDate`) — le tableau se remplit au fur et à mesure que la pratique est codée.
+13 / 40 méthodes validées (`find`, `filter`, `every`, `forEach`, `trim`, `toLowerCase`, `Object.keys`, `Object.values`, `Object.entries`, `getFullYear`, `getMonth`, `getDate`, `console.log`) — le tableau se remplit au fur et à mesure que la pratique est codée.
