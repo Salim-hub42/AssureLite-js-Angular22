@@ -13,8 +13,8 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 | `shift` | ⏳ | — | Module 2 |
 | `unshift` | ⏳ | — | Module 2 |
 | `map` | ⏳ | — | Module 1 |
-| `filter` | ⏳ | — | Module 1 |
-| `find` | ⏳ | — | Module 1 |
+| `filter` | ✅ | `client.utils.ts:21` | Module 1 |
+| `find` | ✅ | `client.utils.ts:5` | Module 1 |
 | `findIndex` | ⏳ | — | Module 2 |
 | `some` | ⏳ | — | Module 1 |
 | `every` | ⏳ | — | Module 1 |
@@ -34,9 +34,9 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 | `substring` | ⏳ | — | Module 8 |
 | `replace` | ⏳ | — | Module 8 |
 | `split` | ⏳ | — | Module 1 |
-| `trim` | ⏳ | — | Module 1 |
+| `trim` | ✅ | `client.utils.ts:4,5` | Module 1 |
 | `toUpperCase` | ⏳ | — | Module 8 |
-| `toLowerCase` | ⏳ | — | Module 1 |
+| `toLowerCase` | ✅ | `client.utils.ts:4,5` | Module 1 |
 | `concat` | ⏳ | — | Module 5 |
 
 ## Objets (5)
@@ -63,9 +63,9 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 | Méthode | Statut | Fichier : ligne | Module |
 |---|---|---|---|
-| `getFullYear` | ⏳ | — | Module 1 |
-| `getMonth` | ⏳ | — | Module 1 |
-| `getDate` | ⏳ | — | Module 1 |
+| `getFullYear` | ✅ | `client.utils.ts:10` | Module 1 |
+| `getMonth` | ✅ | `client.utils.ts:11,12` | Module 1 |
+| `getDate` | ✅ | `client.utils.ts:13` | Module 1 |
 | `toISOString` | ⏳ | — | Module 7 |
 | `getTime` | ⏳ | — | Module 1 |
 
@@ -101,6 +101,6 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 - **Leçon** (`docs/01-bases-js.md`) : ✅ rédigée
 - **Exemple générique** (`src/examples/01-tableaux-objets.example.ts`) : ✅ rédigé (ne compte pas dans la traçabilité, cf. remarque en tête de fichier)
-- **Pratique** (modèles `Client`/`Contrat`/`Devis`/`Sinistre` + fonctions métier dans `src/app/`) : ⏳ **à écrire par l'utilisateur**
+- **Pratique** (modèles `Client`/`Contrat`/`Devis`/`Sinistre` + fonctions métier dans `src/app/`) : 🔄 en cours — `client.model.ts`, `mock-data.ts`, `rechercherClientParEmail` (avec `find`) faits ; reste `filter`, `Object.keys/values/entries`, `Set`, dates, etc., et les modèles `Contrat`/`Devis`/`Sinistre`
 
-0 / 40 méthodes validées pour l'instant — le tableau se remplit au fur et à mesure que la pratique est codée.
+7 / 40 méthodes validées (`find`, `filter`, `trim`, `toLowerCase`, `getFullYear`, `getMonth`, `getDate`) — le tableau se remplit au fur et à mesure que la pratique est codée.
