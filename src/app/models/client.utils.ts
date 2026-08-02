@@ -24,3 +24,7 @@ export function listerClientsMajeurs(clients: Client[], aujourdHui: Date): Clien
      })
 }
 
+export function emailEstValide(email:string): boolean {
+ return email.includes('@') && email.split('@')[0].length > 0 && email.split('@')[1].length > 0 ;
+}
+

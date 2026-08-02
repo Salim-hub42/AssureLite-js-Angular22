@@ -12,15 +12,15 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 | `pop` | ⏳ | — | Module 2 |
 | `shift` | ⏳ | — | Module 2 |
 | `unshift` | ⏳ | — | Module 2 |
-| `map` | ⏳ | — | Module 1 |
+| `map` | ✅ | `contrat.utils.ts:24` | Module 1 |
 | `filter` | ✅ | `client.utils.ts:21` | Module 1 |
 | `find` | ✅ | `client.utils.ts:5` | Module 1 |
 | `findIndex` | ⏳ | — | Module 2 |
-| `some` | ⏳ | — | Module 1 |
+| `some` | ✅ | `contrat.utils.ts:28` | Module 1 |
 | `every` | ✅ | `contrat.utils.ts:4` | Module 1 |
-| `reduce` | ⏳ | — | Module 1 |
+| `reduce` | ✅ | `contrat.utils.ts:32` | Module 1 |
 | `forEach` | ✅ | `contrat.utils.ts:8` | Module 1 |
-| `includes` | ⏳ | — | Module 1 |
+| `includes` | ✅ | `contrat.utils.ts:36` | Module 1 |
 | `slice` | ⏳ | — | Module 2 |
 | `splice` | ⏳ | — | Module 2 |
 
@@ -28,12 +28,12 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 | Méthode | Statut | Fichier : ligne | Module |
 |---|---|---|---|
-| `includes` | ⏳ | — | Module 1 |
+| `includes` | ✅ | `client.utils.ts:28` | Module 1 |
 | `indexOf` | ⏳ | — | Module 8 |
 | `slice` | ⏳ | — | Module 8 |
 | `substring` | ⏳ | — | Module 8 |
 | `replace` | ⏳ | — | Module 8 |
-| `split` | ⏳ | — | Module 1 |
+| `split` | ✅ | `client.utils.ts:28` | Module 1 |
 | `trim` | ✅ | `client.utils.ts:4,5` | Module 1 |
 | `toUpperCase` | ⏳ | — | Module 8 |
 | `toLowerCase` | ✅ | `client.utils.ts:4,5` | Module 1 |
@@ -53,7 +53,7 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 | Méthode | Statut | Fichier : ligne | Module |
 |---|---|---|---|
-| `toFixed` | ⏳ | — | Module 1 |
+| `toFixed` | ✅ | `contrat.utils.ts:36` | Module 1 |
 | `toPrecision` | ⏳ | — | Module 6 |
 | `parseInt` | ⏳ | — | Module 5 |
 | `parseFloat` | ⏳ | — | Module 5 |
@@ -67,7 +67,7 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 | `getMonth` | ✅ | `client.utils.ts:11,12` | Module 1 |
 | `getDate` | ✅ | `client.utils.ts:13` | Module 1 |
 | `toISOString` | ⏳ | — | Module 7 |
-| `getTime` | ⏳ | — | Module 1 |
+| `getTime` | ✅ | `contrat.utils.ts:45` | Module 1 |
 
 ## Sets & Maps (10)
 
@@ -101,6 +101,6 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 - **Leçon** (`docs/01-bases-js.md`) : ✅ rédigée
 - **Exemple générique** (`src/examples/01-tableaux-objets.example.ts`) : ✅ rédigé (ne compte pas dans la traçabilité, cf. remarque en tête de fichier)
-- **Pratique** (modèles `Client`/`Contrat`/`Devis`/`Sinistre` + fonctions métier dans `src/app/`) : 🔄 en cours — `Client` et `Contrat` modélisés, `Object.keys/values/entries` et `Set.add` faits ; reste `map`/`some`/`reduce`/`includes`/`split`, `toFixed`/`getTime`, `Set.has`/`Set.size`, et le modèle `Devis`/`Sinistre`
+- **Pratique** (modèles `Client`/`Contrat`/`Devis`/`Sinistre` + fonctions métier dans `src/app/`) : 🔄 en cours — `Client` et `Contrat` modélisés, `Object.keys/values/entries`, `Set.add`, `map`, `some`, `reduce`, `includes` (tableau + chaîne), `split`, `toFixed` et `getTime` faits ; reste `Set.has`/`Set.size` (facultatif), et le modèle `Devis`/`Sinistre`
 
-14 / 40 méthodes validées (`find`, `filter`, `every`, `forEach`, `trim`, `toLowerCase`, `Object.keys`, `Object.values`, `Object.entries`, `getFullYear`, `getMonth`, `getDate`, `console.log`, `Set.add`) — le tableau se remplit au fur et à mesure que la pratique est codée.
+22 / 40 méthodes validées (`find`, `filter`, `every`, `forEach`, `trim`, `toLowerCase`, `Object.keys`, `Object.values`, `Object.entries`, `getFullYear`, `getMonth`, `getDate`, `console.log`, `Set.add`, `map`, `some`, `reduce`, `includes` tableau, `includes` chaîne, `split`, `toFixed`, `getTime`) — le tableau se remplit au fur et à mesure que la pratique est codée.
