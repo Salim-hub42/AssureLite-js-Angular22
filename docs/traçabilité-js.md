@@ -73,7 +73,7 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 | Méthode | Statut | Fichier : ligne | Module |
 |---|---|---|---|
-| `Set.add` | ⏳ | — | Module 1 |
+| `Set.add` | ✅ | `contrat.utils.ts:19` | Module 1 |
 | `Set.delete` | ⏳ | — | Module 2 |
 | `Set.has` | ⏳ | — | Module 1 |
 | `Set.clear` | ⏳ | — | Module 2 |
@@ -101,6 +101,6 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 - **Leçon** (`docs/01-bases-js.md`) : ✅ rédigée
 - **Exemple générique** (`src/examples/01-tableaux-objets.example.ts`) : ✅ rédigé (ne compte pas dans la traçabilité, cf. remarque en tête de fichier)
-- **Pratique** (modèles `Client`/`Contrat`/`Devis`/`Sinistre` + fonctions métier dans `src/app/`) : 🔄 en cours — `Client` et `Contrat` modélisés, `Object.keys/values/entries` faits ; reste `Set`, `map`/`some`/`reduce`/`includes`/`split`, `toFixed`/`getTime`, et le modèle `Devis`/`Sinistre`
+- **Pratique** (modèles `Client`/`Contrat`/`Devis`/`Sinistre` + fonctions métier dans `src/app/`) : 🔄 en cours — `Client` et `Contrat` modélisés, `Object.keys/values/entries` et `Set.add` faits ; reste `map`/`some`/`reduce`/`includes`/`split`, `toFixed`/`getTime`, `Set.has`/`Set.size`, et le modèle `Devis`/`Sinistre`
 
-13 / 40 méthodes validées (`find`, `filter`, `every`, `forEach`, `trim`, `toLowerCase`, `Object.keys`, `Object.values`, `Object.entries`, `getFullYear`, `getMonth`, `getDate`, `console.log`) — le tableau se remplit au fur et à mesure que la pratique est codée.
+14 / 40 méthodes validées (`find`, `filter`, `every`, `forEach`, `trim`, `toLowerCase`, `Object.keys`, `Object.values`, `Object.entries`, `getFullYear`, `getMonth`, `getDate`, `console.log`, `Set.add`) — le tableau se remplit au fur et à mesure que la pratique est codée.
