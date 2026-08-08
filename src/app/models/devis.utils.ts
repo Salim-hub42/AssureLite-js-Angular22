@@ -24,14 +24,14 @@ export function appliquerMajorationAge(prixBase: number, ageClient: number): num
 }
 
 export function appliquerMajorationOption(prime: number , options: string[]): number {
-   prime = options.length + MONTANT_PAR_OPTION;
+   prime = prime + options.length * MONTANT_PAR_OPTION;
    return prime
 }
 
 export function calculerPrimeDevis(devis: Devis): number {
-   const resultat = primeDeBase(devis.typeDeContrat);
-   const newPrime = appliquerMajorationAge(resultat, devis.ageClient);
-   const finalPrime = newPrime * MONTANT_PAR_OPTION
-   return finalPrime
+   const primeBase = primeDeBase(devis.typeDeContrat);
+   const primeAvecAge = appliquerMajorationAge(primeBase, devis.ageClient);
+   const primeFinale = appliquerMajorationOption(primeAvecAge, devis.optionsChoisies)
+   return primeFinale
 }
 
