@@ -21,3 +21,24 @@ export function sinistrePlusRecent(sinistres: Sinistre[]): Sinistre | undefined 
       }
    })
 }
+
+export function afficherSinistreEnConsole(sinistre: Sinistre): void {
+    Object.entries(sinistre).forEach(([key , val]) => console.log(`Sinistre - ${key} : ${val}`));
+}
+
+export function contratsAvecSinistres(sinistres: Sinistre[]):Set<number> {
+   const idsContrat = new Set<number>();
+   sinistres.forEach((sinistre) => idsContrat.add(sinistre.contratId));
+   return idsContrat
+}
+
+export function contratADejaUnSinistre(idsContrat: Set<number>, contratId: number): boolean {
+ const verifier = idsContrat.has(contratId);
+  return verifier
+}
+
+export function nombreDeContratsAvecSinistre(idsContrat : Set<number>): number {
+  const nbContrats = idsContrat.size;
+  return nbContrats
+
+}

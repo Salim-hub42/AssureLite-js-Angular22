@@ -75,9 +75,9 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 |---|---|---|---|
 | `Set.add` | ✅ | `contrat.utils.ts:19` | Module 1 |
 | `Set.delete` | ⏳ | — | Module 2 |
-| `Set.has` | ⏳ | — | Module 1 |
+| `Set.has` | ✅ | `sinistre.utils.ts:36` | Module 1 |
 | `Set.clear` | ⏳ | — | Module 2 |
-| `Set.size` | ⏳ | — | Module 1 |
+| `Set.size` | ✅ | `sinistre.utils.ts:41` | Module 1 |
 | `Map.set` | ⏳ | — | Module 7 |
 | `Map.get` | ⏳ | — | Module 7 |
 | `Map.has` | ⏳ | — | Module 7 |
@@ -101,6 +101,8 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 - **Leçon** (`docs/01-bases-js.md`) : ✅ rédigée
 - **Exemple générique** (`src/examples/01-tableaux-objets.example.ts`) : ✅ rédigé (ne compte pas dans la traçabilité, cf. remarque en tête de fichier)
-- **Pratique** (modèles `Client`/`Contrat`/`Devis`/`Sinistre` + fonctions métier dans `src/app/`) : 🔄 en cours — `Client` et `Contrat` modélisés, `Object.keys/values/entries`, `Set.add`, `map`, `some`, `reduce`, `includes` (tableau + chaîne), `split`, `toFixed` et `getTime` faits ; `Devis` modélisé (`devis.model.ts`) avec le calcul de prime (`primeDeBase`, `appliquerMajorationAge`, `appliquerMajorationOption`, `calculerPrimeDevis` dans `devis.utils.ts`, testées dans `devis.utils.spec.ts`) — logique purement arithmétique/conditionnelle, aucune nouvelle méthode de la liste des 40 utilisée ici ; reste `Set.has`/`Set.size` (facultatif), et le modèle `Sinistre`
+- **Pratique** (modèles `Client`/`Contrat`/`Devis`/`Sinistre` + fonctions métier dans `src/app/`) : ✅ terminée — `Client`, `Contrat`, `Devis` et `Sinistre` modélisés, avec toutes leurs fonctions métier dans `client.utils.ts`, `contrat.utils.ts`, `devis.utils.ts` et `sinistre.utils.ts`. `Sinistre` clôt le module avec `sinistresParStatut` (filter), `montantTotalSinistres` (reduce), `sinistrePlusRecent` (reduce), `afficherSinistreEnConsole` (Object.entries/forEach), `contratsAvecSinistre` (Set.add), `contratADejaUnSinistre` (Set.has) et `nombreDeContratsAvecSinistre` (Set.size)
 
-22 / 40 méthodes validées (`find`, `filter`, `every`, `forEach`, `trim`, `toLowerCase`, `Object.keys`, `Object.values`, `Object.entries`, `getFullYear`, `getMonth`, `getDate`, `console.log`, `Set.add`, `map`, `some`, `reduce`, `includes` tableau, `includes` chaîne, `split`, `toFixed`, `getTime`) — le tableau se remplit au fur et à mesure que la pratique est codée.
+24 / 40 méthodes validées (`find`, `filter`, `every`, `forEach`, `trim`, `toLowerCase`, `Object.keys`, `Object.values`, `Object.entries`, `getFullYear`, `getMonth`, `getDate`, `console.log`, `Set.add`, `Set.has`, `Set.size`, `map`, `some`, `reduce`, `includes` tableau, `includes` chaîne, `split`, `toFixed`, `getTime`) — le tableau se remplit au fur et à mesure que la pratique est codée.
+
+**Module 1 terminé.** Prochain module : Module 2 — Composants, signals, control flow (liste des contrats).
