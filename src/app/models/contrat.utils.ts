@@ -1,7 +1,7 @@
 import { Contrat, TypeContrat } from "./contrat.model";
 
 export function contratEstComplet(contrat: Contrat): boolean {
-  return Object.values(contrat).every((valeur) => valeur !== null && valeur !== undefined && valeur !== "")
+  return Object.values(contrat).every((valeur) => valeur !== null && valeur !== undefined && valeur !== "");
 }
 
 export function champsDuContrat(contrat: Contrat): string[] {
