@@ -1,10 +1,47 @@
-<div class="flex">
-   <h1>Listes des Contrats</h1>
-   <ul>
-      @for (contrat of contrats(); track contrat.id) {
-          <li> {{ contrat.type }} - {{ contrat.prime }} €</li>
-      } @empty {
-         <li>Ancun Contrat .</li>
-      }
-   </ul>
+
+<div class="flex flex-column gap-3 contrats-table-wrapper">
+  <h1>Listes des Contrats</h1>
+  <p-table [value]="contrats()">
+    <ng-template #header>
+      <tr>
+        <th>Type</th>
+        <th>Prime</th>
+        <th>Statut</th>
+      </tr>
+    </ng-template>
+
+    <ng-template #body let-contrat>
+      <tr>
+        <td>{{ contrat.type }}</td>
+        <td>{{ contrat.prime }} €</td>
+        <td>
+          @switch (contrat.statut) {
+            @case ('actif') {
+              <span>✅ Actif</span>
+            }
+            @case ('suspendu') {
+              <span>⏸️ Suspendu</span>
+            }
+            @default {
+              <span>❌ Résilié</span>
+            }
+          }
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="3">Aucun contrat</td>
+      </tr>
+    </ng-template>
+  </p-table>
+<div class="flex justify-content-between align-items-center">
+  @if (contrats().length > 0) {
+    <p>Total des primes : {{ primeTotale() }} €</p>
+  } @else {
+    <p>Aucun contrat à afficher</p>
+  }
+  <button pButton (click)="ajouterContrat()" size="small">Ajouter un Contrat</button>
+</div>
 </div>
