@@ -1,0 +1,10 @@
+<div class="flex">
+   <h1>Listes des Contrats</h1>
+   <ul>
+      @for (contrat of contrats(); track contrat.id) {
+          <li> {{ contrat.type }} - {{ contrat.prime }} €</li>
+      } @empty {
+         <li>Ancun Contrat .</li>
+      }
+   </ul>
+</div>
