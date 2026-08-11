@@ -151,6 +151,23 @@ contrats.update(liste => {
 
 Le tableau original (`liste`, ce qu'il y avait dans le signal juste avant) n'est jamais touché — seule la copie l'est. C'est ce compromis qui permet d'utiliser `push`/`pop`/`shift`/`unshift`/`splice` (utiles et bien réels dans la vraie vie) **sans** violer la règle d'immutabilité des signals.
 
+### Retirer UN élément précis : `findIndex` + `splice`
+
+`pop`/`shift` ne retirent que le dernier/premier élément — pratique, mais rarement ce qu'on veut vraiment (un utilisateur clique sur "supprimer" à côté d'une ligne **précise**, pas forcément la première ou la dernière).
+
+`findIndex` répond à la question *"à quelle position se trouve l'élément qui correspond ?"* — comme `find`, mais il renvoie l'**index** (un nombre, `-1` si rien ne correspond) plutôt que l'élément lui-même. On combine avec `splice(index, 1)` pour retirer exactement 1 élément à cette position, sur la copie :
+
+```ts
+retirer(id: number): void {
+  this.taches.update((liste) => {
+    const copie = [...liste];
+    const index = copie.findIndex((tache) => tache.id === id);
+    copie.splice(index, 1);
+    return copie;
+  });
+}
+```
+
 ---
 
 ## Ce qu'on ne fait PAS encore

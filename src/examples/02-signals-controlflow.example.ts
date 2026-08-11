@@ -73,4 +73,14 @@ export class ExempleTaches {
       return copie;
     });
   }
+
+  // findIndex + splice : retirer UN élément précis (identifié par son id), pas juste le premier/dernier
+  retirerTacheParId(id: number): void {
+    this.taches.update((liste) => {
+      const copie = [...liste];
+      const index = copie.findIndex((tache) => tache.id === id);
+      copie.splice(index, 1);
+      return copie;
+    });
+  }
 }

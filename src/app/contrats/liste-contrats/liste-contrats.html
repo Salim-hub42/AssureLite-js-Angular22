@@ -6,6 +6,7 @@
         <th>Type</th>
         <th>Prime</th>
         <th>Statut</th>
+        <th>Supprimer</th>
       </tr>
     </ng-template>
 
@@ -16,22 +17,34 @@
         <td>
           @switch (contrat.statut) {
             @case ('actif') {
-              <span>✅ Actif</span>
+              <span
+                ><i class="pi pi-check-circle text-green-500" aria-hidden="true"></i> Actif</span
+              >
             }
             @case ('suspendu') {
-              <span>⏸️ Suspendu</span>
+              <span
+                ><i class="pi pi-pause-circle text-orange-500" aria-hidden="true"></i>
+                Suspendu</span
+              >
             }
             @default {
-              <span>❌ Résilié</span>
+              <span
+                ><i class="pi pi-times-circle text-red-500" aria-hidden="true"></i> Résilié</span
+              >
             }
           }
+        </td>
+        <td>
+          <button pButton (click)="supprimerContrat(contrat.id)" size="small">
+            Supprimer un Contrat
+          </button>
         </td>
       </tr>
     </ng-template>
 
     <ng-template #emptymessage>
       <tr>
-        <td colspan="3">Aucun contrat</td>
+        <td colspan="4">Aucun contrat</td>
       </tr>
     </ng-template>
   </p-table>
@@ -41,6 +54,6 @@
     } @else {
       <p>Aucun contrat à afficher</p>
     }
-    <button pButton (click)="ajouterContrat()" size="small">Ajouter un Contrat</button>
+    <button pButton (click)="ajoutContrat()" size="small">Ajouter un Contrat</button>
   </div>
 </div>

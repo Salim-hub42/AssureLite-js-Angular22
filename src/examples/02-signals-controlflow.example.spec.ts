@@ -24,6 +24,16 @@ describe('Exemple générique — signals et control flow', () => {
     expect(composant.taches()[0].titre).toBe('Faire l’exemple');
   });
 
+  it('findIndex + splice : retire la tâche correspondant à un id précis', () => {
+    const fixture = TestBed.createComponent(ExempleTaches);
+    const composant = fixture.componentInstance;
+
+    composant.retirerTacheParId(2);
+
+    expect(composant.taches().length).toBe(2);
+    expect(composant.taches().map((tache) => tache.id)).toEqual([1, 3]);
+  });
+
   it('@for / @empty : affiche la liste, ou le message vide si aucune tâche', async () => {
     const fixture = TestBed.createComponent(ExempleTaches);
     await fixture.whenStable();

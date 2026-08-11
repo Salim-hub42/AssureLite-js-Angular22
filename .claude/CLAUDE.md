@@ -50,7 +50,7 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 ## Services
 
 - Design services around a single responsibility
-- Use the `providedIn: 'root'` option for singleton services
+- Use the `@Service()` decorator for singleton services (Angular 22+; auto-provided app-wide by default, no `providedIn` needed — this is what `ng generate service` scaffolds by default in this project). Fall back to `@Injectable({ providedIn: 'root' })` only for cases `@Service()` doesn't cover (e.g. a custom factory via `InjectionToken`, or NgModule-scoped providers).
 - Use the `inject()` function instead of constructor injection
 
 ---

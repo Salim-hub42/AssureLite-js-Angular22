@@ -8,21 +8,21 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 | Méthode | Statut | Fichier : ligne | Module |
 |---|---|---|---|
-| `push` | ⏳ | — | Module 2 |
+| `push` | ✅ | `liste-contrats.ts:21` | Module 2 |
 | `pop` | ⏳ | — | Module 2 |
 | `shift` | ⏳ | — | Module 2 |
 | `unshift` | ⏳ | — | Module 2 |
 | `map` | ✅ | `contrat.utils.ts:24` | Module 1 |
 | `filter` | ✅ | `client.utils.ts:21` | Module 1 |
 | `find` | ✅ | `client.utils.ts:5` | Module 1 |
-| `findIndex` | ⏳ | — | Module 2 |
+| `findIndex` | ✅ | `liste-contrats.ts:36` | Module 2 |
 | `some` | ✅ | `contrat.utils.ts:28` | Module 1 |
 | `every` | ✅ | `contrat.utils.ts:4` | Module 1 |
 | `reduce` | ✅ | `contrat.utils.ts:32` | Module 1 |
 | `forEach` | ✅ | `contrat.utils.ts:8` | Module 1 |
 | `includes` | ✅ | `contrat.utils.ts:36` | Module 1 |
 | `slice` | ⏳ | — | Module 2 |
-| `splice` | ⏳ | — | Module 2 |
+| `splice` | ✅ | `liste-contrats.ts:37` | Module 2 |
 
 ## Chaînes (10)
 
@@ -103,6 +103,22 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 - **Exemple générique** (`src/examples/01-tableaux-objets.example.ts`) : ✅ rédigé (ne compte pas dans la traçabilité, cf. remarque en tête de fichier)
 - **Pratique** (modèles `Client`/`Contrat`/`Devis`/`Sinistre` + fonctions métier dans `src/app/`) : ✅ terminée — `Client`, `Contrat`, `Devis` et `Sinistre` modélisés, avec toutes leurs fonctions métier dans `client.utils.ts`, `contrat.utils.ts`, `devis.utils.ts` et `sinistre.utils.ts`. `Sinistre` clôt le module avec `sinistresParStatut` (filter), `montantTotalSinistres` (reduce), `sinistrePlusRecent` (reduce), `afficherSinistreEnConsole` (Object.entries/forEach), `contratsAvecSinistre` (Set.add), `contratADejaUnSinistre` (Set.has) et `nombreDeContratsAvecSinistre` (Set.size)
 
-24 / 40 méthodes validées (`find`, `filter`, `every`, `forEach`, `trim`, `toLowerCase`, `Object.keys`, `Object.values`, `Object.entries`, `getFullYear`, `getMonth`, `getDate`, `console.log`, `Set.add`, `Set.has`, `Set.size`, `map`, `some`, `reduce`, `includes` tableau, `includes` chaîne, `split`, `toFixed`, `getTime`) — le tableau se remplit au fur et à mesure que la pratique est codée.
+24 / 40 méthodes validées à la fin du Module 1 (`find`, `filter`, `every`, `forEach`, `trim`, `toLowerCase`, `Object.keys`, `Object.values`, `Object.entries`, `getFullYear`, `getMonth`, `getDate`, `console.log`, `Set.add`, `Set.has`, `Set.size`, `map`, `some`, `reduce`, `includes` tableau, `includes` chaîne, `split`, `toFixed`, `getTime`) — le tableau se remplit au fur et à mesure que la pratique est codée.
 
-**Module 1 terminé.** Prochain module : Module 2 — Composants, signals, control flow (liste des contrats).
+**Module 1 terminé.**
+
+## État du Module 2
+
+- **Leçon** (`docs/02-composants-signals.md`) : ✅ rédigée
+- **Exemple générique** (`src/examples/02-signals-controlflow.example.ts`) : ✅ rédigé (`ExempleTaches` — signal, computed, `@if`/`@for`/`@switch`/`@empty`, push/shift/findIndex+splice sur copie)
+- **Pratique** (`src/app/contrats/liste-contrats/`) : ✅ composant `ListeContrats` — signal `contrats`, `computed` `primeTotale` (réutilise `primeTotal` du Module 1), tableau `p-table` (PrimeNG) avec `@switch` pour le statut, ajout d'un contrat (`push` sur copie) et suppression d'un contrat précis (`findIndex` + `splice` sur copie)
+
+**27 / 40 méthodes validées** (+`push`, `findIndex`, `splice` par rapport au Module 1). `pop`/`shift`/`unshift` restent à caser dans un cas métier réel (pas forcé artificiellement) — voir Module 3 ou plus tard si l'occasion se présente.
+
+## État du Module 3
+
+- **Leçon** (`docs/03-services-di.md`) : ✅ rédigée — service (`@Injectable`, `providedIn: 'root'`), signal privé + `asReadonly()`, `inject()`, SRP, `input()`/`output()` parent-enfant, aperçu de `model()`
+- **Exemple générique** (`src/examples/03-services-di.example.ts`) : ✅ rédigé (`ExempleCompteurService` + `ExempleBoutonCompteur`/`ExempleCompteurParent` — providedIn root, signal protégé, inject(), input.required/input avec défaut, output())
+- **Pratique** (`ContratsService`, refactor de `ListeContrats`, composant enfant `ContratLigne`) : ⏳ à coder par l'utilisateur — voir la section "Pour la pratique" de la leçon (pistes pour `Object.assign` et `Set.delete`/`Set.clear`)
+
+Prochain module (après la pratique du Module 3) : Module 4 — Routing et navigation, guards.
