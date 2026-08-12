@@ -1,8 +1,6 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { CONTRATS_MOCKS } from '../../data/mock-data';
-import { Contrat } from '../../models/contrat.model';
+import { Component,inject } from '@angular/core';
+
 import { Table } from 'primeng/table';
-import { primeTotal } from '../../models/contrat.utils';
 import { ButtonModule } from 'primeng/button';
 import { ContratService } from '../../services/contrat-service';
 
@@ -14,6 +12,7 @@ import { ContratService } from '../../services/contrat-service';
 })
 export class ListeContrats {
      contratService = inject(ContratService);
+     
      contrats = this.contratService.contrats;
      primeTotale = this.contratService.primeTotale;
 
