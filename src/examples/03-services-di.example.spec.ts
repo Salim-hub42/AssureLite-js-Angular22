@@ -3,7 +3,10 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import {
   ExempleBoutonCompteur,
   ExempleCompteurParent,
-  ExempleCompteurService
+  ExempleCompteurService,
+  ExempleFiltreTags,
+  fusionnerPatch,
+  modifierItem
 } from './03-services-di.example';
 
 describe('Exemple générique — service et injection de dépendances', () => {
@@ -68,5 +71,61 @@ describe('Exemple générique — communication parent/enfant (input/output)', (
     expect(fixture.nativeElement.querySelector('button').textContent).toContain(
       '+1 (actuel : 42)'
     );
+  });
+});
+
+describe('Exemple générique — Object.assign (fusion sans mutation)', () => {
+  it('fusionnerPatch : renvoie un NOUVEL objet, sans modifier l’original', () => {
+    const original = { id: 1, label: 'Un', actif: false };
+
+    const fusionne = fusionnerPatch(original, { actif: true });
+
+    expect(fusionne).toEqual({ id: 1, label: 'Un', actif: true });
+    expect(original.actif).toBe(false);
+    expect(fusionne).not.toBe(original);
+  });
+
+  it('modifierItem : seul l’élément dont l’id correspond est remplacé, les autres restent inchangés', () => {
+    const liste = [
+      { id: 1, label: 'Un', actif: false },
+      { id: 2, label: 'Deux', actif: false }
+    ];
+
+    const resultat = modifierItem(liste, 2, { actif: true });
+
+    expect(resultat[0]).toBe(liste[0]);
+    expect(resultat[1]).toEqual({ id: 2, label: 'Deux', actif: true });
+    expect(liste[1].actif).toBe(false);
+  });
+});
+
+describe('Exemple générique — Set (add/delete/has/clear)', () => {
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ExempleFiltreTags]
+    }).compileComponents();
+  });
+
+  it('toggle : ajoute un tag absent, retire un tag déjà présent', () => {
+    const fixture = TestBed.createComponent(ExempleFiltreTags);
+    const composant = fixture.componentInstance;
+
+    composant.toggle('auto');
+    expect(composant.tagsSelectionnes().has('auto')).toBe(true);
+
+    composant.toggle('auto');
+    expect(composant.tagsSelectionnes().has('auto')).toBe(false);
+  });
+
+  it('reinitialiser : vide entièrement la sélection', () => {
+    const fixture = TestBed.createComponent(ExempleFiltreTags);
+    const composant = fixture.componentInstance;
+
+    composant.toggle('auto');
+    composant.toggle('sante');
+    expect(composant.tagsSelectionnes().size).toBe(2);
+
+    composant.reinitialiser();
+    expect(composant.tagsSelectionnes().size).toBe(0);
   });
 });

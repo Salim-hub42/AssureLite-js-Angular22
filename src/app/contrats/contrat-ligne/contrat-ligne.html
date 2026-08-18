@@ -1,1 +1,27 @@
-<p>contrat-ligne works!</p>
+  <td>{{ contrat().type }}</td>
+        <td>{{ contrat().prime }} €</td>
+        <td>
+          @switch (contrat().statut) {
+            @case ('actif') {
+              <span
+                ><i class="pi pi-check-circle text-green-500" aria-hidden="true"></i> Actif</span
+              >
+            }
+            @case ('suspendu') {
+              <span
+                ><i class="pi pi-pause-circle text-orange-500" aria-hidden="true"></i>
+                Suspendu</span
+              >
+            }
+            @default {
+              <span
+                ><i class="pi pi-times-circle text-red-500" aria-hidden="true"></i> Résilié</span
+              >
+            }
+          }
+        </td>
+        <td>
+          <button pButton (click)="supLigne()" size="small">
+            Supprimer un Contrat
+          </button>
+        </td>

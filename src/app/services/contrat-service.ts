@@ -36,6 +36,12 @@ export class ContratService {
     });
   }
 
+  modifierContrat(id : number, patch: Partial<Contrat>): void{
+    this._contrats.update((liste) => {
+    return  liste.map((contrat) => (contrat.id === id ? Object.assign({} , contrat , patch) : contrat))
+      })
+  }
+
 
 
 

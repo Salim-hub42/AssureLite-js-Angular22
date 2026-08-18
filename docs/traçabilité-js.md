@@ -117,8 +117,8 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 ## État du Module 3
 
-- **Leçon** (`docs/03-services-di.md`) : ✅ rédigée — service (`@Injectable`, `providedIn: 'root'`), signal privé + `asReadonly()`, `inject()`, SRP, `input()`/`output()` parent-enfant, aperçu de `model()`
-- **Exemple générique** (`src/examples/03-services-di.example.ts`) : ✅ rédigé (`ExempleCompteurService` + `ExempleBoutonCompteur`/`ExempleCompteurParent` — providedIn root, signal protégé, inject(), input.required/input avec défaut, output())
+- **Leçon** (`docs/03-services-di.md`) : ✅ rédigée — service (`@Injectable`, `providedIn: 'root'`), signal privé + `asReadonly()`, `inject()`, SRP, `input()`/`output()` parent-enfant, aperçu de `model()`, `Object.assign` (fusion sans mutation, section 9), `Set` immuable (add/delete/has/clear, section 10)
+- **Exemple générique** (`src/examples/03-services-di.example.ts`) : ✅ rédigé (`ExempleCompteurService` + `ExempleBoutonCompteur`/`ExempleCompteurParent` — providedIn root, signal protégé, inject(), input.required/input avec défaut, output() ; `fusionnerPatch`/`modifierItem` — Object.assign ; `ExempleFiltreTags` — Set.add/delete/has/clear copié à chaque update())
 - **Pratique** (`ContratsService`, refactor de `ListeContrats`, composant enfant `ContratLigne`) : ⏳ à coder par l'utilisateur — voir la section "Pour la pratique" de la leçon (pistes pour `Object.assign` et `Set.delete`/`Set.clear`)
 
 Prochain module (après la pratique du Module 3) : Module 4 — Routing et navigation, guards.

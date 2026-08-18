@@ -187,6 +187,86 @@ L'enfant ne connaît pas le service, ni comment la suppression est réellement f
 
 ---
 
+## 9. `Object.assign` : fusionner un patch sans muter l'original
+
+Modifier un contrat existant (changer son statut, sa prime...) sans le remplacer entièrement pose la même question que l'ajout/suppression au Module 2 : on ne touche jamais l'objet original directement, on **construit un nouvel objet fusionné**.
+
+```ts
+interface ExempleItem {
+  id: number;
+  label: string;
+  actif: boolean;
+}
+
+function fusionnerPatch(item: ExempleItem, patch: Partial<ExempleItem>): ExempleItem {
+  return Object.assign({}, item, patch);
+}
+```
+
+- `Object.assign(cible, ...sources)` copie les propriétés de chaque source dans `cible`, de gauche à droite — une source plus à droite écrase les propriétés déjà copiées.
+- `{}` comme première cible est essentiel : sans lui, `Object.assign(item, patch)` **muterait `item` directement**, exactement le piège qu'on évite depuis le Module 2.
+- Équivalent strictement identique avec le spread : `{ ...item, ...patch }`. Les deux syntaxes existent dans le JS moderne ; `Object.assign` est demandé explicitement dans la table de traçabilité, mais le spread reste ce que tu verras le plus souvent en pratique.
+- `Partial<T>` (TypeScript) dit "un objet qui a *certaines* des propriétés de `T`, pas forcément toutes" — exactement ce qu'est un patch.
+
+Dans un service, ce pattern s'utilise typiquement à l'intérieur d'un `update()` sur le signal, comme `retirer()` l'a fait avec `splice` :
+
+```ts
+modifier(id: number, patch: Partial<ExempleItem>): void {
+  this._items.update((liste) =>
+    liste.map((item) => (item.id === id ? Object.assign({}, item, patch) : item))
+  );
+}
+```
+
+`map` reconstruit tout le tableau ; seul l'élément dont l'`id` correspond est remplacé par sa version fusionnée, tous les autres passent inchangés.
+
+---
+
+## 10. `Set` : ajouter/retirer une valeur sans doublon
+
+Un `Set` stocke des valeurs **uniques** — utile pour une sélection (statuts cochés, tags actifs...) où l'ordre n'a pas d'importance et où un doublon n'aurait aucun sens.
+
+```ts
+const selection = new Set<string>();
+selection.add('actif');     // { 'actif' }
+selection.add('actif');     // toujours { 'actif' } — pas de doublon
+selection.has('actif');     // true
+selection.delete('actif');  // retire 'actif', renvoie true si ça a marché
+selection.clear();          // vide le Set entièrement
+selection.size;             // nombre d'éléments (pas une méthode, une propriété)
+```
+
+Comme un tableau ou un objet, un `Set` est une référence : le muter directement dans un `signal.update()` ne déclencherait pas forcément les effets attendus et casse la même règle d'immutabilité qu'au Module 2. Le pattern est identique — copier, muter la copie, retourner la copie :
+
+```ts
+private readonly _selection = signal<Set<string>>(new Set());
+readonly selection = this._selection.asReadonly();
+
+toggle(valeur: string): void {
+  this._selection.update((set) => {
+    const copie = new Set(set);
+    if (copie.has(valeur)) {
+      copie.delete(valeur);
+    } else {
+      copie.add(valeur);
+    }
+    return copie;
+  });
+}
+
+reinitialiser(): void {
+  this._selection.update((set) => {
+    const copie = new Set(set);
+    copie.clear();
+    return copie;
+  });
+}
+```
+
+Dans un template, `@for` ne peut pas itérer un `Set` directement de la même façon qu'un tableau signal — le plus simple est de tester l'appartenance avec `.has()` pendant qu'on boucle sur la liste des valeurs *possibles* (ex : tous les statuts), pour savoir laquelle est actuellement sélectionnée.
+
+---
+
 ## Pour la pratique
 
 Objectif du module côté `src/app/` :
@@ -194,8 +274,8 @@ Objectif du module côté `src/app/` :
 1. Créer `ContratsService` (`providedIn: 'root'`) qui reprend l'état et les méthodes actuellement dans `ListeContrats` (`contrats`, `primeTotale`, ajout, suppression).
 2. Faire injecter ce service par `ListeContrats` via `inject()`, à la place du signal local.
 3. Extraire un composant enfant `ContratLigne` (une ligne du tableau) avec `input.required<Contrat>()` et un `output()` pour la suppression.
-4. Chercher une occasion réelle d'utiliser `Object.assign` (ou l'équivalent en spread) : par exemple une méthode `modifierContrat(id, patch: Partial<Contrat>)` sur le service, qui fusionne un patch sur le contrat existant **sans le muter**.
-5. Chercher une occasion réelle d'utiliser `Set.delete` / `Set.clear` : par exemple un filtre par statut (l'utilisateur coche/décoche des statuts à afficher, stockés dans un `Set<StatutContrat>`), avec un bouton "réinitialiser les filtres" qui vide le `Set`.
+4. `Object.assign` (section 9) : une méthode `modifierContrat(id, patch: Partial<Contrat>)` sur le service, qui fusionne un patch sur le contrat existant **sans le muter**.
+5. `Set` (section 10) : un filtre par statut (l'utilisateur coche/décoche des statuts à afficher, stockés dans un `Set<StatutContrat>`), avec un bouton "réinitialiser les filtres" qui vide le `Set`.
 
 Pas d'obligation de tout faire dans un seul composant — si le filtre par statut mérite son propre composant enfant, c'est une bonne occasion supplémentaire de pratiquer `input()`/`output()`.
 

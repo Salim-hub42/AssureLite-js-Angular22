@@ -59,3 +59,62 @@ export class ExempleCompteurParent {
     this.compteurService.incrementer(pas);
   }
 }
+
+// 4. Object.assign : fusionner un patch sur un élément d'une liste sans le muter
+export interface ExempleItem {
+  id: number;
+  label: string;
+  actif: boolean;
+}
+
+export function fusionnerPatch(item: ExempleItem, patch: Partial<ExempleItem>): ExempleItem {
+  return Object.assign({}, item, patch);
+  // équivalent avec le spread : { ...item, ...patch }
+}
+
+export function modifierItem(
+  liste: ExempleItem[],
+  id: number,
+  patch: Partial<ExempleItem>
+): ExempleItem[] {
+  return liste.map((item) => (item.id === id ? fusionnerPatch(item, patch) : item));
+}
+
+// 5. Set : sélection sans doublon (add/delete/has/clear), copiée à chaque mise à jour
+@Component({
+  selector: 'app-exemple-filtre-tags',
+  template: `
+    @for (tag of tagsDisponibles(); track tag) {
+      <button (click)="toggle(tag)">
+        {{ tag }} {{ tagsSelectionnes().has(tag) ? '✓' : '' }}
+      </button>
+    }
+    <button (click)="reinitialiser()">Réinitialiser</button>
+  `
+})
+export class ExempleFiltreTags {
+  tagsDisponibles = input<string[]>([]);
+
+  private readonly _tagsSelectionnes = signal<Set<string>>(new Set());
+  readonly tagsSelectionnes = this._tagsSelectionnes.asReadonly();
+
+  toggle(tag: string): void {
+    this._tagsSelectionnes.update((set) => {
+      const copie = new Set(set);
+      if (copie.has(tag)) {
+        copie.delete(tag);
+      } else {
+        copie.add(tag);
+      }
+      return copie;
+    });
+  }
+
+  reinitialiser(): void {
+    this._tagsSelectionnes.update((set) => {
+      const copie = new Set(set);
+      copie.clear();
+      return copie;
+    });
+  }
+}

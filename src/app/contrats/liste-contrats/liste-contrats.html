@@ -11,35 +11,7 @@
     </ng-template>
 
     <ng-template #body let-contrat>
-      <tr>
-        <td>{{ contrat.type }}</td>
-        <td>{{ contrat.prime }} €</td>
-        <td>
-          @switch (contrat.statut) {
-            @case ('actif') {
-              <span
-                ><i class="pi pi-check-circle text-green-500" aria-hidden="true"></i> Actif</span
-              >
-            }
-            @case ('suspendu') {
-              <span
-                ><i class="pi pi-pause-circle text-orange-500" aria-hidden="true"></i>
-                Suspendu</span
-              >
-            }
-            @default {
-              <span
-                ><i class="pi pi-times-circle text-red-500" aria-hidden="true"></i> Résilié</span
-              >
-            }
-          }
-        </td>
-        <td>
-          <button pButton (click)="supprimerContrat(contrat.id)" size="small">
-            Supprimer un Contrat
-          </button>
-        </td>
-      </tr>
+          <tr app-contrat-ligne [contrat]="contrat" (supprimer)="supprimerContrat($event)"></tr>
     </ng-template>
 
     <ng-template #emptymessage>

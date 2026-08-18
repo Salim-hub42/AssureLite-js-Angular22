@@ -1,9 +1,10 @@
 import { Component, input, output } from '@angular/core';
 import { Contrat } from '../../models/contrat.model';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'tr[app-contrat-ligne]',
-  imports: [],
+  imports: [ButtonModule],
   templateUrl: './contrat-ligne.html',
   styleUrl: './contrat-ligne.scss',
 })
