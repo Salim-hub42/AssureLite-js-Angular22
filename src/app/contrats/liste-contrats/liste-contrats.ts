@@ -4,6 +4,7 @@ import { Table } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { ContratService } from '../../services/contrat-service';
 import { ContratLigne } from '../contrat-ligne/contrat-ligne';
+import { StatutContrat } from '../../models/contrat.model';
 
 @Component({
   selector: 'app-liste-contrats',
@@ -16,6 +17,18 @@ export class ListeContrats {
      
      contrats = this.contratService.contrats;
      primeTotale = this.contratService.primeTotale;
+     contratsFiltres = this.contratService.contratsFiltres;
+     statutsFiltres = this.contratService.statutsFiltres;
+
+     statuts: StatutContrat[] = ['actif', 'resilie', 'suspendu'];
+
+     toggle(status: StatutContrat): void {
+      this.contratService.toggle(status)
+     }
+
+     reinisialise(){
+      this.contratService.reinitialiserFiltres()
+     }
 
 
 

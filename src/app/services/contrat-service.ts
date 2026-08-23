@@ -1,5 +1,6 @@
 import { computed, Service, signal } from '@angular/core';
 import { Contrat } from '../models/contrat.model';
+import { StatutContrat } from '../models/contrat.model';
 import { CONTRATS_MOCKS } from '../data/mock-data';
 import { primeTotal } from '../models/contrat.utils';
 
@@ -10,7 +11,39 @@ export class ContratService {
   private readonly _contrats = signal<Contrat[]>(CONTRATS_MOCKS);
   readonly contrats = this._contrats.asReadonly();
 
+  private readonly _statutsFiltres = signal<Set<StatutContrat>>(new Set());
+  readonly statutsFiltres = this._statutsFiltres.asReadonly();
+
   primeTotale = computed(() => primeTotal(this.contrats()));
+
+  contratsFiltres = computed(() => {
+  return this.statutsFiltres().size === 0 ? this.contrats() : this.contrats().filter((contrat) => this.statutsFiltres().has(contrat.statut) )
+  })
+
+
+  toggle(status: StatutContrat): void {
+      this._statutsFiltres.update((set) => {
+        const copie = new Set(set);
+       if (copie.has(status)) {
+        copie.delete(status)
+       }
+       else {
+        copie.add(status)
+       }
+       return copie
+     }
+    )
+   }
+      
+    reinitialiserFiltres() : void {
+      this._statutsFiltres.update((set) => {
+        const copie = new Set(set);
+        copie.clear()
+        return copie
+      })
+    }
+
+
 
   ajouterContrat() {
     this._contrats.update((listes) => {
@@ -42,7 +75,7 @@ export class ContratService {
       })
   }
 
-
+ 
 
 
 
