@@ -2,13 +2,14 @@ import { Component,inject } from '@angular/core';
 
 import { Table } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
+import { Card } from 'primeng/card';
 import { ContratService } from '../../services/contrat-service';
 import { ContratLigne } from '../contrat-ligne/contrat-ligne';
 import { StatutContrat } from '../../models/contrat.model';
 
 @Component({
   selector: 'app-liste-contrats',
-  imports: [Table, ButtonModule, ContratLigne],
+  imports: [Table, ButtonModule, Card, ContratLigne],
   templateUrl: './liste-contrats.html',
   styleUrl: './liste-contrats.scss',
 })

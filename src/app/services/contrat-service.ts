@@ -14,7 +14,7 @@ export class ContratService {
   private readonly _statutsFiltres = signal<Set<StatutContrat>>(new Set());
   readonly statutsFiltres = this._statutsFiltres.asReadonly();
 
-  primeTotale = computed(() => primeTotal(this.contrats()));
+  primeTotale = computed(() => primeTotal(this.contratsFiltres()));
 
   contratsFiltres = computed(() => {
   return this.statutsFiltres().size === 0 ? this.contrats() : this.contrats().filter((contrat) => this.statutsFiltres().has(contrat.statut) )

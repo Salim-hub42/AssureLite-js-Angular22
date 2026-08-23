@@ -1,0 +1,14 @@
+:host {
+  td:first-child {
+    text-transform: capitalize;
+  }
+
+  td:last-child {
+    text-align: right;
+  }
+
+  .assurlite-delete-btn {
+    /* rouge par défaut du thème (#ef4444) trop clair sur fond blanc : 3.5:1, sous le seuil WCAG AA (4.5:1) */
+    --p-button-text-danger-color: var(--p-red-700);
+  }
+}

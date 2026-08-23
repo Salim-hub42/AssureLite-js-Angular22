@@ -46,7 +46,7 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 | `Object.keys` | ✅ | `contrat.utils.ts:14` | Module 1 |
 | `Object.values` | ✅ | `contrat.utils.ts:4` | Module 1 |
 | `Object.entries` | ✅ | `contrat.utils.ts:8` | Module 1 |
-| `Object.assign` | ⏳ | — | Module 2 |
+| `Object.assign` | ✅ | `contrat-service.ts:77` | Module 3 |
 | `Object.hasOwn` | ⏳ | — | Module 5 |
 
 ## Nombres / Math (5)
@@ -74,9 +74,9 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 | Méthode | Statut | Fichier : ligne | Module |
 |---|---|---|---|
 | `Set.add` | ✅ | `contrat.utils.ts:19` | Module 1 |
-| `Set.delete` | ⏳ | — | Module 2 |
+| `Set.delete` | ✅ | `contrat-service.ts:28` | Module 3 |
 | `Set.has` | ✅ | `sinistre.utils.ts:36` | Module 1 |
-| `Set.clear` | ⏳ | — | Module 2 |
+| `Set.clear` | ✅ | `contrat-service.ts:41` | Module 3 |
 | `Set.size` | ✅ | `sinistre.utils.ts:41` | Module 1 |
 | `Map.set` | ⏳ | — | Module 7 |
 | `Map.get` | ⏳ | — | Module 7 |
@@ -119,6 +119,10 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 - **Leçon** (`docs/03-services-di.md`) : ✅ rédigée — service (`@Injectable`, `providedIn: 'root'`), signal privé + `asReadonly()`, `inject()`, SRP, `input()`/`output()` parent-enfant, aperçu de `model()`, `Object.assign` (fusion sans mutation, section 9), `Set` immuable (add/delete/has/clear, section 10)
 - **Exemple générique** (`src/examples/03-services-di.example.ts`) : ✅ rédigé (`ExempleCompteurService` + `ExempleBoutonCompteur`/`ExempleCompteurParent` — providedIn root, signal protégé, inject(), input.required/input avec défaut, output() ; `fusionnerPatch`/`modifierItem` — Object.assign ; `ExempleFiltreTags` — Set.add/delete/has/clear copié à chaque update())
-- **Pratique** (`ContratsService`, refactor de `ListeContrats`, composant enfant `ContratLigne`) : ⏳ à coder par l'utilisateur — voir la section "Pour la pratique" de la leçon (pistes pour `Object.assign` et `Set.delete`/`Set.clear`)
+- **Pratique** (`ContratService` dans `src/app/services/contrat-service.ts`, refactor de `ListeContrats`, composant enfant `ContratLigne`) : ✅ terminée — service + injection (`@Service()`, signal privé + `asReadonly()`), composant enfant `ContratLigne` (`input.required`/`output`), `modifierContrat` (`Object.assign`), filtre par statut avec `Set` (`toggle`/`contratsFiltres`/`reinitialiserFiltres` — `has`/`delete`/`add`/`size`/`clear`) câblé à des checkboxes + bouton reset dans `liste-contrats.html`, vérifié dans le navigateur (filtre et reset fonctionnels, aucune erreur console)
 
-Prochain module (après la pratique du Module 3) : Module 4 — Routing et navigation, guards.
+**30 / 40 méthodes validées** (+`Object.assign`, `Set.delete`, `Set.clear` par rapport au Module 2).
+
+**Module 3 terminé.**
+
+Prochain module : Module 4 — Routing et navigation, guards.
