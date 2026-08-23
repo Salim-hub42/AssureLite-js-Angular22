@@ -25,6 +25,7 @@ export class ListeContrats {
 
      toggle(status: StatutContrat): void {
       this.contratService.toggle(status)
+      console.log(status)
      }
 
      reinisialise(){
