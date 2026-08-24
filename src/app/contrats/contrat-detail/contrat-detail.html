@@ -1,0 +1,6 @@
+<h1>Contrat Détail</h1>
+@if (recherche(); as contrat) {
+   {{contrat.type}} {{contrat.prime}} {{contrat.statut}}
+} @else {
+   Aucun contrat..
+}
