@@ -129,8 +129,10 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 - **Leçon** (`docs/04-routing-navigation.md`) : ✅ rédigée — `Routes`/`provideRouter`, `RouterOutlet`, `routerLink` vs navigation programmatique, paramètres de route via `input.required()` + `withComponentInputBinding()`, lazy loading (`loadComponent`), guards fonctionnels (`CanActivateFn`)
 - **Exemple générique** (`src/examples/04-routing-navigation.example.ts` + spec) : ✅ rédigé (domaine recettes, pas assurance) — `ExempleListeRecettes`/`ExempleRecetteDetail` (paramètre `:id` en `input.required<string>()`), `exempleRecetteExisteGuard` (`CanActivateFn` qui redirige si l'id n'existe pas), testé via `RouterTestingHarness` (3 tests passent)
-- **Pratique** (`app.routes.ts`, `app.html`, nouveau composant `ContratDetail`, guard) : ⏳ à coder par l'utilisateur — voir la section "Pour la pratique" de la leçon
+- **Pratique** : ✅ terminée — `<router-outlet/>` dans `app.html`, routes `contrats` (lazy) et `contrats/:id` dans `app.routes.ts`, `withComponentInputBinding()` activé, nouveau composant `ContratDetail` (`id = input.required<string>()` + `computed()` de recherche via `Number`/`.find()`), lien `routerLink` depuis `ContratLigne` vers le détail, guard `contratExisteGuard` (`.some()` + `router.parseUrl`) qui redirige si l'id n'existe pas. Vérifié dans le navigateur (redirection racine, param valide/invalide, guard, navigation par lien). Suite de tests : 49/51 (2 bugs pré-existants sans rapport).
 
-Ce module ne fait pas progresser le compteur de méthodes JS (routing = Angular pur) — reste à **30 / 40** jusqu'au Module 5.
+**Module 4 terminé.**
 
-Prochain module (après la pratique du Module 4) : Module 5 — Reactive Forms.
+Ce module ne fait pas progresser le compteur de méthodes JS (routing = Angular pur) — reste à **30 / 40**.
+
+Prochain module : Module 5 — Reactive Forms.
