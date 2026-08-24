@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ListeContrats } from './contrats/liste-contrats/liste-contrats';
 
 
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ListeContrats],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
