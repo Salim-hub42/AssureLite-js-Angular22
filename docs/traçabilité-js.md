@@ -135,4 +135,10 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 Ce module ne fait pas progresser le compteur de méthodes JS (routing = Angular pur) — reste à **30 / 40**.
 
-Prochain module : Module 5 — Reactive Forms.
+## État du Module 5
+
+- **Leçon** (`docs/05-reactive-forms.md`) : ✅ rédigée — `FormGroup`/`FormControl` typés, `Validators` intégrés, validateur personnalisé (pattern factory `ValidatorFn`), binding template (`formGroup`/`formControlName`), `valueChanges` + `toSignal()`, `FormArray`, et un exemple isolé (domaine inscription à un événement) pour `parseInt`/`parseFloat`/`Math.random`/`.concat()`/`Object.hasOwn`
+- **Exemple générique** (`src/examples/05-reactive-forms.example.ts` + spec, 14 tests passent) : ✅ rédigé (domaine inscription à un événement, pas assurance) — `ExempleInscriptionEvenement` (`FormGroup` typé, validateur `ageMinimum` personnalisé, `valueChanges`+`toSignal` pour un montant recalculé en direct), `genererReference` (`Math.random`+`.concat()`), `montantSaisi` (`parseFloat` tolérant), `aUneErreurRequise` (`Object.hasOwn`)
+- **Pratique** (formulaire de souscription `SouscriptionContrat`) : ⏳ à coder — voir la section "Pour la pratique" de la leçon
+
+Prochain module (après la pratique du Module 5) : Module 6 — Signal Forms (comparaison sur ce même formulaire).

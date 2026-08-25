@@ -39,6 +39,20 @@
 .assurlite-breadcrumb {
   display: inline-block;
   margin-bottom: 1.25rem;
+
+  // ::ng-deep : nécessaire ici pour atteindre les <a> générés à l'intérieur du
+  // template interne de p-breadcrumb (composant tiers), pas du nôtre.
+  // a[href] cible uniquement le vrai lien ("Contrats") — l'élément courant
+  // ("Détail du contrat") n'a pas de href, il garde donc son style neutre.
+  ::ng-deep a[href] {
+    color: var(--p-primary-color);
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+      color: lightblue
+    }
+  }
 }
 
 .assurlite-detail-header {
