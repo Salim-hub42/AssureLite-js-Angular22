@@ -1,6 +1,54 @@
-<h1>Contrat Détail</h1>
-@if (recherche(); as contrat) {
-   {{contrat.type}} {{contrat.prime}} {{contrat.statut}}
-} @else {
-   Aucun contrat..
-}
+<div class="assurlite-page">
+  <header class="assurlite-header">
+    <span class="assurlite-header-icon" aria-hidden="true"><i class="pi pi-shield"></i></span>
+    <div>
+      <h1>AssurLite</h1>
+      <p class="assurlite-subtitle">Détail du contrat</p>
+    </div>
+  </header>
+
+  <p-breadcrumb [model]="breadcrumbItems" class="assurlite-breadcrumb" />
+
+  @if (recherche(); as contrat) {
+    <p-card>
+      <div class="assurlite-detail-header">
+        <h2>Contrat n°{{ contrat.id }}</h2>
+        @switch (contrat.statut) {
+          @case ('actif') {
+            <p-tag value="Actif" severity="success" icon="pi pi-check-circle" />
+          }
+          @case ('suspendu') {
+            <p-tag value="Suspendu" severity="warn" icon="pi pi-pause-circle" />
+          }
+          @default {
+            <p-tag value="Résilié" severity="danger" icon="pi pi-times-circle" />
+          }
+        }
+      </div>
+
+      <p-divider />
+
+      <dl class="assurlite-detail-list">
+        <div class="assurlite-detail-row">
+          <dt>Type</dt>
+          <dd>{{ contrat.type }}</dd>
+        </div>
+        <div class="assurlite-detail-row">
+          <dt>Prime</dt>
+          <dd>{{ contrat.prime }} €</dd>
+        </div>
+        <div class="assurlite-detail-row">
+          <dt>Date de début</dt>
+          <dd>{{ contrat.dateDebut | date: 'dd/MM/yyyy' }}</dd>
+        </div>
+      </dl>
+    </p-card>
+  } @else {
+    <p-card>
+      <p-message severity="warn" icon="pi pi-exclamation-triangle">
+        Aucun contrat ne correspond à cet identifiant.
+      </p-message>
+      <a routerLink="/contrats" pButton size="small" class="assurlite-back-btn">Retour à la liste</a>
+    </p-card>
+  }
+</div>
