@@ -70,8 +70,7 @@ export class ExempleInscriptionEvenement {
   form = new FormGroup({
     nom: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     age: new FormControl<number | null>(null, {
-      validators: [Validators.required, ageMinimum(18)],
-    }),
+    validators: [Validators.required, ageMinimum(18)]}),
     montant: new FormControl('', { nonNullable: true }),
   });
 
