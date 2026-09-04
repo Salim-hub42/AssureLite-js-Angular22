@@ -1,47 +1,118 @@
-<h1>Formulaire</h1>
-<form [formGroup]="form">
-  <label>
-    N° client
-    <input type="number" formControlName="clientId" />
-  </label>
-    @if (form.controls.clientId.invalid && form.controls.clientId.touched) {
-    <p>Le n° client est requis.</p>
-  }
+<div class="assurlite-page">
+  <header class="assurlite-header">
+    <span class="assurlite-header-icon" aria-hidden="true"><i class="pi pi-shield"></i></span>
+    <div>
+      <h1>AssurLite</h1>
+      <p class="assurlite-subtitle">Souscrire un nouveau contrat</p>
+    </div>
+  </header>
 
-  <label>
-    Age
-    <input type="number" formControlName="ageClient" />
-  </label>
-  @if (form.controls.ageClient.hasError('required') && form.controls.ageClient.touched) {
-     <p>L'age est requis</p>
-  }
-  @if (form.controls.ageClient.hasError('ageMinimum')) {
-     <p>Age minimum : 18 ans.</p>
-  }
+  <p-card>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="assurlite-form" novalidate>
+      <div class="assurlite-form-grid">
+        <div class="assurlite-field">
+          <label for="clientId">N° client</label>
+          <input
+            pInputText
+            fluid
+            id="clientId"
+            type="number"
+            inputmode="numeric"
+            formControlName="clientId"
+            [invalid]="form.controls.clientId.invalid && form.controls.clientId.touched"
+            [attr.aria-invalid]="form.controls.clientId.invalid && form.controls.clientId.touched"
+            aria-describedby="clientId-error"
+          />
+          @if (form.controls.clientId.invalid && form.controls.clientId.touched) {
+            <small id="clientId-error" class="assurlite-field-error" role="alert">
+              <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+              Le n° client est requis.
+            </small>
+          }
+        </div>
 
-  <label>
-         Type de contrat
-        <select formControlName="typeDeContrat">
-          <option [ngValue]="null" disabled>choisir un type</option>
-          <option [ngValue]="'auto'">Auto</option>
-          <option [ngValue]="'habitation'">Habitation</option>
-          <option [ngValue]="'sante'">Santé</option>
-        </select>
-  </label>
-  @if (form.controls.typeDeContrat.invalid && form.controls.typeDeContrat.touched) {
-       <p>Le type de contrat est requis.</p>
-  }
-  <label>
-  Options
-  <p-select
-    formControlName="optionsChoisies"
-    [options]="optionsDisponibles"
-    optionLabel="label"
-    optionValue="value"
-    placeholder="Choisir des options"
-    multiple
-  ></p-select>
-</label>
-  
-  <p>Prime : {{ primeAffichee() }} €</p>
-</form>
+        <div class="assurlite-field">
+          <label for="ageClient">Âge du souscripteur</label>
+          <input
+            pInputText
+            fluid
+            id="ageClient"
+            type="number"
+            inputmode="numeric"
+            formControlName="ageClient"
+            [invalid]="form.controls.ageClient.invalid && form.controls.ageClient.touched"
+            [attr.aria-invalid]="form.controls.ageClient.invalid && form.controls.ageClient.touched"
+            aria-describedby="ageClient-error"
+          />
+          @if (form.controls.ageClient.hasError('required') && form.controls.ageClient.touched) {
+            <small id="ageClient-error" class="assurlite-field-error" role="alert">
+              <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+              L'âge est requis.
+            </small>
+          }
+          @if (form.controls.ageClient.hasError('ageMinimum')) {
+            <small id="ageClient-error" class="assurlite-field-error" role="alert">
+              <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+              Âge minimum : 18 ans.
+            </small>
+          }
+        </div>
+
+        <div class="assurlite-field assurlite-field--full">
+          <label for="typeDeContrat">Type de contrat</label>
+          <p-select
+            fluid
+            inputId="typeDeContrat"
+            formControlName="typeDeContrat"
+            [options]="typesContrat"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Choisir un type"
+          />
+          @if (form.controls.typeDeContrat.invalid && form.controls.typeDeContrat.touched) {
+            <small class="assurlite-field-error" role="alert">
+              <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+              Le type de contrat est requis.
+            </small>
+          }
+        </div>
+
+        <div class="assurlite-field assurlite-field--full">
+          <label for="optionsChoisies">Options</label>
+          <p-select
+            fluid
+            inputId="optionsChoisies"
+            formControlName="optionsChoisies"
+            [options]="optionsDisponibles"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Choisir des options"
+            multiple
+          />
+          <small class="assurlite-field-hint">+ 15 € par option.</small>
+        </div>
+      </div>
+
+      <p-divider />
+
+      <div class="assurlite-prime-panel">
+        <div>
+          <p class="assurlite-prime-label">Prime estimée</p>
+          @if (prime() === 0) {
+            <p class="assurlite-prime-hint">
+              Renseignez le type et l'âge pour obtenir une estimation.
+            </p>
+          }
+        </div>
+        <p class="assurlite-prime-value" aria-live="polite">{{ primeAffichee() }} <span>€</span></p>
+      </div>
+
+      <div class="assurlite-form-actions">
+        <button pButton type="submit" [disabled]="form.invalid">
+          <i class="pi pi-check" aria-hidden="true"></i>
+          Souscrire le contrat
+        </button>
+      </div>
+    </form>
+  </p-card>
+</div>

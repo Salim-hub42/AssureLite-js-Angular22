@@ -1,0 +1,136 @@
+.assurlite-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+.assurlite-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+
+  h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    color: var(--p-primary-color);
+  }
+}
+
+.assurlite-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--p-primary-color);
+  color: var(--p-primary-contrast-color);
+  font-size: 1.4rem;
+}
+
+.assurlite-subtitle {
+  margin: 0.2rem 0 0;
+  color: var(--p-text-muted-color);
+  font-size: 0.95rem;
+}
+
+.assurlite-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.assurlite-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem 1rem;
+
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.assurlite-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--p-text-color);
+  }
+
+  input,
+  p-select {
+    width: 100%;
+  }
+}
+
+.assurlite-field--full {
+  grid-column: 1 / -1;
+}
+
+.assurlite-field-error {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--p-red-700);
+
+  i {
+    font-size: 0.85rem;
+  }
+}
+
+.assurlite-field-hint {
+  font-size: 0.8rem;
+  color: var(--p-text-muted-color);
+}
+
+.assurlite-prime-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.35rem;
+  border: 1px solid var(--p-content-border-color);
+  border-radius: var(--p-content-border-radius);
+  background: rgba(26, 50, 88, 0.06);
+}
+
+.assurlite-prime-label {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--p-text-muted-color);
+}
+
+.assurlite-prime-hint {
+  margin: 0.25rem 0 0;
+  font-size: 0.8rem;
+  color: var(--p-text-muted-color);
+}
+
+.assurlite-prime-value {
+  margin: 0;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--p-primary-color);
+  white-space: nowrap;
+  border-bottom: 3px solid #b8860b;
+  padding-bottom: 0.15rem;
+
+  span {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-left: 0.15rem;
+  }
+}
+
+.assurlite-form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
