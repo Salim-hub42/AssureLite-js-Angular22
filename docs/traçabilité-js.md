@@ -155,4 +155,10 @@ Suite de tests : 65/66 (le seul échec restant, `app.spec.ts > should render tit
 
 **Module 5 terminé.**
 
-Prochain module : Module 6 — Signal Forms (on refait ce formulaire en Signal Forms pour comparer ancien / nouveau monde).
+## État du Module 6
+
+- **Leçon** (`docs/06-signal-forms.md`) : ✅ rédigée — modèle `signal()`, `form()` + schéma, validateurs intégrés (`required`/`min`/`minLength`/`email`/`pattern`…), `validate()` personnalisé, binding `[formField]` / `[formRoot]`, lecture d'état 100 % signals, logique inter-champs `disabled`/`hidden` avec `{ when }` (sans `valueChanges`), `submit()`, tableau de comparaison Reactive Forms ↔ Signal Forms. Calée sur l'API réelle `@angular/forms/signals` d'Angular 22.0.7.
+- **Exemple générique** (`src/examples/06-signal-forms.example.ts` + spec, 12 tests passent) : ✅ rédigé (domaine « inscription à un événement », même que le Module 5 pour comparaison ligne à ligne) — `ExempleInscriptionSignal` (`signal()` modèle, `form()` + schéma, `min` intégré à la place du validateur perso, `validate()` custom « pas d'espace », `disabled({ when })` inter-champs, `computed` de prix dérivé sans `valueChanges`, `submit()`), helpers purs `contientEspace` / `genererReference`.
+- **Pratique** (refaire `SouscriptionContrat` en Signal Forms, composant séparé) : ⏳ à coder — voir la section « Pour la pratique » de la leçon.
+
+Ce module ne fait pas progresser le compteur de méthodes JS (Signal Forms = Angular pur) — reste à **32 / 40**.
