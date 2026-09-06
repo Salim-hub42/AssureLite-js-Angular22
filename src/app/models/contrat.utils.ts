@@ -45,3 +45,7 @@ export function joursDepuisDebut(contrat: Contrat , aujourdhui: Date): number {
    const dureeEnJours = (aujourdhui.getTime() - contrat.dateDebut.getTime()) / millisecondesParJour ; 
    return dureeEnJours ; 
 }
+
+export function genererReference(prefix: string): string {
+  return prefix.concat('-', String(Math.floor(Math.random() * 100000)));
+}

@@ -6,15 +6,18 @@ import { Card } from 'primeng/card';
 import { ContratService } from '../../services/contrat-service';
 import { ContratLigne } from '../contrat-ligne/contrat-ligne';
 import { StatutContrat } from '../../models/contrat.model';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-liste-contrats',
-  imports: [Table, ButtonModule, Card, ContratLigne],
+  imports: [Table, ButtonModule, Card, ContratLigne, RouterLink],
   templateUrl: './liste-contrats.html',
   styleUrl: './liste-contrats.scss',
 })
 export class ListeContrats {
      contratService = inject(ContratService);
+     router = inject(Router);
+
      
      contrats = this.contratService.contrats;
      primeTotale = this.contratService.primeTotale;
@@ -33,11 +36,6 @@ export class ListeContrats {
      }
 
 
-
-     ajoutContrat(): void{
-      this.contratService.ajouterContrat();
-     }
-     
      supprimerContrat(id: number): void{
       this.contratService.supprimerContrat(id);
      }

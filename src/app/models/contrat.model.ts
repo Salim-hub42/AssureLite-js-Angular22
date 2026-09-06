@@ -8,5 +8,6 @@ export interface Contrat {
    type: TypeContrat,
    statut: StatutContrat,
    prime: number,
-   dateDebut: Date
+   dateDebut: Date,
+   reference?: string
 }

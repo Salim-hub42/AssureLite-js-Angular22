@@ -1,8 +1,10 @@
 import { computed, Service, signal } from '@angular/core';
-import { Contrat } from '../models/contrat.model';
+import { Contrat, TypeContrat } from '../models/contrat.model';
 import { StatutContrat } from '../models/contrat.model';
 import { CONTRATS_MOCKS } from '../data/mock-data';
-import { primeTotal } from '../models/contrat.utils';
+import { genererReference, primeTotal } from '../models/contrat.utils';
+import { Devis } from '../models/devis.model';
+import { calculerPrimeDevis } from '../models/devis.utils';
 
 @Service()
 export class ContratService {
@@ -45,19 +47,37 @@ export class ContratService {
 
 
 
-  ajouterContrat() {
-    this._contrats.update((listes) => {
-      const copie = [...listes];
-      copie.push({
-        id: copie.length + 1,
-        clientId: 1,
-        type: 'auto',
-        statut: 'actif',
-        prime: 75,
-        dateDebut: new Date(),
-      });
-      return copie;
-    });
+  souscrireContrat(donnees:{clientId: number; type: TypeContrat; ageClient: number; optionsChoisies: string[];}): Contrat{
+     const devis : Devis = {
+      id : 0,
+      clientId : donnees.clientId,
+      typeDeContrat: donnees.type,
+      ageClient: donnees.ageClient,
+      optionsChoisies: donnees.optionsChoisies
+     };
+
+     const prime = calculerPrimeDevis(devis);
+     const reference = genererReference(donnees.type.toUpperCase());
+
+     const nouveauContrat: Contrat = {
+      id: this._contrats().length +1,
+      clientId: donnees.clientId,
+      type: donnees.type,
+      statut: 'actif',
+      prime,
+      dateDebut: new Date(),
+      reference,
+     }
+
+     this._contrats.update((liste) => {
+      const copie = [...liste];
+      copie.push(nouveauContrat);
+      return copie; 
+     });
+     
+     return nouveauContrat;
+
+
   }
 
   supprimerContrat(id: number): void {

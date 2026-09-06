@@ -1,4 +1,4 @@
-import { Component, computed } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Card } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -10,6 +10,8 @@ import { TypeContrat } from '../../models/contrat.model';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Devis } from '../../models/devis.model';
 import { calculerPrimeDevis } from '../../models/devis.utils';
+import { ContratService } from '../../services/contrat-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-souscription-contrat',
@@ -18,6 +20,10 @@ import { calculerPrimeDevis } from '../../models/devis.utils';
   styleUrl: './souscription-contrat.scss',
 })
 export class SouscriptionContrat {
+
+  private readonly contratService = inject(ContratService);
+  private readonly router = inject(Router);
+
   form = new FormGroup({
     clientId: new FormControl<number | null>(null, { validators: [Validators.required] }),
     typeDeContrat: new FormControl<TypeContrat | null>(null, Validators.required),
@@ -61,13 +67,31 @@ export class SouscriptionContrat {
 
   readonly primeAffichee = computed(() => this.prime().toFixed(2));
 
-  // Stub visuel : la vraie logique de soumission (form.getRawValue(),
-  // genererReference(), appel à ContratService) reste l'objet du « temps 4 ».
+
   onSubmit(): void {
+
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
-    console.log('Formulaire valide — soumission à implémenter (temps 4).');
+
+   const donnees = this.form.getRawValue();
+   if (donnees.clientId == null || donnees.typeDeContrat == null || donnees.ageClient == null ){
+    return
+   }
+   
+     this.contratService.souscrireContrat({
+     clientId: donnees.clientId,
+     type: donnees.typeDeContrat,
+     ageClient: donnees.ageClient,
+     optionsChoisies: donnees.optionsChoisies ?? [],
+   });
+
+   this.router.navigate(['/contrats']);
+
+
   }
+
+
+
 }

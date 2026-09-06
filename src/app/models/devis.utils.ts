@@ -14,13 +14,15 @@ export function primeDeBase(type: TypeContrat): number {
 }
 
 export function appliquerMajorationAge(prixBase: number, ageClient: number): number {
+  let prime: number;
   if (ageClient < 25) {
-    return prixBase * 1.2 ;
+     prime = prixBase * 1.2 ;
   }else if (ageClient > 65){
-    return prixBase * 1.1;
+    prime = prixBase * 1.1;
   }else {
-    return prixBase;
+     prime = prixBase;
   }
+  return Math.round(prime * 100) / 100;
 }
 
 export function appliquerMajorationOption(prime: number , options: string[]): number {
