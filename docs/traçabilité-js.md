@@ -8,21 +8,21 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 | Méthode | Statut | Fichier : ligne | Module |
 |---|---|---|---|
-| `push` | ✅ | `liste-contrats.ts:21` | Module 2 |
+| `push` | ✅ | `contrat-service.ts:74` (souscrireContrat) | Module 2 |
 | `pop` | ⏳ | — | Module 2 |
 | `shift` | ⏳ | — | Module 2 |
 | `unshift` | ⏳ | — | Module 2 |
 | `map` | ✅ | `contrat.utils.ts:24` | Module 1 |
 | `filter` | ✅ | `client.utils.ts:21` | Module 1 |
 | `find` | ✅ | `client.utils.ts:5` | Module 1 |
-| `findIndex` | ✅ | `liste-contrats.ts:36` | Module 2 |
+| `findIndex` | ✅ | `contrat-service.ts:86` (supprimerContrat) | Module 2 |
 | `some` | ✅ | `contrat.utils.ts:28` | Module 1 |
 | `every` | ✅ | `contrat.utils.ts:4` | Module 1 |
 | `reduce` | ✅ | `contrat.utils.ts:32` | Module 1 |
 | `forEach` | ✅ | `contrat.utils.ts:8` | Module 1 |
 | `includes` | ✅ | `contrat.utils.ts:36` | Module 1 |
 | `slice` | ⏳ | — | Module 2 |
-| `splice` | ✅ | `liste-contrats.ts:37` | Module 2 |
+| `splice` | ✅ | `contrat-service.ts:87` (supprimerContrat) | Module 2 |
 
 ## Chaînes (10)
 
@@ -37,7 +37,7 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 | `trim` | ✅ | `client.utils.ts:4,5` | Module 1 |
 | `toUpperCase` | ⏳ | — | Module 8 |
 | `toLowerCase` | ✅ | `client.utils.ts:4,5` | Module 1 |
-| `concat` | ⏳ | — | Module 5 |
+| `concat` | ✅ | `contrat.utils.ts:50` (genererReference) | Module 5 |
 
 ## Objets (5)
 
@@ -47,7 +47,7 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 | `Object.values` | ✅ | `contrat.utils.ts:4` | Module 1 |
 | `Object.entries` | ✅ | `contrat.utils.ts:8` | Module 1 |
 | `Object.assign` | ✅ | `contrat-service.ts:77` | Module 3 |
-| `Object.hasOwn` | ⏳ | — | Module 5 |
+| `Object.hasOwn` | ⏳ | — | Module 7 |
 
 ## Nombres / Math (5)
 
@@ -55,9 +55,9 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 |---|---|---|---|
 | `toFixed` | ✅ | `contrat.utils.ts:36` | Module 1 |
 | `toPrecision` | ⏳ | — | Module 6 |
-| `parseInt` | ⏳ | — | Module 5 |
-| `parseFloat` | ⏳ | — | Module 5 |
-| `Math.random` | ⏳ | — | Module 5 |
+| `parseInt` | ⏳ | — | Module 7 |
+| `parseFloat` | ⏳ | — | Module 7 |
+| `Math.random` | ✅ | `contrat.utils.ts:50` (genererReference) | Module 5 |
 
 ## Dates (5)
 
@@ -139,6 +139,20 @@ Ce module ne fait pas progresser le compteur de méthodes JS (routing = Angular 
 
 - **Leçon** (`docs/05-reactive-forms.md`) : ✅ rédigée — `FormGroup`/`FormControl` typés, `Validators` intégrés, validateur personnalisé (pattern factory `ValidatorFn`), binding template (`formGroup`/`formControlName`), `valueChanges` + `toSignal()`, `FormArray`, et un exemple isolé (domaine inscription à un événement) pour `parseInt`/`parseFloat`/`Math.random`/`.concat()`/`Object.hasOwn`
 - **Exemple générique** (`src/examples/05-reactive-forms.example.ts` + spec, 14 tests passent) : ✅ rédigé (domaine inscription à un événement, pas assurance) — `ExempleInscriptionEvenement` (`FormGroup` typé, validateur `ageMinimum` personnalisé, `valueChanges`+`toSignal` pour un montant recalculé en direct), `genererReference` (`Math.random`+`.concat()`), `montantSaisi` (`parseFloat` tolérant), `aUneErreurRequise` (`Object.hasOwn`)
-- **Pratique** (formulaire de souscription `SouscriptionContrat`) : ⏳ à coder — voir la section "Pour la pratique" de la leçon
+- **Pratique** (`SouscriptionContrat` + `ContratService.souscrireContrat`) : ✅ terminée
+  - `FormGroup` typé (`clientId`, `typeDeContrat`, `ageClient`, `optionsChoisies`) + validateur personnalisé `ageMinimum(18)` (`src/app/validators/age-minimum.validator.ts`)
+  - prime recalculée **en direct** via `valueChanges` → `toSignal()` → `computed`, réutilise `calculerPrimeDevis` ; `primeAffichee` formate avec `toFixed(2)`
+  - `genererReference()` (`contrat.utils.ts:50`) : `Math.random` + `.concat()` — génère le n° de contrat (ex. `AUTO-73412`)
+  - `onSubmit()` : garde `form.invalid` + `markAllAsTouched()`, `getRawValue()`, narrowing des `null`, appel `ContratService.souscrireContrat(...)`, redirection vers `/contrats`
+  - `ContratService.souscrireContrat(donnees)` : construit un `Devis`, calcule la prime, génère la référence, `push` le `Contrat` sur une copie du signal, renvoie le contrat créé
+  - bouton « Ajouter un contrat » (poussait un contrat en dur) → lien `routerLink="/contrats/nouveau"` ; `ajouterContrat()` (service) et `ajoutContrat()` (liste) supprimés
+  - champ `reference?: string` ajouté au modèle `Contrat`
+  - correctif au passage : `appliquerMajorationAge` arrondit à 2 décimales (`Math.round(x*100)/100`) — supprime l'imprécision flottante `400 * 1.1 = 440.00000000000006` et répare le test `devis.utils.spec.ts` correspondant
 
-Prochain module (après la pratique du Module 5) : Module 6 — Signal Forms (comparaison sur ce même formulaire).
+**32 / 40 méthodes validées** (+`Math.random`, +`concat` chaîne). `parseInt` / `parseFloat` / `Object.hasOwn` : aucun cas métier naturel dans ce formulaire (champs `type="number"`, `hasError()` d'Angular suffit) → reportés au Module 7 (test de forme sur les réponses JSON de `HttpClient`).
+
+Suite de tests : 65/66 (le seul échec restant, `app.spec.ts > should render title`, est le test « Hello world » du scaffold CLI, sans rapport — nettoyage prévu au Module 9).
+
+**Module 5 terminé.**
+
+Prochain module : Module 6 — Signal Forms (on refait ce formulaire en Signal Forms pour comparer ancien / nouveau monde).
