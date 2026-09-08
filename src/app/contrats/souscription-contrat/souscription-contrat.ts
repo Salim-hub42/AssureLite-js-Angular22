@@ -13,6 +13,7 @@ import { calculerPrimeDevis } from '../../models/devis.utils';
 import { ContratService } from '../../services/contrat-service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-souscription-contrat',
   imports: [ReactiveFormsModule, Card, ButtonModule, Divider, InputText, Select],
@@ -27,11 +28,12 @@ export class SouscriptionContrat {
   form = new FormGroup({
     clientId: new FormControl<number | null>(null, { validators: [Validators.required] }),
     typeDeContrat: new FormControl<TypeContrat | null>(null, Validators.required),
-    ageClient: new FormControl<number | null>(null, {
-      validators: [Validators.required, ageMinimum(18)],
-    }),
+    ageClient: new FormControl<number | null>(null, {validators: [Validators.required, ageMinimum(18), Validators.max(99)]}),
     optionsChoisies: new FormControl<string[]>([]),
   });
+
+
+  
 
   readonly typesContrat = [
     { label: 'Auto', value: 'auto' },
@@ -69,9 +71,8 @@ export class SouscriptionContrat {
 
 
   onSubmit(): void {
-
+    this.form.markAllAsTouched();
     if (this.form.invalid) {
-      this.form.markAllAsTouched();
       return;
     }
 
@@ -88,8 +89,6 @@ export class SouscriptionContrat {
    });
 
    this.router.navigate(['/contrats']);
-
-
   }
 
 

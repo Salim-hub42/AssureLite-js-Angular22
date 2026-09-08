@@ -8,7 +8,7 @@
   </header>
 
   <p-card>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="assurlite-form" novalidate>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="assurlite-form">
       <div class="assurlite-form-grid">
         <div class="assurlite-field">
           <label for="clientId">N° client</label>
@@ -56,6 +56,12 @@
               Âge minimum : 18 ans.
             </small>
           }
+               @if (form.controls.ageClient.hasError('max')) {
+            <small id="ageClient-error" class="assurlite-field-error" role="alert">
+              <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+              Âge maximum : 99 ans.
+            </small>
+          }
         </div>
 
         <div class="assurlite-field assurlite-field--full">
@@ -80,7 +86,7 @@
         <div class="assurlite-field assurlite-field--full">
           <label for="optionsChoisies">Options</label>
           <p-select
-            fluid
+            fluid 
             inputId="optionsChoisies"
             formControlName="optionsChoisies"
             [options]="optionsDisponibles"
