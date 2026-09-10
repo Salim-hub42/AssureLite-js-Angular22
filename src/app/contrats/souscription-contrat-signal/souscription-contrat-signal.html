@@ -1,1 +1,146 @@
-<p>souscription-contrat-signal works!</p>
+<div class="assurlite-page">
+  <header class="assurlite-header">
+    <span class="assurlite-header-icon" aria-hidden="true"><i class="pi pi-shield"></i></span>
+    <div>
+      <h1>AssurLite</h1>
+      <p class="assurlite-subtitle">Souscrire un nouveau contrat (Signal Forms)</p>
+    </div>
+  </header>
+
+  <p-card>
+    <form [formRoot]="formSouscription" (submit)="onSubmit($event)" class="assurlite-form">
+      <div class="assurlite-form-grid">
+        <div class="assurlite-field">
+          <label for="clientId">N° client</label>
+          <input
+            pInputText
+            fluid
+            id="clientId"
+            type="number"
+            inputmode="numeric"
+            [formField]="formSouscription.clientId"
+            [class.p-invalid]="
+              formSouscription.clientId().touched() && formSouscription.clientId().invalid()
+            "
+            [attr.aria-invalid]="
+              (formSouscription.clientId().touched() && formSouscription.clientId().invalid()) ||
+              null
+            "
+          />
+          @if (formSouscription.clientId().touched()) {
+            @for (e of formSouscription.clientId().errors(); track e.kind) {
+              <small class="assurlite-field-error" role="alert">
+                <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+                {{ e.message }}
+              </small>
+            }
+          }
+        </div>
+
+        <div class="assurlite-field">
+          <label for="ageClient">Âge du souscripteur</label>
+          <input
+            pInputText
+            fluid
+            id="ageClient"
+            type="number"
+            inputmode="numeric"
+            [formField]="formSouscription.ageClient"
+            [class.p-invalid]="
+              formSouscription.ageClient().touched() && formSouscription.ageClient().invalid()
+            "
+            [attr.aria-invalid]="
+              (formSouscription.ageClient().touched() && formSouscription.ageClient().invalid()) ||
+              null
+            "
+          />
+          @if (formSouscription.ageClient().touched()) {
+            @for (e of formSouscription.ageClient().errors(); track e.kind) {
+              <small class="assurlite-field-error" role="alert">
+                <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+                {{ e.message }}
+              </small>
+            }
+          }
+        </div>
+
+        <div class="assurlite-field assurlite-field--full">
+          <label for="typeDeContrat">Type de contrat</label>
+          <select
+            id="typeDeContrat"
+            [formField]="formSouscription.typeDeContrat"
+            [class.p-invalid]="
+              formSouscription.typeDeContrat().touched() &&
+              formSouscription.typeDeContrat().invalid()
+            "
+            [attr.aria-invalid]="
+              (formSouscription.typeDeContrat().touched() &&
+                formSouscription.typeDeContrat().invalid()) ||
+              null
+            "
+          >
+            <option value="">Choisir un type…</option>
+            @for (type of typesContrat; track type.value) {
+              <option [value]="type.value">{{ type.label }}</option>
+            }
+          </select>
+          @if (formSouscription.typeDeContrat().touched()) {
+            @for (e of formSouscription.typeDeContrat().errors(); track e.kind) {
+              <small class="assurlite-field-error" role="alert">
+                <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+                {{ e.message }}
+              </small>
+            }
+          }
+        </div>
+
+        <fieldset class="assurlite-field assurlite-field--full assurlite-checkgroup">
+          <legend>Options</legend>
+
+          @for (option of optionsDisponibles; track option.value) {
+            <label>
+              <input
+                type="checkbox"
+                [checked]="estOptionCochee(option.value)"
+                (change)="basculerOption(option.value, $event)"
+              />
+              <span>{{ option.label }}</span>
+            </label>
+          }
+
+          <small class="assurlite-field-hint">+ 15 € par option.</small>
+
+          @if (formSouscription.optionsChoisies().touched()) {
+            @for (e of formSouscription.optionsChoisies().errors(); track e.kind) {
+              <small class="assurlite-field-error" role="alert">
+                <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+                {{ e.message }}
+              </small>
+            }
+          }
+        </fieldset>
+      </div>
+
+      <p-divider />
+
+      <div class="assurlite-prime-panel">
+        <div>
+          <p class="assurlite-prime-label">Prime estimée</p>
+          @if (prime() === 0) {
+            <p class="assurlite-prime-hint">
+              Renseignez le type et l'âge pour obtenir une estimation.
+            </p>
+          }
+        </div>
+        <p class="assurlite-prime-value" aria-live="polite">{{ primeAffichee() }} <span>€</span></p>
+      </div>
+
+      <div class="assurlite-form-actions">
+        <button pButton type="submit" [disabled]="formSouscription().invalid()">
+          <i class="pi pi-check" aria-hidden="true"></i>
+          Souscrire le contrat
+        </button>
+      </div>
+    </form>
+  </p-card>
+</div>

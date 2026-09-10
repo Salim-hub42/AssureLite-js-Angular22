@@ -32,9 +32,6 @@ export class SouscriptionContrat {
     optionsChoisies: new FormControl<string[]>([]),
   });
 
-
-  
-
   readonly typesContrat = [
     { label: 'Auto', value: 'auto' },
     { label: 'Habitation', value: 'habitation' },
