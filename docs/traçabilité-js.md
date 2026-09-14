@@ -6,94 +6,94 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 ## Tableaux (15)
 
-| Méthode | Statut | Fichier : ligne | Module |
-|---|---|---|---|
-| `push` | ✅ | `contrat-service.ts:74` (souscrireContrat) | Module 2 |
-| `pop` | ⏳ | — | Module 2 |
-| `shift` | ⏳ | — | Module 2 |
-| `unshift` | ⏳ | — | Module 2 |
-| `map` | ✅ | `contrat.utils.ts:24` | Module 1 |
-| `filter` | ✅ | `client.utils.ts:21` | Module 1 |
-| `find` | ✅ | `client.utils.ts:5` | Module 1 |
-| `findIndex` | ✅ | `contrat-service.ts:86` (supprimerContrat) | Module 2 |
-| `some` | ✅ | `contrat.utils.ts:28` | Module 1 |
-| `every` | ✅ | `contrat.utils.ts:4` | Module 1 |
-| `reduce` | ✅ | `contrat.utils.ts:32` | Module 1 |
-| `forEach` | ✅ | `contrat.utils.ts:8` | Module 1 |
-| `includes` | ✅ | `contrat.utils.ts:36` | Module 1 |
-| `slice` | ⏳ | — | Module 2 |
-| `splice` | ✅ | `contrat-service.ts:87` (supprimerContrat) | Module 2 |
+| Méthode     | Statut | Fichier : ligne                            | Module   |
+| ----------- | ------ | ------------------------------------------ | -------- |
+| `push`      | ✅     | `contrat-service.ts:74` (souscrireContrat) | Module 2 |
+| `pop`       | ⏳     | —                                          | Module 2 |
+| `shift`     | ⏳     | —                                          | Module 2 |
+| `unshift`   | ⏳     | —                                          | Module 2 |
+| `map`       | ✅     | `contrat.utils.ts:24`                      | Module 1 |
+| `filter`    | ✅     | `client.utils.ts:21`                       | Module 1 |
+| `find`      | ✅     | `client.utils.ts:5`                        | Module 1 |
+| `findIndex` | ✅     | `contrat-service.ts:86` (supprimerContrat) | Module 2 |
+| `some`      | ✅     | `contrat.utils.ts:28`                      | Module 1 |
+| `every`     | ✅     | `contrat.utils.ts:4`                       | Module 1 |
+| `reduce`    | ✅     | `contrat.utils.ts:32`                      | Module 1 |
+| `forEach`   | ✅     | `contrat.utils.ts:8`                       | Module 1 |
+| `includes`  | ✅     | `contrat.utils.ts:36`                      | Module 1 |
+| `slice`     | ⏳     | —                                          | Module 2 |
+| `splice`    | ✅     | `contrat-service.ts:87` (supprimerContrat) | Module 2 |
 
 ## Chaînes (10)
 
-| Méthode | Statut | Fichier : ligne | Module |
-|---|---|---|---|
-| `includes` | ✅ | `client.utils.ts:28` | Module 1 |
-| `indexOf` | ⏳ | — | Module 8 |
-| `slice` | ⏳ | — | Module 8 |
-| `substring` | ⏳ | — | Module 8 |
-| `replace` | ⏳ | — | Module 8 |
-| `split` | ✅ | `client.utils.ts:28` | Module 1 |
-| `trim` | ✅ | `client.utils.ts:4,5` | Module 1 |
-| `toUpperCase` | ⏳ | — | Module 8 |
-| `toLowerCase` | ✅ | `client.utils.ts:4,5` | Module 1 |
-| `concat` | ✅ | `contrat.utils.ts:50` (genererReference) | Module 5 |
+| Méthode       | Statut | Fichier : ligne                          | Module   |
+| ------------- | ------ | ---------------------------------------- | -------- |
+| `includes`    | ✅     | `client.utils.ts:28`                     | Module 1 |
+| `indexOf`     | ⏳     | —                                        | Module 8 |
+| `slice`       | ⏳     | —                                        | Module 8 |
+| `substring`   | ⏳     | —                                        | Module 8 |
+| `replace`     | ⏳     | —                                        | Module 8 |
+| `split`       | ✅     | `client.utils.ts:28`                     | Module 1 |
+| `trim`        | ✅     | `client.utils.ts:4,5`                    | Module 1 |
+| `toUpperCase` | ⏳     | —                                        | Module 8 |
+| `toLowerCase` | ✅     | `client.utils.ts:4,5`                    | Module 1 |
+| `concat`      | ✅     | `contrat.utils.ts:50` (genererReference) | Module 5 |
 
 ## Objets (5)
 
-| Méthode | Statut | Fichier : ligne | Module |
-|---|---|---|---|
-| `Object.keys` | ✅ | `contrat.utils.ts:14` | Module 1 |
-| `Object.values` | ✅ | `contrat.utils.ts:4` | Module 1 |
-| `Object.entries` | ✅ | `contrat.utils.ts:8` | Module 1 |
-| `Object.assign` | ✅ | `contrat-service.ts:77` | Module 3 |
-| `Object.hasOwn` | ⏳ | — | Module 7 |
+| Méthode          | Statut | Fichier : ligne         | Module   |
+| ---------------- | ------ | ----------------------- | -------- |
+| `Object.keys`    | ✅     | `contrat.utils.ts:14`   | Module 1 |
+| `Object.values`  | ✅     | `contrat.utils.ts:4`    | Module 1 |
+| `Object.entries` | ✅     | `contrat.utils.ts:8`    | Module 1 |
+| `Object.assign`  | ✅     | `contrat-service.ts:77` | Module 3 |
+| `Object.hasOwn`  | ⏳     | —                       | Module 7 |
 
 ## Nombres / Math (5)
 
-| Méthode | Statut | Fichier : ligne | Module |
-|---|---|---|---|
-| `toFixed` | ✅ | `contrat.utils.ts:36` | Module 1 |
-| `toPrecision` | ⏳ | — | Module 6 |
-| `parseInt` | ⏳ | — | Module 7 |
-| `parseFloat` | ⏳ | — | Module 7 |
-| `Math.random` | ✅ | `contrat.utils.ts:50` (genererReference) | Module 5 |
+| Méthode       | Statut | Fichier : ligne                          | Module   |
+| ------------- | ------ | ---------------------------------------- | -------- |
+| `toFixed`     | ✅     | `contrat.utils.ts:36`                    | Module 1 |
+| `toPrecision` | ⏳     | —                                        | Module 6 |
+| `parseInt`    | ⏳     | —                                        | Module 7 |
+| `parseFloat`  | ⏳     | —                                        | Module 7 |
+| `Math.random` | ✅     | `contrat.utils.ts:50` (genererReference) | Module 5 |
 
 ## Dates (5)
 
-| Méthode | Statut | Fichier : ligne | Module |
-|---|---|---|---|
-| `getFullYear` | ✅ | `client.utils.ts:10` | Module 1 |
-| `getMonth` | ✅ | `client.utils.ts:11,12` | Module 1 |
-| `getDate` | ✅ | `client.utils.ts:13` | Module 1 |
-| `toISOString` | ⏳ | — | Module 7 |
-| `getTime` | ✅ | `contrat.utils.ts:45` | Module 1 |
+| Méthode       | Statut | Fichier : ligne         | Module   |
+| ------------- | ------ | ----------------------- | -------- |
+| `getFullYear` | ✅     | `client.utils.ts:10`    | Module 1 |
+| `getMonth`    | ✅     | `client.utils.ts:11,12` | Module 1 |
+| `getDate`     | ✅     | `client.utils.ts:13`    | Module 1 |
+| `toISOString` | ⏳     | —                       | Module 7 |
+| `getTime`     | ✅     | `contrat.utils.ts:45`   | Module 1 |
 
 ## Sets & Maps (10)
 
-| Méthode | Statut | Fichier : ligne | Module |
-|---|---|---|---|
-| `Set.add` | ✅ | `contrat.utils.ts:19` | Module 1 |
-| `Set.delete` | ✅ | `contrat-service.ts:28` | Module 3 |
-| `Set.has` | ✅ | `sinistre.utils.ts:36` | Module 1 |
-| `Set.clear` | ✅ | `contrat-service.ts:41` | Module 3 |
-| `Set.size` | ✅ | `sinistre.utils.ts:41` | Module 1 |
-| `Map.set` | ⏳ | — | Module 7 |
-| `Map.get` | ⏳ | — | Module 7 |
-| `Map.has` | ⏳ | — | Module 7 |
-| `Map.delete` | ⏳ | — | Module 7 |
-| `Map.clear` | ⏳ | — | Module 7 |
+| Méthode      | Statut | Fichier : ligne         | Module   |
+| ------------ | ------ | ----------------------- | -------- |
+| `Set.add`    | ✅     | `contrat.utils.ts:19`   | Module 1 |
+| `Set.delete` | ✅     | `contrat-service.ts:28` | Module 3 |
+| `Set.has`    | ✅     | `sinistre.utils.ts:36`  | Module 1 |
+| `Set.clear`  | ✅     | `contrat-service.ts:41` | Module 3 |
+| `Set.size`   | ✅     | `sinistre.utils.ts:41`  | Module 1 |
+| `Map.set`    | ⏳     | —                       | Module 7 |
+| `Map.get`    | ⏳     | —                       | Module 7 |
+| `Map.has`    | ⏳     | —                       | Module 7 |
+| `Map.delete` | ⏳     | —                       | Module 7 |
+| `Map.clear`  | ⏳     | —                       | Module 7 |
 
 ## Autres (5)
 
-| Méthode | Statut | Fichier : ligne | Module |
-|---|---|---|---|
-| `then` | ⏳ | — | Module 7 |
-| `catch` | ⏳ | — | Module 7 |
-| `finally` | ⏳ | — | Module 7 |
-| `JSON.parse` | ⏳ | — | Module 7 |
-| `JSON.stringify` | ⏳ | — | Module 7 |
-| `console.log` | ✅ | `contrat.utils.ts:10` | Module 1 |
+| Méthode          | Statut | Fichier : ligne       | Module   |
+| ---------------- | ------ | --------------------- | -------- |
+| `then`           | ⏳     | —                     | Module 7 |
+| `catch`          | ⏳     | —                     | Module 7 |
+| `finally`        | ⏳     | —                     | Module 7 |
+| `JSON.parse`     | ⏳     | —                     | Module 7 |
+| `JSON.stringify` | ⏳     | —                     | Module 7 |
+| `console.log`    | ✅     | `contrat.utils.ts:10` | Module 1 |
 
 ---
 
@@ -159,6 +159,15 @@ Suite de tests : 65/66 (le seul échec restant, `app.spec.ts > should render tit
 
 - **Leçon** (`docs/06-signal-forms.md`) : ✅ rédigée — modèle `signal()`, `form()` + schéma, validateurs intégrés (`required`/`min`/`minLength`/`email`/`pattern`…), `validate()` personnalisé, binding `[formField]` / `[formRoot]`, lecture d'état 100 % signals, logique inter-champs `disabled`/`hidden` avec `{ when }` (sans `valueChanges`), `submit()`, tableau de comparaison Reactive Forms ↔ Signal Forms. Calée sur l'API réelle `@angular/forms/signals` d'Angular 22.0.7.
 - **Exemple générique** (`src/examples/06-signal-forms.example.ts` + spec, 12 tests passent) : ✅ rédigé (domaine « inscription à un événement », même que le Module 5 pour comparaison ligne à ligne) — `ExempleInscriptionSignal` (`signal()` modèle, `form()` + schéma, `min` intégré à la place du validateur perso, `validate()` custom « pas d'espace », `disabled({ when })` inter-champs, `computed` de prix dérivé sans `valueChanges`, `submit()`), helpers purs `contientEspace` / `genererReference`.
-- **Pratique** (refaire `SouscriptionContrat` en Signal Forms, composant séparé) : ⏳ à coder — voir la section « Pour la pratique » de la leçon.
+- **Pratique** (`SouscriptionContratSignal` + route `contrats/nouveau-signal`) : ✅ terminée — reprise du formulaire de souscription du Module 5, mais en Signal Forms :
+  - modèle `signal<SouscriptionModel>({ clientId, typeDeContrat, ageClient, optionsChoisies })` en données brutes (`typeDeContrat: TypeContrat | ''` pour rester assignable au `<select>`)
+  - `form(this.model, path => …)` + schéma : `required` (`clientId`, `typeDeContrat`, `ageClient`), `min(18)` / `max(99)` sur `ageClient` (remplace le validateur perso `ageMinimum` du Module 5), et **deux** `validate()` personnalisés — `clientId` entier (`Number.isInteger`) et « au moins une option » sur `optionsChoisies` (`required` ne se déclenche pas sur `[]` : `isEmpty([])` est faux)
+  - prime en direct **sans `valueChanges` ni `toSignal`** : simple `computed` qui lit `this.model()` et réutilise `calculerPrimeDevis` ; `primeAffichee` = `toFixed(2)`
+  - template : `[formRoot]` sur le `<form>`, `[formField]` sur `clientId` / `ageClient` (`<input type="number">` natifs) et `typeDeContrat` (`<select>` natif) ; erreurs via `@for (e of f.champ().errors())` gardées par `f.champ().touched()`
+  - `optionsChoisies` géré **à la main** (pas de `[formField]` pour un groupe de cases → tableau) : `estOptionCochee()` (`includes`) + `basculerOption()` (`[...liste, v]` / `filter`, mise à jour immuable via `.value.update()`, puis `markAsTouched()`)
+  - `submit(this.formSouscription, async f => …)` : lit `f().value()`, narrowing des `null` / `''`, appelle `ContratService.souscrireContrat({ type: … })` **réutilisé tel quel du Module 5**, puis `router.navigate(['/contrats'])`
+  - style aligné sur la version RF (PrimeNG `p-card` / `pInputText` / `p-divider` / `pButton`, `<select>` natif habillé en SCSS) ; état invalide via `[class.p-invalid]` conditionné par `touched() && invalid()`, et neutralisation du halo natif `:-moz-ui-invalid` (l'attribut `required` recopié par `[formField]` rend le champ `:invalid` dès le chargement)
 
 Ce module ne fait pas progresser le compteur de méthodes JS (Signal Forms = Angular pur) — reste à **32 / 40**.
+
+**Module 6 terminé.**
