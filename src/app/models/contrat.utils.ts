@@ -1,4 +1,4 @@
-import { Contrat, TypeContrat } from "./contrat.model";
+import { Contrat, ContratDTO, TypeContrat } from "./contrat.model";
 
 export function contratEstComplet(contrat: Contrat): boolean {
   return Object.values(contrat).every((valeur) => valeur !== null && valeur !== undefined && valeur !== "");
@@ -48,4 +48,8 @@ export function joursDepuisDebut(contrat: Contrat , aujourdhui: Date): number {
 
 export function genererReference(prefix: string): string {
   return prefix.concat('-', String(Math.floor(Math.random() * 100000)));
+}
+
+export function versContrat(dto: ContratDTO) : Contrat {
+   return  {...dto, dateDebut: new Date(dto.dateDebut)};
 }

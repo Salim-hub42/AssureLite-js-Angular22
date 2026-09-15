@@ -9,8 +9,12 @@
 
   <p-breadcrumb [model]="breadcrumbItems" class="assurlite-breadcrumb" />
 
-  @if (recherche(); as contrat) {
-    <p-card>
+  @if (enChargement()) {
+   
+         <p-message severity="info" >Chargement du contrat…</p-message>
+    
+  } @else if (contrat(); as contrat) {
+     <p-card>
       <div class="assurlite-detail-header">
         <h2>Contrat n°{{ contrat.id }}</h2>
         @switch (contrat.statut) {

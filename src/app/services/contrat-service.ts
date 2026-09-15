@@ -1,17 +1,21 @@
-import { computed, Service, signal } from '@angular/core';
-import { Contrat, TypeContrat } from '../models/contrat.model';
+import { computed, inject, Service, signal } from '@angular/core';
+import { Contrat, TypeContrat, ContratDTO } from '../models/contrat.model';
 import { StatutContrat } from '../models/contrat.model';
-import { CONTRATS_MOCKS } from '../data/mock-data';
-import { genererReference, primeTotal } from '../models/contrat.utils';
+import { genererReference, primeTotal, versContrat } from '../models/contrat.utils';
 import { Devis } from '../models/devis.model';
 import { calculerPrimeDevis } from '../models/devis.utils';
+import { HttpClient, httpResource } from '@angular/common/http';
+import  { API } from '../core/api';
+import { firstValueFrom } from 'rxjs';
+
 
 @Service()
 export class ContratService {
-   
+   private readonly http = inject(HttpClient)
 
-  private readonly _contrats = signal<Contrat[]>(CONTRATS_MOCKS);
-  readonly contrats = this._contrats.asReadonly();
+  private readonly _contrats = httpResource<ContratDTO[]>(() => `${API}/contrats`, {defaultValue: []});
+  readonly contrats = computed(() => this._contrats.value().map(versContrat));
+ 
 
   private readonly _statutsFiltres = signal<Set<StatutContrat>>(new Set());
   readonly statutsFiltres = this._statutsFiltres.asReadonly();
@@ -47,7 +51,7 @@ export class ContratService {
 
 
 
-  souscrireContrat(donnees:{clientId: number; type: TypeContrat; ageClient: number; optionsChoisies: string[];}): Contrat{
+  souscrireContrat(donnees:{clientId: number; type: TypeContrat; ageClient: number; optionsChoisies: string[];}): Promise<Contrat>{
      const devis : Devis = {
       id : 0,
       clientId : donnees.clientId,
@@ -59,34 +63,34 @@ export class ContratService {
      const prime = calculerPrimeDevis(devis);
      const reference = genererReference(donnees.type.toUpperCase());
 
-     const nouveauContrat: Contrat = {
-      id: this._contrats().length +1,
+     const corps = {
       clientId: donnees.clientId,
       type: donnees.type,
-      statut: 'actif',
+      statut: 'actif' as const,
       prime,
-      dateDebut: new Date(),
       reference,
-     }
+      dateDebut: new Date().toISOString(),
+     };
 
-     this._contrats.update((liste) => {
-      const copie = [...liste];
-      copie.push(nouveauContrat);
-      return copie; 
+     return firstValueFrom(this.http.post<ContratDTO>(`${API}/contrats`, corps))
+     .then((dto) => { 
+      this._contrats.reload();
+      return versContrat(dto);
+     })
+     .catch((erreur) => {
+      console.log('Echec de la souscription', erreur);
+      throw erreur;
+     })
+     .finally(() => {
+      console.log('Requete de souscription terminée')
      });
-     
-     return nouveauContrat;
-
-
   }
 
   supprimerContrat(id: number): void {
-    this._contrats.update((liste) => {
-      const copie = [...liste];
-      const index = copie.findIndex((contrat) => contrat.id === id);
-      copie.splice(index, 1);
-      return copie;
-    });
+      firstValueFrom(this.http.delete(`${API}/contrats/${id}`))
+      .then(() => this._contrats.reload())
+      .catch((erreur) => console.error('Échec de la suppression', erreur));
+  
   }
 
   modifierContrat(id : number, patch: Partial<Contrat>): void{

@@ -9,6 +9,10 @@ import { Breadcrumb } from 'primeng/breadcrumb';
 import { Divider } from 'primeng/divider';
 import { Message } from 'primeng/message';
 import { ContratService } from '../../services/contrat-service';
+import { httpResource } from '@angular/common/http';
+import { ContratDTO } from '../../models/contrat.model';
+import { API } from '../../core/api';
+import { versContrat } from '../../models/contrat.utils';
 
 @Component({
   selector: 'app-contrat-detail',
@@ -21,12 +25,13 @@ export class ContratDetail {
 
   id = input.required<string>();
 
-  contrats = this.contratService.contrats;
+  private readonly _contratRes =  httpResource<ContratDTO>(() => `${API}/contrats/${this.id()}`);
 
-  recherche = computed(() => {
-    const idNumber = Number(this.id());
-    return this.contrats().find((contrat) => contrat.id === idNumber)
+  contrat = computed(() => {
+    return this._contratRes.hasValue() ? versContrat(this._contratRes.value()) : undefined;
   });
+
+  enChargement = computed(() => this._contratRes.isLoading());
 
   breadcrumbItems: MenuItem[] = [
     { label: 'Contrats', routerLink: '/contrats' },

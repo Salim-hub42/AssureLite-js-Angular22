@@ -11,3 +11,7 @@ export interface Contrat {
    dateDebut: Date,
    reference?: string
 }
+
+export interface ContratDTO extends Omit<Contrat, 'dateDebut'> {
+   dateDebut: string;
+}

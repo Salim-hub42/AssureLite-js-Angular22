@@ -1,0 +1,58 @@
+{
+  "clients": [
+    {
+      "id": 1,
+      "nom": "Salim",
+      "email": "sksnumerique@gmail.com",
+      "dateNaissance": "1990-06-17"
+    },
+    {
+      "id": 2,
+      "nom": "Jack",
+      "email": "jack@gmail.com",
+      "dateNaissance": "1986-05-28"
+    }
+  ],
+  "contrats": [
+    {
+      "id": 1,
+      "clientId": 1,
+      "type": "auto",
+      "statut": "actif",
+      "prime": 50,
+      "dateDebut": "2006-01-15"
+    },
+    {
+      "id": 2,
+      "clientId": 1,
+      "type": "habitation",
+      "statut": "suspendu",
+      "prime": 100,
+      "dateDebut": "2003-02-18"
+    },
+    {
+      "id": 3,
+      "clientId": 2,
+      "type": "sante",
+      "statut": "resilie",
+      "prime": 62,
+      "dateDebut": "2025-05-25"
+    },
+    {
+      "id": 4,
+      "clientId": 2,
+      "type": "habitation",
+      "statut": "actif",
+      "prime": 99,
+      "dateDebut": "2026-06-16"
+    }
+  ],
+  "sinistre": [],
+  "users": [
+    {
+      "id": 1,
+      "email": "test@gmail.com",
+      "password": "demo123"
+    }
+  ]
+}

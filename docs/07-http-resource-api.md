@@ -30,8 +30,10 @@ Ce module **fait avancer** la table de traçabilité : ~14 lignes cochées (`the
 Jusqu'ici les données vivent dans le code : `signal<Contrat[]>(CONTRATS_MOCKS)`. Une vraie app interroge un serveur. `json-server` transforme un simple fichier JSON en API REST complète.
 
 ```bash
-npm install -D json-server
+npm install -D json-server@0.17.4
 ```
+
+> **Version pinnée volontairement.** `npm install -D json-server` sans version installe aujourd'hui la **v1 (beta)** — elle génère des `id` en **string aléatoire** sur `POST` (incompatible avec `id: number` utilisé dans tous les modèles de ce projet) et remplace `_like` par une syntaxe `champ:contains=` sans rétrocompatibilité (`?nom_like=sal` y renvoie silencieusement `[]`, jamais une erreur). La `0.17.4` est la dernière version « classique » stable : id auto-incrémentés en number, syntaxe `_like`/`_gte`/… inchangée — c'est elle qu'on utilise dans tout ce module.
 
 `db.json` à la racine (on reprend les mocks — les dates deviennent du **texte** ISO, un serveur ne connaît pas l'objet `Date` de JS) :
 
@@ -58,10 +60,10 @@ npm install -D json-server
 Script dans `package.json` :
 
 ```json
-"api": "json-server db.json --port 3000"
+"api": "json-server db.json --port 3000 --watch"
 ```
 
-> Selon la version de `json-server` : la v1 surveille le fichier toute seule (`json-server db.json`), la v0.17 demande `--watch db.json`.
+> `--watch` est nécessaire en `0.17.x` pour que `json-server` recharge les données si `db.json` est modifié à la main pendant qu'il tourne (la v1 le fait par défaut, mais on est sur `0.17.4`, cf. encadré ci-dessus).
 
 Ça te donne gratuitement :
 
@@ -84,7 +86,7 @@ Le `POST` qui génère l'`id` règle enfin le bricolage `id: this._contrats().le
 Dans `app.config.ts`, à côté des autres providers :
 
 ```ts
-import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { logInterceptor } from './interceptors/log.interceptor';
 
@@ -92,14 +94,15 @@ export const appConfig: ApplicationConfig = {
   providers: [
     // …existant…
     provideHttpClient(
-      withFetch(), // utilise l'API fetch du navigateur (recommandé en v22)
       withInterceptors([authInterceptor, logInterceptor]), // ordre = ordre d'exécution
     ),
   ],
 };
 ```
 
-`withFetch()` : `HttpClient` s'appuie sur `fetch` plutôt que sur le vieux `XMLHttpRequest` — obligatoire pour `httpResource` côté serveur, sans inconvénient côté navigateur.
+> **Pas de `withFetch()`.** Vérifié dans les typings installés (Angular 22.0.7) : `withFetch` est **`@deprecated`** — *« not required anymore. `FetchBackend` is the default `HttpBackend` »*. En v22, `fetch` est déjà le backend par défaut de `HttpClient` ; l'opt-in existe maintenant dans l'autre sens, avec `withXhr()` pour revenir à l'ancien `XMLHttpRequest` si un jour c'est nécessaire.
+>
+> Ces deux intercepteurs (`authInterceptor`, `logInterceptor`) ne sont écrits qu'au §10/§16 — à ce stade du module tu peux commencer avec `provideHttpClient()` tout seul, et rajouter `withInterceptors([...])` une fois qu'ils existent (voir le checklist « Pour la pratique », étape 2 vs étape 8).
 
 Une base d'URL centralisée, pour ne pas répéter `http://localhost:3000` partout :
 
@@ -684,8 +687,8 @@ Côté RxJS (hors traçabilité, mais couverture Angular du module) : `map` / `f
 
 ## Pour la pratique
 
-1. **Backend.** `npm install -D json-server`, créer `db.json` (`clients`, `contrats`, `sinistres`, `users` — reprendre les mocks, dates en texte ISO), ajouter le script `"api"`. Vérifier `GET http://localhost:3000/contrats` dans le navigateur.
-2. **Provider.** Ajouter `provideHttpClient(withFetch(), withInterceptors([authInterceptor, logInterceptor]))` dans `app.config.ts`. Créer `src/app/core/api.ts` (`export const API = …`).
+1. **Backend.** `npm install -D json-server@0.17.4`, créer `db.json` (`clients`, `contrats`, `sinistres`, `users` — reprendre les mocks, dates en texte ISO), ajouter le script `"api"`. Vérifier `GET http://localhost:3000/contrats` dans le navigateur.
+2. **Provider.** Ajouter `provideHttpClient()` dans `app.config.ts` (pas de `withFetch()`, déprécié — `fetch` est déjà le backend par défaut en v22 ; `withInterceptors([...])` viendra à l'étape 8 avec les intercepteurs). Créer `src/app/core/api.ts` (`export const API = …`).
 3. **Lecture.** Dans `ContratService`, remplacer `signal<Contrat[]>(CONTRATS_MOCKS)` par `contratsRes = httpResource<ContratDTO[]>(() => \`${API}/contrats\`, { defaultValue: [] })`. Exposer un `computed` `contrats`qui mappe les DTO en`Contrat` (`versContrat`, §12). Garder `contratsFiltres`/`primeTotale`en`computed`par-dessus. Adapter`ListeContrats`:`@if (contratsRes.isLoading())`/`error()` / sinon la table.
 4. **Création.** `souscrireContrat` → `firstValueFrom(this.http.post<ContratDTO>(\`${API}/contrats\`, corps))`avec`corps.dateDebut = new Date().toISOString()`et **sans`id`**. Enchaîner `.then`/`.catch`/`.finally`, puis `this.contratsRes.reload()`. Supprimer le `push` sur copie et le calcul d'`id` maison.
 5. **Détail.** `ContratDetail` → `httpResource<ContratDTO>(() => this.id() ? \`${API}/contrats/${this.id()}\` : undefined)`. Gérer le 404 via `.statusCode() === 404`. `parseInt(this.id(), 10)` si tu compares l'id ailleurs.
