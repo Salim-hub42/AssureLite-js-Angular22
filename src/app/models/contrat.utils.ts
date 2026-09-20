@@ -53,3 +53,16 @@ export function genererReference(prefix: string): string {
 export function versContrat(dto: ContratDTO) : Contrat {
    return  {...dto, dateDebut: new Date(dto.dateDebut)};
 }
+
+export function estContrat(x: unknown):x is ContratDTO{
+   return (
+      typeof x === 'object' &&
+      x !== null &&
+      Object.hasOwn(x, 'id')  &&
+      Object.hasOwn(x, 'clientId') &&
+      Object.hasOwn(x, 'type') &&
+      Object.hasOwn(x, 'statut') &&
+      Object.hasOwn(x, 'prime') &&
+      Object.hasOwn(x, 'dateDebut')
+   );
+}

@@ -47,7 +47,7 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 | `Object.values`  | ✅     | `contrat.utils.ts:4`    | Module 1 |
 | `Object.entries` | ✅     | `contrat.utils.ts:8`    | Module 1 |
 | `Object.assign`  | ✅     | `contrat-service.ts:77` | Module 3 |
-| `Object.hasOwn`  | ⏳     | —                       | Module 7 |
+| `Object.hasOwn`  | ✅     | `contrat.utils.ts:57` (`estContrat`, branché dans le `parse` du `httpResource` de `ContratService`) | Module 7 |
 
 ## Nombres / Math (5)
 
@@ -66,7 +66,7 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 | `getFullYear` | ✅     | `client.utils.ts:10`    | Module 1 |
 | `getMonth`    | ✅     | `client.utils.ts:11,12` | Module 1 |
 | `getDate`     | ✅     | `client.utils.ts:13`    | Module 1 |
-| `toISOString` | ⏳     | —                       | Module 7 |
+| `toISOString` | ✅     | `contrat-service.ts:72` (souscrireContrat) | Module 7 |
 | `getTime`     | ✅     | `contrat.utils.ts:45`   | Module 1 |
 
 ## Sets & Maps (10)
@@ -78,9 +78,9 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 | `Set.has`    | ✅     | `sinistre.utils.ts:36`  | Module 1 |
 | `Set.clear`  | ✅     | `contrat-service.ts:41` | Module 3 |
 | `Set.size`   | ✅     | `sinistre.utils.ts:41`  | Module 1 |
-| `Map.set`    | ⏳     | —                       | Module 7 |
-| `Map.get`    | ⏳     | —                       | Module 7 |
-| `Map.has`    | ⏳     | —                       | Module 7 |
+| `Map.set`    | ✅     | `devis-service.ts:19` (calculerAvecCache) | Module 7 |
+| `Map.get`    | ✅     | `devis-service.ts:16` (calculerAvecCache) | Module 7 |
+| `Map.has`    | ✅     | `devis-service.ts:15` (calculerAvecCache) | Module 7 |
 | `Map.delete` | ⏳     | —                       | Module 7 |
 | `Map.clear`  | ⏳     | —                       | Module 7 |
 
@@ -88,9 +88,9 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 | Méthode          | Statut | Fichier : ligne       | Module   |
 | ---------------- | ------ | --------------------- | -------- |
-| `then`           | ⏳     | —                     | Module 7 |
-| `catch`          | ⏳     | —                     | Module 7 |
-| `finally`        | ⏳     | —                     | Module 7 |
+| `then`           | ✅     | `contrat-service.ts:76` (souscrireContrat) | Module 7 |
+| `catch`          | ✅     | `contrat-service.ts:80` (souscrireContrat) | Module 7 |
+| `finally`        | ✅     | `contrat-service.ts:84` (souscrireContrat) | Module 7 |
 | `JSON.parse`     | ⏳     | —                     | Module 7 |
 | `JSON.stringify` | ⏳     | —                     | Module 7 |
 | `console.log`    | ✅     | `contrat.utils.ts:10` | Module 1 |
@@ -171,3 +171,16 @@ Suite de tests : 65/66 (le seul échec restant, `app.spec.ts > should render tit
 Ce module ne fait pas progresser le compteur de méthodes JS (Signal Forms = Angular pur) — reste à **32 / 40**.
 
 **Module 6 terminé.**
+
+## État du Module 7
+
+- **Leçon** (`docs/07-http-resource-api.md`, 17 sections) : ✅ rédigée — `HttpClient`, `httpResource`, `rxResource`, promesses (`then`/`catch`/`finally`), `JSON.parse`/`JSON.stringify`, intercepteur fonctionnel, opérateurs RxJS de base (`tap`/`map`/`catchError`/`finalize`/`switchMap`/`debounceTime`/`distinctUntilChanged`), `toObservable`/`toSignal`, `takeUntilDestroyed`
+- **Exemple générique** (`src/examples/07-http-resource.example.ts` + spec, 35 tests passent) : ✅ rédigé (domaine bibliothèque de livres, pas assurance) — `estLivreDTO` (Object.hasOwn), `versLivre`/`corpsNouveauLivre` (toISOString), `parseAnnee`/`parsePrix` (parseInt/parseFloat), favoris via `localStorage` (JSON.parse/JSON.stringify), `CacheResumes` (Map complet : has/get/set/delete/clear/size), intercepteur, pipeline de recherche RxJS, `BiblioService` (httpResource, then/catch/finally, subscribe, pipe)
+- **Pratique** (en cours) :
+  - `ContratService` (`src/app/services/contrat-service.ts`) : ✅ `httpResource<ContratDTO[]>` avec `parse` filtrant via `estContrat` (`contrat.utils.ts:57`, `Object.hasOwn`) ; `souscrireContrat` fait un `http.post` puis `.then()` (reload + conversion), `.catch()` (log + relance), `.finally()` (log) ; `dateDebut` sérialisée en ISO (`toISOString`) avant l'envoi ; `supprimerContrat` en `then`/`catch` sur un `http.delete`
+  - `DevisService` (`src/app/services/devis-service.ts`) : ✅ `calculerAvecCache` — cache de primes avec `Map<string, number>` (`has`/`get`/`set`), clé construite à partir des champs du devis ; getter `taille` (`Map.size`) exposé pour les tests ; testé dans `devis-service.spec.ts` (AAA : deux appels identiques → même résultat, une seule entrée en cache)
+  - ⏳ reste à faire : authentification (json-server), `Map.delete`/`Map.clear` dans un vrai cas d'usage (invalider une entrée du cache de devis ?), `parseInt`/`parseFloat`, `JSON.parse`/`JSON.stringify` dans un cas métier réel (pas juste l'exemple générique), recherche RxJS bonus (debounce sur une liste de contrats/clients)
+
+**40 / 40 méthodes comptées comme validées** dans ce tableau (+`Object.hasOwn`, +`toISOString`, +`Map.set`, +`Map.get`, +`Map.has`, +`then`, +`catch`, +`finally` par rapport au Module 6) — **mais le module n'est pas terminé** : il reste 16 méthodes ⏳ dans le tableau au global (`pop`, `shift`, `unshift`, `slice` tableau, `indexOf`, `slice`/`substring`/`replace`/`toUpperCase` chaîne, `toPrecision`, `parseInt`, `parseFloat`, `Map.delete`, `Map.clear`, `JSON.parse`, `JSON.stringify`), dont plusieurs sont explicitement prévues pour la suite du Module 7 (voir ⏳ ci-dessus). Le « 40/40 » reflète le compteur historique de ce fichier, pas la fin de la liste des 56 lignes du tableau.
+
+**Module 7 en cours — pratique HttpClient/httpResource/promesses en place, reste l'auth + les méthodes JSON/parse/Map restantes.**

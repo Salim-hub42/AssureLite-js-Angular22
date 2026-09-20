@@ -1,7 +1,7 @@
 import { computed, inject, Service, signal } from '@angular/core';
 import { Contrat, TypeContrat, ContratDTO } from '../models/contrat.model';
 import { StatutContrat } from '../models/contrat.model';
-import { genererReference, primeTotal, versContrat } from '../models/contrat.utils';
+import { estContrat, genererReference, primeTotal, versContrat } from '../models/contrat.utils';
 import { Devis } from '../models/devis.model';
 import { calculerPrimeDevis } from '../models/devis.utils';
 import { HttpClient, httpResource } from '@angular/common/http';
@@ -13,7 +13,7 @@ import { firstValueFrom } from 'rxjs';
 export class ContratService {
    private readonly http = inject(HttpClient)
 
-  private readonly _contrats = httpResource<ContratDTO[]>(() => `${API}/contrats`, {defaultValue: []});
+  private readonly _contrats = httpResource<ContratDTO[]>(() => `${API}/contrats`, {defaultValue: [], parse: (brut) => (Array.isArray(brut) ? brut.filter(estContrat) : [])});
   readonly contrats = computed(() => this._contrats.value().map(versContrat));
  
 
