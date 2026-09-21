@@ -3,6 +3,9 @@ import { contratExisteGuard } from './guards/contrat-existe.guard';
 
 
 export const routes: Routes = [
+   {path: 'login', 
+      loadComponent:() => import('./auth/login/login').then((m) => m.Login)
+   },
    {path: 'contrats' , 
       loadComponent: () => import('./contrats/liste-contrats/liste-contrats').then((m) => m.ListeContrats)
    },
