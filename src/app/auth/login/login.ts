@@ -1,6 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
 import { email, form, FormField, FormRoot, required } from '@angular/forms/signals';
 import { Router } from '@angular/router';
+import { Card } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { InputText } from 'primeng/inputtext';
 
 interface LoginModel {
   email: string;
@@ -9,7 +12,7 @@ interface LoginModel {
 
 @Component({
   selector: 'app-login',
-  imports: [FormRoot, FormField],
+  imports: [FormRoot, FormField, Card, ButtonModule, InputText],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
@@ -26,15 +29,14 @@ export class Login {
     (path) => {
       required(path.email, { message: "L'email est requis." });
       email(path.email, { message: "Format d'email invalide." });
-      required(path.password, { message: "Le mot de passe est requis." });
+      required(path.password, { message: 'Le mot de passe est requis.' });
     },
     {
       submission: {
         action: async () => {
-          console.log('login déclenché', this.model().email); // sera async quand on appellera AuthService 
+          console.log('login déclenché', this.model()); // sera async quand on appellera AuthService
         },
       },
     },
   );
-
 }
