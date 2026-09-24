@@ -9,6 +9,7 @@ import { calculerPrimeDevis } from '../models/devis.utils';
 export class DevisService {
 
    private readonly cachePrime = new Map<string , number>();
+   private readonly  TAILLE_MAX_CACHE = 20;
 
    private cle(devis: Devis): string {
       return `${devis.ageClient}-${devis.typeDeContrat}-${devis.clientId}-${devis.optionsChoisies.join('-')}`;
@@ -20,14 +21,15 @@ export class DevisService {
          return this.cachePrime.get(cle)!;
       }
       const pasEnCache = calculerPrimeDevis(devis);
+      if(this.cachePrime.size >= this.TAILLE_MAX_CACHE){
+         const plusAncienne = this.cachePrime.keys().next().value;
+         this.cachePrime.delete(plusAncienne!)
+      }
       this.cachePrime.set(cle,pasEnCache);
       return pasEnCache
    }
 
-   recalculer(devis: Devis): number {
-      this.cachePrime.delete(this.cle(devis));
-      return this.calculerAvecCache(devis);
-   }
+
 
    reinitialiserCache(): void {
       this.cachePrime.clear();

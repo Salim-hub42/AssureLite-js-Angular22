@@ -32,4 +32,31 @@ describe('DevisService', () => {
     expect(deuxiemeAppel).toBe(premierAppel);
     expect(service.taille).toBe(1);
   });
+
+  // Un devis différent à chaque âge → une clé de cache différente
+  const devisAge = (ageClient: number): Devis => ({
+    id: 0,
+    clientId: 1,
+    typeDeContrat: 'auto',
+    ageClient,
+    optionsChoisies: [],
+  });
+
+  it('ne dépasse jamais 20 entrées (Map.delete de la plus ancienne)', () => {
+    for (let age = 18; age < 18 + 25; age++) {
+      service.calculerAvecCache(devisAge(age));
+      expect(service.taille).toBeLessThanOrEqual(20);
+    }
+    expect(service.taille).toBe(20);
+  });
+
+  it('vide tout le cache à la déconnexion (Map.clear)', () => {
+    service.calculerAvecCache(devisAge(30));
+    service.calculerAvecCache(devisAge(40));
+    expect(service.taille).toBe(2);
+
+    service.reinitialiserCache();
+
+    expect(service.taille).toBe(0);
+  });
 });

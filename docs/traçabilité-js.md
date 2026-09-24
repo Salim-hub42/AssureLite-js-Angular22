@@ -26,18 +26,18 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 ## Chaînes (10)
 
-| Méthode       | Statut | Fichier : ligne                          | Module   |
-| ------------- | ------ | ---------------------------------------- | -------- |
-| `includes`    | ✅     | `client.utils.ts:28`                     | Module 1 |
-| `indexOf`     | ⏳     | —                                        | Module 8 |
-| `slice`       | ⏳     | —                                        | Module 8 |
-| `substring`   | ⏳     | —                                        | Module 8 |
-| `replace`     | ⏳     | —                                        | Module 8 |
-| `split`       | ✅     | `client.utils.ts:28`                     | Module 1 |
-| `trim`        | ✅     | `client.utils.ts:4,5`                    | Module 1 |
-| `toUpperCase` | ⏳     | —                                        | Module 8 |
-| `toLowerCase` | ✅     | `client.utils.ts:4,5`                    | Module 1 |
-| `concat`      | ✅     | `contrat.utils.ts:50` (genererReference) | Module 5 |
+| Méthode       | Statut | Fichier : ligne                                                                    | Module   |
+| ------------- | ------ | ---------------------------------------------------------------------------------- | -------- |
+| `includes`    | ✅     | `client.utils.ts:28`                                                               | Module 1 |
+| `indexOf`     | ⏳     | —                                                                                  | Module 8 |
+| `slice`       | ⏳     | —                                                                                  | Module 8 |
+| `substring`   | ⏳     | —                                                                                  | Module 8 |
+| `replace`     | ⏳     | —                                                                                  | Module 8 |
+| `split`       | ✅     | `client.utils.ts:28`                                                               | Module 1 |
+| `trim`        | ✅     | `client.utils.ts:4,5`                                                              | Module 1 |
+| `toUpperCase` | ✅     | `contrat-service.ts:64` (préfixe de la référence de contrat : `'auto'` → `'AUTO'`) | Module 5 |
+| `toLowerCase` | ✅     | `client.utils.ts:4,5`                                                              | Module 1 |
+| `concat`      | ✅     | `contrat.utils.ts:50` (genererReference)                                           | Module 5 |
 
 ## Objets (5)
 
@@ -56,7 +56,7 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 | `toFixed`     | ✅     | `contrat.utils.ts:36`                                                                               | Module 1 |
 | `toPrecision` | ⏳     | —                                                                                                   | Module 6 |
 | `parseInt`    | ✅     | `guards/contrat-existe.guard.ts:10` (id de route `string` → `number`, base 10, `NaN` → redirection) | Module 7 |
-| `parseFloat`  | ⏳     | —                                                                                                   | Module 7 |
+| `parseFloat`  | ⏳     | — (reporté : montant saisi en texte dans la déclaration de sinistre, avec `replace`)                | Module 8 |
 | `Math.random` | ✅     | `contrat.utils.ts:50` (genererReference)                                                            | Module 5 |
 
 ## Dates (5)
@@ -71,18 +71,18 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 ## Sets & Maps (10)
 
-| Méthode      | Statut | Fichier : ligne                           | Module   |
-| ------------ | ------ | ----------------------------------------- | -------- |
-| `Set.add`    | ✅     | `contrat.utils.ts:19`                     | Module 1 |
-| `Set.delete` | ✅     | `contrat-service.ts:28`                   | Module 3 |
-| `Set.has`    | ✅     | `sinistre.utils.ts:36`                    | Module 1 |
-| `Set.clear`  | ✅     | `contrat-service.ts:41`                   | Module 3 |
-| `Set.size`   | ✅     | `sinistre.utils.ts:41`                    | Module 1 |
-| `Map.set`    | ✅     | `devis-service.ts:19` (calculerAvecCache) | Module 7 |
-| `Map.get`    | ✅     | `devis-service.ts:16` (calculerAvecCache) | Module 7 |
-| `Map.has`    | ✅     | `devis-service.ts:15` (calculerAvecCache) | Module 7 |
-| `Map.delete` | ⏳     | —                                         | Module 7 |
-| `Map.clear`  | ⏳     | —                                         | Module 7 |
+| Méthode      | Statut | Fichier : ligne                                                                                                      | Module   |
+| ------------ | ------ | -------------------------------------------------------------------------------------------------------------------- | -------- |
+| `Set.add`    | ✅     | `contrat.utils.ts:19`                                                                                                | Module 1 |
+| `Set.delete` | ✅     | `contrat-service.ts:28`                                                                                              | Module 3 |
+| `Set.has`    | ✅     | `sinistre.utils.ts:36`                                                                                               | Module 1 |
+| `Set.clear`  | ✅     | `contrat-service.ts:41`                                                                                              | Module 3 |
+| `Set.size`   | ✅     | `sinistre.utils.ts:41`                                                                                               | Module 1 |
+| `Map.set`    | ✅     | `devis-service.ts:28` (`calculerAvecCache`, prime calculée mise en cache ; branché dans `SouscriptionContrat.prime`) | Module 7 |
+| `Map.get`    | ✅     | `devis-service.ts:21` (`calculerAvecCache`, prime déjà connue)                                                       | Module 7 |
+| `Map.has`    | ✅     | `devis-service.ts:20` (`calculerAvecCache`)                                                                          | Module 7 |
+| `Map.delete` | ✅     | `devis-service.ts:26` (cache limité à 20 entrées : on supprime la plus ancienne, `keys().next().value`)              | Module 7 |
+| `Map.clear`  | ✅     | `devis-service.ts:35` (`reinitialiserCache`, appelé par `App.deconnecter()` dans `app.ts:26`)                        | Module 7 |
 
 ## Autres (5)
 
@@ -176,11 +176,16 @@ Ce module ne fait pas progresser le compteur de méthodes JS (Signal Forms = Ang
 
 - **Leçon** (`docs/07-http-resource-api.md`, 17 sections) : ✅ rédigée — `HttpClient`, `httpResource`, `rxResource`, promesses (`then`/`catch`/`finally`), `JSON.parse`/`JSON.stringify`, intercepteur fonctionnel, opérateurs RxJS de base (`tap`/`map`/`catchError`/`finalize`/`switchMap`/`debounceTime`/`distinctUntilChanged`), `toObservable`/`toSignal`, `takeUntilDestroyed`
 - **Exemple générique** (`src/examples/07-http-resource.example.ts` + spec, 35 tests passent) : ✅ rédigé (domaine bibliothèque de livres, pas assurance) — `estLivreDTO` (Object.hasOwn), `versLivre`/`corpsNouveauLivre` (toISOString), `parseAnnee`/`parsePrix` (parseInt/parseFloat), favoris via `localStorage` (JSON.parse/JSON.stringify), `CacheResumes` (Map complet : has/get/set/delete/clear/size), intercepteur, pipeline de recherche RxJS, `BiblioService` (httpResource, then/catch/finally, subscribe, pipe)
-- **Pratique** (en cours) :
+- **Pratique** : ✅ terminée
   - `ContratService` (`src/app/services/contrat-service.ts`) : ✅ `httpResource<ContratDTO[]>` avec `parse` filtrant via `estContrat` (`contrat.utils.ts:57`, `Object.hasOwn`) ; `souscrireContrat` fait un `http.post` puis `.then()` (reload + conversion), `.catch()` (log + relance), `.finally()` (log) ; `dateDebut` sérialisée en ISO (`toISOString`) avant l'envoi ; `supprimerContrat` en `then`/`catch` sur un `http.delete`
-  - `DevisService` (`src/app/services/devis-service.ts`) : ✅ `calculerAvecCache` — cache de primes avec `Map<string, number>` (`has`/`get`/`set`), clé construite à partir des champs du devis ; getter `taille` (`Map.size`) exposé pour les tests ; testé dans `devis-service.spec.ts` (AAA : deux appels identiques → même résultat, une seule entrée en cache)
-  - ⏳ reste à faire : authentification (json-server), `Map.delete`/`Map.clear` dans un vrai cas d'usage (invalider une entrée du cache de devis ?), `parseInt`/`parseFloat`, `JSON.parse`/`JSON.stringify` dans un cas métier réel (pas juste l'exemple générique), recherche RxJS bonus (debounce sur une liste de contrats/clients)
+  - `DevisService` (`src/app/services/devis-service.ts`) : ✅ cache de primes `Map<string, number>` (`has`/`get`/`set`), **branché** dans `SouscriptionContrat.prime` ; limité à 20 entrées (`delete` de la plus ancienne clé, l'ordre d'insertion de la `Map` faisant office de file) ; vidé à la déconnexion (`clear`) ; testé (`devis-service.spec.ts` : cache, limite, vidage)
+  - **Authentification** : `AuthService` (`login` via `GET /users?email=` + `then`, session en `signal` + `localStorage` via `JSON.stringify`/`JSON.parse` dans `models/session.utils.ts`), page `login` en Signal Forms (`submission.action` asynchrone), `authInterceptor` (`req.clone` + `Authorization: Bearer`, branché par `withInterceptors`), `authGuard` (redirection `/login`), bouton « Se déconnecter » dans `App` (`logout` + `reinitialiserCache` + navigation) ; tout vérifié dans le navigateur
+  - **Guards** : `contratExisteGuard` réécrit en guard **asynchrone** (`parseInt(id, 10)` + `Number.isNaN`, puis `firstValueFrom(http.get)` → `.then(() => true)` / `.catch(() => UrlTree)`) — corrige la redirection à tort quand on tape `/contrats/1` au démarrage ; routes `contrats…` regroupées sous une **route parente** avec `canActivateChild: [authGuard]` (leçon §17)
+  - **Tests** : `auth-guard.spec.ts`, `contrat-existe.guard.spec.ts` (200 / 404 / id non numérique via `HttpTestingController`), `auth.interceptor.spec.ts` (avec / sans session), `app.spec.ts` (bouton de déconnexion), `devis-service.spec.ts` — 127 tests passent
+  - Non fait (optionnel) : recherche RxJS bonus (debounce), filtre `API` dans l'intercepteur, `returnUrl` après login
 
-**40 / 40 méthodes comptées comme validées** dans ce tableau (+`Object.hasOwn`, +`toISOString`, +`Map.set`, +`Map.get`, +`Map.has`, +`then`, +`catch`, +`finally` par rapport au Module 6) — **mais le module n'est pas terminé** : il reste 16 méthodes ⏳ dans le tableau au global (`pop`, `shift`, `unshift`, `slice` tableau, `indexOf`, `slice`/`substring`/`replace`/`toUpperCase` chaîne, `toPrecision`, `parseInt`, `parseFloat`, `Map.delete`, `Map.clear`, `JSON.parse`, `JSON.stringify`), dont plusieurs sont explicitement prévues pour la suite du Module 7 (voir ⏳ ci-dessus). Le « 40/40 » reflète le compteur historique de ce fichier, pas la fin de la liste des 56 lignes du tableau.
+**Méthodes validées dans ce module** : `toUpperCase` (déjà utilisé depuis le Module 5 dans `souscrireContrat`, jamais coché), `Object.hasOwn`, `toISOString`, `then`, `catch`, `finally`, `JSON.parse`, `JSON.stringify`, `parseInt`, `Map.set`, `Map.get`, `Map.has`, `Map.delete`, `Map.clear`.
 
-**Module 7 en cours — pratique HttpClient/httpResource/promesses en place, reste l'auth + les méthodes JSON/parse/Map restantes.**
+**Encore ⏳ au global** : `pop`, `shift`, `unshift`, `slice` (tableau), `indexOf`, `slice` / `substring` / `replace` (chaînes), `toPrecision`, `parseFloat` → prévus au Module 8 (pipes, formulaire de sinistre, finitions).
+
+**Module 7 terminé.**

@@ -9,9 +9,9 @@ import { ageMinimum } from '../../validators/age-minimum.validator';
 import { TypeContrat } from '../../models/contrat.model';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Devis } from '../../models/devis.model';
-import { calculerPrimeDevis } from '../../models/devis.utils';
 import { ContratService } from '../../services/contrat-service';
 import { Router } from '@angular/router';
+import { DevisService } from '../../services/devis-service';
 
 
 @Component({
@@ -24,6 +24,8 @@ export class SouscriptionContrat {
 
   private readonly contratService = inject(ContratService);
   private readonly router = inject(Router);
+  private readonly devisService = inject(DevisService);
+
 
   form = new FormGroup({
     clientId: new FormControl<number | null>(null, { validators: [Validators.required] }),
@@ -61,7 +63,7 @@ export class SouscriptionContrat {
       ageClient: v.ageClient,
       optionsChoisies: v.optionsChoisies ?? [],
     };
-    return calculerPrimeDevis(devis);
+    return this.devisService.calculerAvecCache(devis);
   });
 
   readonly primeAffichee = computed(() => this.prime().toFixed(2));
