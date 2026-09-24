@@ -100,7 +100,7 @@ export const appConfig: ApplicationConfig = {
 };
 ```
 
-> **Pas de `withFetch()`.** Vérifié dans les typings installés (Angular 22.0.7) : `withFetch` est **`@deprecated`** — *« not required anymore. `FetchBackend` is the default `HttpBackend` »*. En v22, `fetch` est déjà le backend par défaut de `HttpClient` ; l'opt-in existe maintenant dans l'autre sens, avec `withXhr()` pour revenir à l'ancien `XMLHttpRequest` si un jour c'est nécessaire.
+> **Pas de `withFetch()`.** Vérifié dans les typings installés (Angular 22.0.7) : `withFetch` est **`@deprecated`** — _« not required anymore. `FetchBackend` is the default `HttpBackend` »_. En v22, `fetch` est déjà le backend par défaut de `HttpClient` ; l'opt-in existe maintenant dans l'autre sens, avec `withXhr()` pour revenir à l'ancien `XMLHttpRequest` si un jour c'est nécessaire.
 >
 > Ces deux intercepteurs (`authInterceptor`, `logInterceptor`) ne sont écrits qu'au §10/§16 — à ce stade du module tu peux commencer avec `provideHttpClient()` tout seul, et rajouter `withInterceptors([...])` une fois qu'ils existent (voir le checklist « Pour la pratique », étape 2 vs étape 8).
 
@@ -664,7 +664,123 @@ export const authGuard: CanActivateFn = () => {
 
 ---
 
-## 17. Où s'insèrent les méthodes JS de ce module
+## 17. Guards asynchrones et routes parentes
+
+### 17.1 Le problème : un guard qui décide trop tôt
+
+Le guard du Module 4 lisait une liste **déjà en mémoire** :
+
+```ts
+const existe = contratService.contrats().some((c) => c.id === id);
+```
+
+Depuis que la liste vient d'un `httpResource`, ce n'est plus vrai au démarrage. Si l'utilisateur tape `/contrats/1` dans la barre d'adresse, l'application se recharge entièrement :
+
+1. `ContratService` est créé, et son `httpResource` **lance** `GET /contrats`… sans attendre la réponse.
+2. Le guard s'exécute **immédiatement** : `contrats()` vaut encore `[]` (le `defaultValue`).
+3. `[].some(...)` renvoie `false`, donc redirection, alors que le contrat existe bel et bien.
+
+Un guard **synchrone** ne peut répondre qu'avec ce qu'il a sous la main à l'instant T. Quand la réponse dépend du serveur, il faut un guard **asynchrone**.
+
+### 17.2 Ce qu'un guard a le droit de renvoyer
+
+Le type `CanActivateFn` accepte quatre formes de réponse :
+
+| Retour                           | Angular…                                          |
+| -------------------------------- | ------------------------------------------------- |
+| `boolean` / `UrlTree`            | décide tout de suite (ce qu'on faisait jusqu'ici) |
+| `Promise<boolean \| UrlTree>`    | **attend** que la promesse se termine             |
+| `Observable<boolean \| UrlTree>` | **attend** la première valeur émise               |
+
+Pendant l'attente, la navigation est **en suspens** : l'ancienne page reste affichée, la nouvelle n'est pas encore chargée. Aucun composant ne voit un état intermédiaire.
+
+### 17.3 Exemple générique (bibliothèque)
+
+On veut ouvrir `/livres/:id` seulement si le livre existe côté serveur. `json-server` renvoie **404** pour un id inconnu, et `HttpClient` transforme un 404 en **erreur**. On l'attrape donc avec `.catch`.
+
+```ts
+import { inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { CanActivateFn, Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
+
+export const livreExisteGuard: CanActivateFn = (route) => {
+  // 1. Tous les inject() AVANT toute attente (voir le piège ci-dessous)
+  const http = inject(HttpClient);
+  const router = inject(Router);
+
+  // 2. Le paramètre d'URL est TOUJOURS une chaîne → parseInt en base 10
+  const id = parseInt(route.paramMap.get('id') ?? '', 10);
+  if (Number.isNaN(id)) {
+    return router.parseUrl('/livres'); // "/livres/abc" : inutile d'appeler le serveur
+  }
+
+  // 3. On renvoie la promesse elle-même : Angular l'attendra
+  return firstValueFrom(http.get(`http://localhost:3000/livres/${id}`))
+    .then(() => true) // 200 → le livre existe
+    .catch(() => router.parseUrl('/livres')); // 404 (ou serveur éteint) → redirection
+};
+```
+
+Points clés :
+
+- **`return firstValueFrom(...)`** : on renvoie la promesse, pas son résultat. Oublier ce `return`, c'est renvoyer `undefined`, et Angular n'attendra rien.
+- **`.then(() => true)`** : la valeur du livre ne nous intéresse pas, seulement le fait que la requête ait **réussi**.
+- **`.catch(() => router.parseUrl(...))`** : l'échec est transformé en redirection. La promesse renvoyée ne rejette donc jamais, elle se termine toujours avec `true` ou un `UrlTree`.
+- **`parseInt(..., 10)`** : `route.paramMap.get('id')` renvoie `string | null`. `?? ''` remplace `null` par une chaîne vide, et `parseInt('', 10)` donne `NaN`, qu'on détecte avec `Number.isNaN`. On évite ainsi un appel réseau inutile pour `/livres/abc`.
+
+> **Piège : `inject()` après une attente.** `inject()` ne fonctionne que pendant l'exécution **synchrone** du guard. Dans un `.then(...)` ou après un `await`, ce contexte est terminé et `inject(Router)` lève `NG0203`. Règle : **tous les `inject()` en haut de la fonction**, comme ci-dessus.
+
+Variante `Observable`, pour info (même logique, avec les opérateurs du §5) :
+
+```ts
+return http.get(`.../livres/${id}`).pipe(
+  map(() => true),
+  catchError(() => of(router.parseUrl('/livres'))),
+);
+```
+
+### 17.4 Routes parentes : poser un guard une seule fois
+
+Quand plusieurs routes partagent un préfixe et une règle (« il faut être connecté »), on les regroupe sous une **route parente sans composant** :
+
+```ts
+// Avant : le guard est répété, et une route oubliée n'est pas protégée
+{ path: 'livres', canActivate: [authGuard], loadComponent: ... },
+{ path: 'livres/nouveau', canActivate: [authGuard], loadComponent: ... },
+{ path: 'livres/:id', canActivate: [authGuard, livreExisteGuard], loadComponent: ... },
+
+// Après : un parent qui porte la règle, des enfants aux chemins RELATIFS
+{
+  path: 'livres',
+  canActivateChild: [authGuard],
+  children: [
+    { path: '', loadComponent: ... },        // → /livres
+    { path: 'nouveau', loadComponent: ... }, // → /livres/nouveau
+    { path: ':id', canActivate: [livreExisteGuard], loadComponent: ... }, // → /livres/42
+  ],
+},
+```
+
+- Les chemins des enfants **ne répètent pas** `livres/` : ils s'ajoutent à celui du parent.
+- `path: ''` est l'enfant « par défaut », affiché sur `/livres` tout court.
+- Le parent n'a **pas** de `loadComponent` : il ne sert qu'à regrouper. Les enfants s'affichent directement dans le `<router-outlet>` de l'application.
+- Une nouvelle route ajoutée dans `children` est **automatiquement** protégée.
+
+**`canActivate` ou `canActivateChild` sur le parent ?**
+
+| Sur le parent      | S'exécute…                                                                                   |
+| ------------------ | -------------------------------------------------------------------------------------------- |
+| `canActivate`      | quand on **entre** dans `/livres…` depuis ailleurs, pas quand on passe d'un enfant à l'autre |
+| `canActivateChild` | à **chaque** navigation vers un enfant, y compris de `/livres` à `/livres/42`                |
+
+Avec `canActivate`, un utilisateur déconnecté (session expirée, clé effacée) resté sur `/livres` pourrait encore ouvrir `/livres/42`, car le parent est déjà « actif » et n'est pas revérifié. `canActivateChild` ferme cette porte. C'est le bon choix pour une règle d'authentification.
+
+Les gardes se cumulent **du parent vers l'enfant** : pour `/livres/42`, Angular exécute `authGuard` (parent) **puis** `livreExisteGuard` (enfant). On retrouve l'ordre « d'abord qui tu es, ensuite ce que tu demandes », sans avoir à l'écrire dans un tableau.
+
+---
+
+## 18. Où s'insèrent les méthodes JS de ce module
 
 | Méthode                                        | Cas métier AssurLite                                                         |
 | ---------------------------------------------- | ---------------------------------------------------------------------------- |

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Card } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
+import { AuthService } from '../../services/auth-service';
 
 interface LoginModel {
   email: string;
@@ -18,6 +19,7 @@ interface LoginModel {
 })
 export class Login {
   private readonly router = inject(Router);
+  private readonly auth = inject(AuthService);
 
   readonly model = signal<LoginModel>({
     email: '',
@@ -33,8 +35,14 @@ export class Login {
     },
     {
       submission: {
-        action: async () => {
-          console.log('login déclenché', this.model()); // sera async quand on appellera AuthService
+        action: async (f) => {
+          try {
+            await this.auth.login(this.model().email, this.model().password);
+            this.router.navigate(['/contrats']);
+            return;
+          } catch {
+            return [{ fieldTree: f.password, kind: 'auth', message: 'Identifiants invalides.' }];
+          }
         },
       },
     },

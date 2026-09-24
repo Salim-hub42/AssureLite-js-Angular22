@@ -41,59 +41,59 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 ## Objets (5)
 
-| Méthode          | Statut | Fichier : ligne         | Module   |
-| ---------------- | ------ | ----------------------- | -------- |
-| `Object.keys`    | ✅     | `contrat.utils.ts:14`   | Module 1 |
-| `Object.values`  | ✅     | `contrat.utils.ts:4`    | Module 1 |
-| `Object.entries` | ✅     | `contrat.utils.ts:8`    | Module 1 |
-| `Object.assign`  | ✅     | `contrat-service.ts:77` | Module 3 |
+| Méthode          | Statut | Fichier : ligne                                                                                     | Module   |
+| ---------------- | ------ | --------------------------------------------------------------------------------------------------- | -------- |
+| `Object.keys`    | ✅     | `contrat.utils.ts:14`                                                                               | Module 1 |
+| `Object.values`  | ✅     | `contrat.utils.ts:4`                                                                                | Module 1 |
+| `Object.entries` | ✅     | `contrat.utils.ts:8`                                                                                | Module 1 |
+| `Object.assign`  | ✅     | `contrat-service.ts:77`                                                                             | Module 3 |
 | `Object.hasOwn`  | ✅     | `contrat.utils.ts:57` (`estContrat`, branché dans le `parse` du `httpResource` de `ContratService`) | Module 7 |
 
 ## Nombres / Math (5)
 
-| Méthode       | Statut | Fichier : ligne                          | Module   |
-| ------------- | ------ | ---------------------------------------- | -------- |
-| `toFixed`     | ✅     | `contrat.utils.ts:36`                    | Module 1 |
-| `toPrecision` | ⏳     | —                                        | Module 6 |
-| `parseInt`    | ⏳     | —                                        | Module 7 |
-| `parseFloat`  | ⏳     | —                                        | Module 7 |
-| `Math.random` | ✅     | `contrat.utils.ts:50` (genererReference) | Module 5 |
+| Méthode       | Statut | Fichier : ligne                                                                                     | Module   |
+| ------------- | ------ | --------------------------------------------------------------------------------------------------- | -------- |
+| `toFixed`     | ✅     | `contrat.utils.ts:36`                                                                               | Module 1 |
+| `toPrecision` | ⏳     | —                                                                                                   | Module 6 |
+| `parseInt`    | ✅     | `guards/contrat-existe.guard.ts:10` (id de route `string` → `number`, base 10, `NaN` → redirection) | Module 7 |
+| `parseFloat`  | ⏳     | —                                                                                                   | Module 7 |
+| `Math.random` | ✅     | `contrat.utils.ts:50` (genererReference)                                                            | Module 5 |
 
 ## Dates (5)
 
-| Méthode       | Statut | Fichier : ligne         | Module   |
-| ------------- | ------ | ----------------------- | -------- |
-| `getFullYear` | ✅     | `client.utils.ts:10`    | Module 1 |
-| `getMonth`    | ✅     | `client.utils.ts:11,12` | Module 1 |
-| `getDate`     | ✅     | `client.utils.ts:13`    | Module 1 |
+| Méthode       | Statut | Fichier : ligne                            | Module   |
+| ------------- | ------ | ------------------------------------------ | -------- |
+| `getFullYear` | ✅     | `client.utils.ts:10`                       | Module 1 |
+| `getMonth`    | ✅     | `client.utils.ts:11,12`                    | Module 1 |
+| `getDate`     | ✅     | `client.utils.ts:13`                       | Module 1 |
 | `toISOString` | ✅     | `contrat-service.ts:72` (souscrireContrat) | Module 7 |
-| `getTime`     | ✅     | `contrat.utils.ts:45`   | Module 1 |
+| `getTime`     | ✅     | `contrat.utils.ts:45`                      | Module 1 |
 
 ## Sets & Maps (10)
 
-| Méthode      | Statut | Fichier : ligne         | Module   |
-| ------------ | ------ | ----------------------- | -------- |
-| `Set.add`    | ✅     | `contrat.utils.ts:19`   | Module 1 |
-| `Set.delete` | ✅     | `contrat-service.ts:28` | Module 3 |
-| `Set.has`    | ✅     | `sinistre.utils.ts:36`  | Module 1 |
-| `Set.clear`  | ✅     | `contrat-service.ts:41` | Module 3 |
-| `Set.size`   | ✅     | `sinistre.utils.ts:41`  | Module 1 |
+| Méthode      | Statut | Fichier : ligne                           | Module   |
+| ------------ | ------ | ----------------------------------------- | -------- |
+| `Set.add`    | ✅     | `contrat.utils.ts:19`                     | Module 1 |
+| `Set.delete` | ✅     | `contrat-service.ts:28`                   | Module 3 |
+| `Set.has`    | ✅     | `sinistre.utils.ts:36`                    | Module 1 |
+| `Set.clear`  | ✅     | `contrat-service.ts:41`                   | Module 3 |
+| `Set.size`   | ✅     | `sinistre.utils.ts:41`                    | Module 1 |
 | `Map.set`    | ✅     | `devis-service.ts:19` (calculerAvecCache) | Module 7 |
 | `Map.get`    | ✅     | `devis-service.ts:16` (calculerAvecCache) | Module 7 |
 | `Map.has`    | ✅     | `devis-service.ts:15` (calculerAvecCache) | Module 7 |
-| `Map.delete` | ⏳     | —                       | Module 7 |
-| `Map.clear`  | ⏳     | —                       | Module 7 |
+| `Map.delete` | ⏳     | —                                         | Module 7 |
+| `Map.clear`  | ⏳     | —                                         | Module 7 |
 
 ## Autres (5)
 
-| Méthode          | Statut | Fichier : ligne       | Module   |
-| ---------------- | ------ | --------------------- | -------- |
-| `then`           | ✅     | `contrat-service.ts:76` (souscrireContrat) | Module 7 |
-| `catch`          | ✅     | `contrat-service.ts:80` (souscrireContrat) | Module 7 |
-| `finally`        | ✅     | `contrat-service.ts:84` (souscrireContrat) | Module 7 |
-| `JSON.parse`     | ⏳     | —                     | Module 7 |
-| `JSON.stringify` | ⏳     | —                     | Module 7 |
-| `console.log`    | ✅     | `contrat.utils.ts:10` | Module 1 |
+| Méthode          | Statut | Fichier : ligne                                                                                      | Module   |
+| ---------------- | ------ | ---------------------------------------------------------------------------------------------------- | -------- |
+| `then`           | ✅     | `contrat-service.ts:76` (souscrireContrat)                                                           | Module 7 |
+| `catch`          | ✅     | `contrat-service.ts:80` (souscrireContrat)                                                           | Module 7 |
+| `finally`        | ✅     | `contrat-service.ts:84` (souscrireContrat)                                                           | Module 7 |
+| `JSON.parse`     | ✅     | `models/session.utils.ts:16` (`lireSession` : texte `localStorage` → `Session`, dans un `try/catch`) | Module 7 |
+| `JSON.stringify` | ✅     | `models/session.utils.ts:6` (`ecrireSession` : `Session` → texte pour `localStorage`)                | Module 7 |
+| `console.log`    | ✅     | `contrat.utils.ts:10`                                                                                | Module 1 |
 
 ---
 
