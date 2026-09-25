@@ -7,6 +7,25 @@
     </div>
   </header>
 
+  @if (consultesRecents().length > 0) {
+    <nav class="assurlite-recents" aria-label="Contrats consultés récemment">
+      <span class="assurlite-recents-label">
+        <i class="pi pi-history" aria-hidden="true"></i>
+        Consultés récemment
+      </span>
+      <ul class="assurlite-recents-list">
+        @for (id of consultesRecents(); track id) {
+          <li>
+            <a class="assurlite-recent-link" [routerLink]="['/contrats', id]">
+              Contrat n°{{ id }}
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+  }
+
+
   <p-card>
     <div class="assurlite-filters" role="group" aria-label="Filtrer les contrats par statut">
       <span class="assurlite-filters-label">
@@ -16,7 +35,11 @@
       <div class="assurlite-chips">
         @for (statut of statuts; track statut) {
           <label class="assurlite-chip">
-            <input type="checkbox" [checked]="statutsFiltres().has(statut)" (change)="toggle(statut)" />
+            <input
+              type="checkbox"
+              [checked]="statutsFiltres().has(statut)"
+              (change)="toggle(statut)"
+            />
             {{ statut }}
           </label>
         }
@@ -39,7 +62,12 @@
         </ng-template>
 
         <ng-template #body let-contrat>
-          <tr app-contrat-ligne [contrat]="contrat" (supprimer)="supprimerContrat($event)"></tr>
+          <tr
+            app-contrat-ligne
+            [contrat]="contrat"
+            (supprimer)="supprimerContrat($event)"
+            [appSurbrillance]="contrat.statut === 'resilie'"
+          ></tr>
         </ng-template>
 
         <ng-template #emptymessage>
@@ -54,15 +82,15 @@
       @if (contrats().length > 0) {
         <p class="assurlite-total">
           Total des primes
-          <strong>{{ primeTotale() | currency}}</strong>
+          <strong>{{ primeTotale() | currency }}</strong>
         </p>
       } @else {
         <p class="assurlite-total">Aucun contrat à afficher</p>
       }
-   <a routerLink="/contrats/nouveau" pButton size="small">
-       <i class="pi pi-plus" aria-hidden="true"></i>
+      <a routerLink="/contrats/nouveau" pButton size="small">
+        <i class="pi pi-plus" aria-hidden="true"></i>
         Souscrire un contrat
-   </a>
+      </a>
     </div>
   </p-card>
 </div>

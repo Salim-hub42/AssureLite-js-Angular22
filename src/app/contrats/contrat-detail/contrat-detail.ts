@@ -1,4 +1,4 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, effect, inject, input } from '@angular/core';
 import { CurrencyPipe, DatePipe, TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
@@ -13,6 +13,7 @@ import { httpResource } from '@angular/common/http';
 import { ContratDTO } from '../../models/contrat.model';
 import { API } from '../../core/api';
 import { versContrat } from '../../models/contrat.utils';
+import { Historique } from '../../services/historique';
 
 @Component({
   selector: 'app-contrat-detail',
@@ -22,8 +23,18 @@ import { versContrat } from '../../models/contrat.utils';
 })
 export class ContratDetail {
   contratService = inject(ContratService);
+  private readonly historiqueService = inject(Historique);
+  
+ 
+
 
   id = input.required<string>();
+
+  constructor() {
+  effect(() => {
+    this.historiqueService.enregistrer(parseInt(this.id(), 10));
+  });
+}
 
   private readonly _contratRes =  httpResource<ContratDTO>(() => `${API}/contrats/${this.id()}`);
 
