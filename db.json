@@ -29,25 +29,12 @@
       "statut": "suspendu",
       "prime": 100,
       "dateDebut": "2003-02-18"
-    },
-    {
-      "id": 3,
-      "clientId": 2,
-      "type": "sante",
-      "statut": "resilie",
-      "prime": 62,
-      "dateDebut": "2025-05-25"
-    },
-    {
-      "id": 4,
-      "clientId": 2,
-      "type": "habitation",
-      "statut": "actif",
-      "prime": 99,
-      "dateDebut": "2026-06-16"
     }
   ],
-  "sinistre": [],
+  "sinistres": [
+      {"id": 1, "contratId": 1, "dateDeclaration": "2026-09-12T10:00:00.000Z", "montant": 450, "statut": "accepte" },
+      {"id": 2, "contratId": 2, "dateDeclaration": "2026-09-20T14:30:00.000Z", "montant": 1299.9, "statut": "declare" }
+  ],
   "users": [
     {
       "id": 1,

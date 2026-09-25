@@ -36,6 +36,70 @@
   color: var(--p-text-muted-color);
 }
 
+// Bandeau de notification, en bas à droite de l'écran
+.assurlite-notifications {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+  pointer-events: none; // la zone vide ne bloque pas les clics sur la page
+}
+
+.assurlite-notification {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 28rem;
+  padding: 0.75rem 0.75rem 0.75rem 1rem;
+  border-radius: var(--p-content-border-radius);
+  background: var(--p-primary-color);
+  color: var(--p-primary-contrast-color);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  font-size: 0.9rem;
+  pointer-events: auto;
+
+  &.assurlite-notification-erreur {
+    background: var(--p-red-700);
+    color: #fff;
+  }
+}
+
+.assurlite-notification-texte {
+  flex: 1;
+}
+
+.assurlite-notification-attente {
+  font-size: 0.75rem;
+  opacity: 0.85;
+  white-space: nowrap;
+}
+
+.assurlite-notification-fermer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #b8860b;
+    outline-offset: 2px;
+  }
+}
+
 // Texte lu par les lecteurs d'écran, invisible à l'écran
 .assurlite-sr-only {
   position: absolute;

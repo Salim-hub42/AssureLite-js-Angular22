@@ -4,6 +4,7 @@ import { provideRouter, Router } from '@angular/router';
 import { App } from './app';
 import { AuthService } from './services/auth-service';
 import { DevisService } from './services/devis-service';
+import { NotificationService } from './services/notification-service';
 import { Session } from './models/utilisateur.model';
 
 // Page factice : la vraie page de login n'a pas d'intérêt ici
@@ -73,5 +74,34 @@ describe('App', () => {
     expect(devisService.taille).toBe(0);
     expect(router.url).toBe('/login');
     expect(bouton(fixture.nativeElement)).toBeNull();
+  });
+
+  it('affiche la notification en tête de file et le nombre en attente', async () => {
+    const notifications = TestBed.inject(NotificationService);
+    notifications.info('Contrat souscrit');
+    notifications.erreur('Échec de la suppression');
+
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    const zone = (fixture.nativeElement as HTMLElement).querySelector('[role="status"]')!;
+
+    expect(zone.textContent).toContain('Échec de la suppression');
+    expect(zone.textContent).not.toContain('Contrat souscrit');
+    expect(zone.textContent).toContain('+1 en attente');
+  });
+
+  it('affiche la notification suivante quand on ferme la première', async () => {
+    const notifications = TestBed.inject(NotificationService);
+    notifications.info('Premier');
+    notifications.info('Second');
+
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+    const element = fixture.nativeElement as HTMLElement;
+    element.querySelector<HTMLButtonElement>('[aria-label="Fermer la notification"]')!.click();
+    await fixture.whenStable();
+
+    expect(element.querySelector('[role="status"]')!.textContent).toContain('Second');
+    expect(notifications.file()).toHaveLength(1);
   });
 });

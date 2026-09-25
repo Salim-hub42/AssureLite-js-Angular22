@@ -24,3 +24,37 @@
 <main>
   <router-outlet />
 </main>
+
+<!-- Zone toujours présente : les lecteurs d'écran annoncent ce qui y apparaît -->
+<div class="assurlite-notifications" role="status" aria-live="polite">
+  @if (notification(); as notification) {
+    <div
+      class="assurlite-notification"
+      [class.assurlite-notification-erreur]="notification.type === 'erreur'"
+    >
+      <i
+        class="pi"
+        [class.pi-check-circle]="notification.type === 'info'"
+        [class.pi-exclamation-triangle]="notification.type === 'erreur'"
+        aria-hidden="true"
+      ></i>
+      <span class="assurlite-notification-texte">
+        @if (notification.type === 'erreur') {
+          <span class="assurlite-sr-only">Erreur :</span>
+        }
+        {{ notification.texte }}
+      </span>
+      @if (enAttente() > 0) {
+        <span class="assurlite-notification-attente">+{{ enAttente() }} en attente</span>
+      }
+      <button
+        type="button"
+        class="assurlite-notification-fermer"
+        (click)="fermerNotification()"
+        aria-label="Fermer la notification"
+      >
+        <i class="pi pi-times" aria-hidden="true"></i>
+      </button>
+    </div>
+  }
+</div>
