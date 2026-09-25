@@ -4,22 +4,23 @@ import { provideRouter, Router } from '@angular/router';
 import { App } from './app';
 import { AuthService } from './services/auth-service';
 import { DevisService } from './services/devis-service';
+import { Session } from './models/utilisateur.model';
 
 // Page factice : la vraie page de login n'a pas d'intérêt ici
 @Component({ template: '' })
 class FauxLogin {}
 
 describe('App', () => {
-  // Faux AuthService : logout() repasse estConnecte à false, comme le vrai
-  const estConnecte = signal(false);
-  const authService = { estConnecte, logout: () => estConnecte.set(false) };
+  // Faux AuthService : logout() efface la session, comme le vrai
+  const session = signal<Session | null>(null);
+  const authService = { session, logout: () => session.set(null) };
 
   let devisService: DevisService;
 
   const bouton = (element: HTMLElement) => element.querySelector('button');
 
   beforeEach(async () => {
-    estConnecte.set(false);
+    session.set(null);
     await TestBed.configureTestingModule({
       imports: [App],
       providers: [
@@ -36,6 +37,14 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
+  it("affiche l'e-mail masqué de l'utilisateur connecté", async () => {
+    session.set({ email: 'salim@gmail.com', userId: 1, token: 'demo' });
+    const fixture = TestBed.createComponent(App);
+    await fixture.whenStable();
+
+    expect((fixture.nativeElement as HTMLElement).textContent).toContain('sa***@gmail.com');
+  });
+
   it("n'affiche pas le bouton de déconnexion si l'utilisateur n'est pas connecté", async () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
@@ -44,7 +53,7 @@ describe('App', () => {
   });
 
   it('déconnecte, vide le cache de devis et renvoie vers /login au clic', async () => {
-    estConnecte.set(true);
+    session.set({ email: 'salim@gmail.com', userId: 1, token: 'demo' });
     devisService.calculerAvecCache({
       id: 0,
       clientId: 1,
@@ -60,7 +69,7 @@ describe('App', () => {
     bouton(fixture.nativeElement)!.click();
     await fixture.whenStable();
 
-    expect(estConnecte()).toBe(false);
+    expect(session()).toBeNull();
     expect(devisService.taille).toBe(0);
     expect(router.url).toBe('/login');
     expect(bouton(fixture.nativeElement)).toBeNull();

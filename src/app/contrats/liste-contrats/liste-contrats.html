@@ -54,7 +54,7 @@
       @if (contrats().length > 0) {
         <p class="assurlite-total">
           Total des primes
-          <strong>{{ primeTotale() }} €</strong>
+          <strong>{{ primeTotale() | currency}}</strong>
         </p>
       } @else {
         <p class="assurlite-total">Aucun contrat à afficher</p>

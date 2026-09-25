@@ -29,9 +29,9 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 | Méthode       | Statut | Fichier : ligne                                                                    | Module   |
 | ------------- | ------ | ---------------------------------------------------------------------------------- | -------- |
 | `includes`    | ✅     | `client.utils.ts:28`                                                               | Module 1 |
-| `indexOf`     | ⏳     | —                                                                                  | Module 8 |
-| `slice`       | ⏳     | —                                                                                  | Module 8 |
-| `substring`   | ⏳     | —                                                                                  | Module 8 |
+| `indexOf`     | ✅     | `pipes/masquer-email-pipe.ts:8` (position du `@`, `-1` si absent)                  | Module 8 |
+| `slice`       | ✅     | `pipes/masquer-email-pipe.ts:13` (2 premiers caractères du nom)                    | Module 8 |
+| `substring`   | ✅     | `pipes/masquer-email-pipe.ts:12-13` (nom avant le `@`, domaine à partir du `@`)    | Module 8 |
 | `replace`     | ⏳     | —                                                                                  | Module 8 |
 | `split`       | ✅     | `client.utils.ts:28`                                                               | Module 1 |
 | `trim`        | ✅     | `client.utils.ts:4,5`                                                              | Module 1 |
@@ -189,3 +189,11 @@ Ce module ne fait pas progresser le compteur de méthodes JS (Signal Forms = Ang
 **Encore ⏳ au global** : `pop`, `shift`, `unshift`, `slice` (tableau), `indexOf`, `slice` / `substring` / `replace` (chaînes), `toPrecision`, `parseFloat` → prévus au Module 8 (pipes, formulaire de sinistre, finitions).
 
 **Module 7 terminé.**
+
+## État du Module 8
+
+- **Leçon** (`docs/08-pipes-directives-defer.md`, 12 sections) : ✅ rédigée — pipes intégrés (paramètres, chaînage), `LOCALE_ID` / `registerLocaleData` / `DEFAULT_CURRENCY_CODE`, pipe personnalisé (`@Pipe`, `PipeTransform`, pur / impur, pipe ou `computed`), les trois familles de directives, directive d'attribut (`host` + `input` avec alias), directive DOM (`ElementRef` + `afterNextRender`, autofocus), `@defer` (blocs, déclencheurs, règles), tableaux pile / file avec signals, `replace` + `parseFloat`, `toPrecision`
+- **Exemple générique** (`src/examples/08-pipes-directives-defer.example.ts` + spec, 18 tests passent) : ✅ rédigé (domaine boutique de vélos, pas assurance) — `TronquerPipe` (indexOf + substring), `MasquerTelephonePipe` (replace + slice), `SurbrillanceDirective`, `AutofocusDirective`, `ajouterAHistorique` (slice + unshift + pop), `FileCommandes` (push / unshift / shift), `parserPrix` (replace + parseFloat), `noteMoyenne` (toPrecision), `ExempleBoutique` (currency / date / titlecase / uppercase en `fr-FR`, `@defer (on viewport)` testé avec `DeferBlockBehavior.Manual`)
+- **Pratique** : ⏳ à faire (7 étapes, voir « Pour la pratique » de la leçon)
+
+**Module 8 en cours.**

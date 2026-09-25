@@ -1,5 +1,26 @@
-@if (estConnecte()){
-<button (click)="deconnecter()">Se déconnecter</button>
+@if (session(); as session) {
+  <header class="assurlite-topbar">
+    <div class="assurlite-topbar-inner">
+      <span class="assurlite-topbar-brand">
+        <i class="pi pi-shield" aria-hidden="true"></i>
+        AssurLite
+      </span>
+
+      <div class="assurlite-topbar-user">
+        <span class="assurlite-topbar-email">
+          <i class="pi pi-user" aria-hidden="true"></i>
+          <span class="assurlite-sr-only">Connecté en tant que</span>
+          {{ session.email | masquerEmail }}
+        </span>
+        <button pButton (click)="deconnecter()" size="small" severity="secondary" outlined>
+          <i class="pi pi-sign-out" aria-hidden="true"></i>
+          Se déconnecter
+        </button>
+      </div>
+    </div>
+  </header>
 }
 
-<router-outlet/>
+<main>
+  <router-outlet />
+</main>

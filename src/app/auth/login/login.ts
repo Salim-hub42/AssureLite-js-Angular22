@@ -5,6 +5,7 @@ import { Card } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { InputText } from 'primeng/inputtext';
 import { AuthService } from '../../services/auth-service';
+import { Autofocus } from '../../directives/autofocus';
 
 interface LoginModel {
   email: string;
@@ -13,7 +14,7 @@ interface LoginModel {
 
 @Component({
   selector: 'app-login',
-  imports: [FormRoot, FormField, Card, ButtonModule, InputText],
+  imports: [FormRoot, FormField, Card, ButtonModule, InputText, Autofocus],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })

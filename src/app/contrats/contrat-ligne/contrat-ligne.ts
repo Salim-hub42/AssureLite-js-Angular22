@@ -3,10 +3,11 @@ import { Contrat } from '../../models/contrat.model';
 import { ButtonModule } from 'primeng/button';
 import { Tag } from 'primeng/tag';
 import { RouterLink } from '@angular/router';
+import { CurrencyPipe, TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'tr[app-contrat-ligne]',
-  imports: [ButtonModule, Tag, RouterLink],
+  imports: [ButtonModule, Tag, RouterLink, CurrencyPipe, TitleCasePipe],
   templateUrl: './contrat-ligne.html',
   styleUrl: './contrat-ligne.scss',
 })

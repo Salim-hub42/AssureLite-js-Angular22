@@ -1,5 +1,5 @@
-<td>{{ contrat().type }}</td>
-<td>{{ contrat().prime }} €</td>
+<td>{{ contrat().type | titlecase }}</td>
+<td>{{ contrat().prime | currency}} </td>
 <td>
   @switch (contrat().statut) {
     @case ('actif') {

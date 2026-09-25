@@ -7,10 +7,11 @@ import { ContratService } from '../../services/contrat-service';
 import { ContratLigne } from '../contrat-ligne/contrat-ligne';
 import { StatutContrat } from '../../models/contrat.model';
 import { Router, RouterLink } from '@angular/router';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-liste-contrats',
-  imports: [Table, ButtonModule, Card, ContratLigne, RouterLink],
+  imports: [Table, ButtonModule, Card, ContratLigne, RouterLink, CurrencyPipe],
   templateUrl: './liste-contrats.html',
   styleUrl: './liste-contrats.scss',
 })

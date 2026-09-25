@@ -5,6 +5,7 @@ export interface Utilisateur {
 }
 
 export interface Session {
+  email: string;
   userId: number;
   token: string;
 }

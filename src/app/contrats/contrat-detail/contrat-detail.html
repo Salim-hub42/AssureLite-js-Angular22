@@ -35,15 +35,15 @@
       <dl class="assurlite-detail-list">
         <div class="assurlite-detail-row">
           <dt>Type</dt>
-          <dd>{{ contrat.type }}</dd>
+          <dd>{{ contrat.type | titlecase }}</dd>
         </div>
         <div class="assurlite-detail-row">
           <dt>Prime</dt>
-          <dd>{{ contrat.prime }} €</dd>
+          <dd>{{ contrat.prime | currency:'EUR':'symbol' }}</dd>
         </div>
         <div class="assurlite-detail-row">
           <dt>Date de début</dt>
-          <dd>{{ contrat.dateDebut | date: 'dd/MM/yyyy' }}</dd>
+          <dd>{{ contrat.dateDebut | date: 'longDate' }}</dd>
         </div>
       </dl>
     </p-card>

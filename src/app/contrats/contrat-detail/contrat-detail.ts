@@ -1,5 +1,5 @@
 import { Component, computed, inject, input } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe, TitleCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -16,7 +16,7 @@ import { versContrat } from '../../models/contrat.utils';
 
 @Component({
   selector: 'app-contrat-detail',
-  imports: [DatePipe, RouterLink, ButtonModule, Card, Tag, Breadcrumb, Divider, Message],
+  imports: [ RouterLink, ButtonModule, Card, Tag, Breadcrumb, Divider, Message, CurrencyPipe, TitleCasePipe, DatePipe],
   templateUrl: './contrat-detail.html',
   styleUrl: './contrat-detail.scss',
 })

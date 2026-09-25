@@ -29,7 +29,7 @@ describe('authInterceptor', () => {
   afterEach(() => httpMock.verify());
 
   it("ajoute l'en-tête Authorization quand une session existe", () => {
-    session.set({ userId: 1, token: 'demo-1-123' });
+    session.set({ email: 'salim@gmail.com', userId: 1, token: 'demo-1-123' });
 
     http.get('/contrats').subscribe();
 

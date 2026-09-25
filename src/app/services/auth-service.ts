@@ -19,14 +19,14 @@ export class AuthService {
     this._session.set(null);
   }
 
-  login(email: string, motDePasse: string): Promise<void> {
+  login(email: string, motDePasse: string ): Promise<void> {
     return firstValueFrom(this.http.get<Utilisateur[]>(`${API}/users`, { params: { email } })).then(
       (users) => {
         const u = users[0];
         if (!u || u.password !== motDePasse) {
           throw new Error('Identifiants invalides');
         }
-        const session: Session = { userId: u.id, token: `demo-${u.id}-${Date.now()}` };
+        const session: Session = {email: u.email, userId: u.id, token: `demo-${u.id}-${Date.now()}` };
         this._session.set(session);
         ecrireSession(session);
       },

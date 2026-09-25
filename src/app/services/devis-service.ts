@@ -28,7 +28,8 @@ export class DevisService {
       this.cachePrime.set(cle,pasEnCache);
       return pasEnCache
    }
-
+   
+   
 
 
    reinitialiserCache(): void {
