@@ -1,16 +1,18 @@
 import { Service, computed, signal } from '@angular/core';
 
-export type TypeNotification = 'info' | 'erreur';
 
-// Pas « Notification » : ce nom est déjà pris par la classe globale du navigateur
+export type TypeNotification = 'info' | 'erreur';  
+
 export interface MessageNotification {
   type: TypeNotification;
   texte: string;
 }
 
-// File d'attente (FIFO) : seule la première notification est affichée,
-// les suivantes attendent leur tour.
+
 @Service()
+
+// Du fait maison comme dirait l'autre ! haha (Le ToastModule de PrimeNg est bien mieux)
+
 export class NotificationService {
   private readonly _file = signal<MessageNotification[]>([]);
   readonly file = this._file.asReadonly();

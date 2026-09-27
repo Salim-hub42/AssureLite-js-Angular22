@@ -43,7 +43,11 @@ export function nombreDeContratsAvecSinistre(idsContrat : Set<number>): number {
 
 }
 
+export function parserMontant(texte: string): number {
+   const montantNettoye = texte.replace(',', '.').replace('€', '').replace(/ /g, '');
+   return parseFloat(montantNettoye);
+}
+
 export function versSinistre(dto: SinistreDTO) : Sinistre {
-   const montantNettoye = dto.montant.replace(',', '.').replace('€', '').replace(/ /g, '');
-   return  {...dto, dateDeclaration: new Date(dto.dateDeclaration), montant: parseFloat(montantNettoye)};
+   return  {...dto, dateDeclaration: new Date(dto.dateDeclaration), montant: parserMontant(dto.montant)};
 }
