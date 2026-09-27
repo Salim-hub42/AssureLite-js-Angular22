@@ -1,4 +1,4 @@
-import { SinistreDTO, StatutSinistre } from "./sinistre.model";
+import { StatutSinistre } from "./sinistre.model";
 import { Sinistre } from "./sinistre.model";
 
 
@@ -41,9 +41,4 @@ export function nombreDeContratsAvecSinistre(idsContrat : Set<number>): number {
   const nbContrats = idsContrat.size;
   return nbContrats
 
-}
-
-export function versSinistre(dto: SinistreDTO) : Sinistre {
-   const montantNettoye = dto.montant.replace(',', '.').replace('€', '').replace(/ /g, '');
-   return  {...dto, dateDeclaration: new Date(dto.dateDeclaration), montant: parseFloat(montantNettoye)};
 }
