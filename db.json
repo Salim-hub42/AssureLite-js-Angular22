@@ -32,8 +32,8 @@
     }
   ],
   "sinistres": [
-      {"id": 1, "contratId": 1, "dateDeclaration": "2026-09-12T10:00:00.000Z", "montant": 450, "statut": "accepte" },
-      {"id": 2, "contratId": 2, "dateDeclaration": "2026-09-20T14:30:00.000Z", "montant": 1299.9, "statut": "declare" }
+      {"id": 1, "contratId": 1, "dateDeclaration": "2026-09-12T10:00:00.000Z", "montant": "450,00 €", "statut": "accepte" },
+      {"id": 2, "contratId": 2, "dateDeclaration": "2026-09-20T14:30:00.000Z", "montant": "1 299,99 €", "statut": "declare" }
   ],
   "users": [
     {

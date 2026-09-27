@@ -35,7 +35,7 @@ export class Login {
       required(path.password, { message: 'Le mot de passe est requis.' });
     },
     {
-      submission: {
+      submission: { // test ticket EDT-1 pour Jira .
         action: async (f) => {
           try {
             await this.auth.login(this.model().email, this.model().password);
