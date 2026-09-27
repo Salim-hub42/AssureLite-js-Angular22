@@ -7,3 +7,8 @@ export interface Sinistre {
    montant: number,
    statut: StatutSinistre
 }
+
+export interface SinistreDTO extends Omit<Sinistre, 'dateDeclaration' | 'montant'> {
+   dateDeclaration: string;
+   montant: string;
+}
