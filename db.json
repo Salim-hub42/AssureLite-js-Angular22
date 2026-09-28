@@ -38,6 +38,15 @@
       "reference": "SANTE-12595",
       "dateDebut": "2026-09-28T08:30:02.999Z",
       "id": 3
+    },
+    {
+      "clientId": 42,
+      "type": "habitation",
+      "statut": "actif",
+      "prime": 305,
+      "reference": "HABITATION-56375",
+      "dateDebut": "2026-09-28T12:52:17.689Z",
+      "id": 4
     }
   ],
   "sinistres": [
@@ -87,6 +96,11 @@
       "id": 2,
       "email": "admin@gmail.com",
       "password": "admin123"
+    },
+     {
+      "id": 3,
+      "email": "newTesting@gmail.com",
+      "password": "admin1234"
     }
   ]
 }

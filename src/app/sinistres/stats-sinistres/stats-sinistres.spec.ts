@@ -13,6 +13,8 @@ describe('StatsSinistres', () => {
 
     fixture = TestBed.createComponent(StatsSinistres);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('sinistres', []);
+    fixture.componentRef.setInput('primeTotale', 0);
     await fixture.whenStable();
   });
 

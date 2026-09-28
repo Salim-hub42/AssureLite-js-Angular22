@@ -6,38 +6,38 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 ## Tableaux (15)
 
-| Méthode     | Statut | Fichier : ligne                            | Module   |
-| ----------- | ------ | ------------------------------------------ | -------- |
-| `push`      | ✅     | `contrat-service.ts:74` (souscrireContrat) | Module 2 |
-| `pop`       | ⏳     | —                                          | Module 2 |
-| `shift`     | ⏳     | —                                          | Module 2 |
-| `unshift`   | ⏳     | —                                          | Module 2 |
-| `map`       | ✅     | `contrat.utils.ts:24`                      | Module 1 |
-| `filter`    | ✅     | `client.utils.ts:21`                       | Module 1 |
-| `find`      | ✅     | `client.utils.ts:5`                        | Module 1 |
-| `findIndex` | ✅     | `contrat-service.ts:86` (supprimerContrat) | Module 2 |
-| `some`      | ✅     | `contrat.utils.ts:28`                      | Module 1 |
-| `every`     | ✅     | `contrat.utils.ts:4`                       | Module 1 |
-| `reduce`    | ✅     | `contrat.utils.ts:32`                      | Module 1 |
-| `forEach`   | ✅     | `contrat.utils.ts:8`                       | Module 1 |
-| `includes`  | ✅     | `contrat.utils.ts:36`                      | Module 1 |
-| `slice`     | ⏳     | —                                          | Module 2 |
-| `splice`    | ✅     | `contrat-service.ts:87` (supprimerContrat) | Module 2 |
+| Méthode     | Statut | Fichier : ligne                                                                                                                 | Module   |
+| ----------- | ------ | ------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `push`      | ✅     | `contrat-service.ts:74` (souscrireContrat)                                                                                      | Module 2 |
+| `pop`       | ✅     | `services/historique.ts:16` (historique limité à 5 : on retire le plus ancien)                                                  | Module 8 |
+| `shift`     | ✅     | `services/notification-service.ts:45` (`fermer` : retire la notification affichée, tête de file) — écrit par Claude à l’étape 5 | Module 8 |
+| `unshift`   | ✅     | `services/historique.ts:14` (dernier contrat consulté en tête) ; `notification-service.ts:36` (erreur prioritaire)              | Module 8 |
+| `map`       | ✅     | `contrat.utils.ts:24`                                                                                                           | Module 1 |
+| `filter`    | ✅     | `client.utils.ts:21`                                                                                                            | Module 1 |
+| `find`      | ✅     | `client.utils.ts:5`                                                                                                             | Module 1 |
+| `findIndex` | ✅     | `contrat-service.ts:86` (supprimerContrat)                                                                                      | Module 2 |
+| `some`      | ✅     | `contrat.utils.ts:28`                                                                                                           | Module 1 |
+| `every`     | ✅     | `contrat.utils.ts:4`                                                                                                            | Module 1 |
+| `reduce`    | ✅     | `contrat.utils.ts:32`                                                                                                           | Module 1 |
+| `forEach`   | ✅     | `contrat.utils.ts:8`                                                                                                            | Module 1 |
+| `includes`  | ✅     | `contrat.utils.ts:36`                                                                                                           | Module 1 |
+| `slice`     | ✅     | `contrats/liste-contrats/liste-contrats.ts:31` (3 contrats consultés récemment)                                                 | Module 8 |
+| `splice`    | ✅     | `contrat-service.ts:87` (supprimerContrat)                                                                                      | Module 2 |
 
 ## Chaînes (10)
 
-| Méthode       | Statut | Fichier : ligne                                                                    | Module   |
-| ------------- | ------ | ---------------------------------------------------------------------------------- | -------- |
-| `includes`    | ✅     | `client.utils.ts:28`                                                               | Module 1 |
-| `indexOf`     | ✅     | `pipes/masquer-email-pipe.ts:8` (position du `@`, `-1` si absent)                  | Module 8 |
-| `slice`       | ✅     | `pipes/masquer-email-pipe.ts:13` (2 premiers caractères du nom)                    | Module 8 |
-| `substring`   | ✅     | `pipes/masquer-email-pipe.ts:12-13` (nom avant le `@`, domaine à partir du `@`)    | Module 8 |
-| `replace`     | ⏳     | —                                                                                  | Module 8 |
-| `split`       | ✅     | `client.utils.ts:28`                                                               | Module 1 |
-| `trim`        | ✅     | `client.utils.ts:4,5`                                                              | Module 1 |
-| `toUpperCase` | ✅     | `contrat-service.ts:64` (préfixe de la référence de contrat : `'auto'` → `'AUTO'`) | Module 5 |
-| `toLowerCase` | ✅     | `client.utils.ts:4,5`                                                              | Module 1 |
-| `concat`      | ✅     | `contrat.utils.ts:50` (genererReference)                                           | Module 5 |
+| Méthode       | Statut | Fichier : ligne                                                                                      | Module   |
+| ------------- | ------ | ---------------------------------------------------------------------------------------------------- | -------- |
+| `includes`    | ✅     | `client.utils.ts:28`                                                                                 | Module 1 |
+| `indexOf`     | ✅     | `pipes/masquer-email-pipe.ts:8` (position du `@`, `-1` si absent)                                    | Module 8 |
+| `slice`       | ✅     | `pipes/masquer-email-pipe.ts:13` (2 premiers caractères du nom)                                      | Module 8 |
+| `substring`   | ✅     | `pipes/masquer-email-pipe.ts:12-13` (nom avant le `@`, domaine à partir du `@`)                      | Module 8 |
+| `replace`     | ✅     | `models/sinistre.utils.ts:47` (`parserMontant` : `,`→`.`, retrait de `€` et des espaces avec `/ /g`) | Module 8 |
+| `split`       | ✅     | `client.utils.ts:28`                                                                                 | Module 1 |
+| `trim`        | ✅     | `client.utils.ts:4,5`                                                                                | Module 1 |
+| `toUpperCase` | ✅     | `contrat-service.ts:64` (préfixe de la référence de contrat : `'auto'` → `'AUTO'`)                   | Module 5 |
+| `toLowerCase` | ✅     | `client.utils.ts:4,5`                                                                                | Module 1 |
+| `concat`      | ✅     | `contrat.utils.ts:50` (genererReference)                                                             | Module 5 |
 
 ## Objets (5)
 
@@ -51,13 +51,13 @@ Mise à jour à la fin de chaque module. Statut : ✅ utilisée dans un **vrai c
 
 ## Nombres / Math (5)
 
-| Méthode       | Statut | Fichier : ligne                                                                                     | Module   |
-| ------------- | ------ | --------------------------------------------------------------------------------------------------- | -------- |
-| `toFixed`     | ✅     | `contrat.utils.ts:36`                                                                               | Module 1 |
-| `toPrecision` | ⏳     | —                                                                                                   | Module 6 |
-| `parseInt`    | ✅     | `guards/contrat-existe.guard.ts:10` (id de route `string` → `number`, base 10, `NaN` → redirection) | Module 7 |
-| `parseFloat`  | ⏳     | — (reporté : montant saisi en texte dans la déclaration de sinistre, avec `replace`)                | Module 8 |
-| `Math.random` | ✅     | `contrat.utils.ts:50` (genererReference)                                                            | Module 5 |
+| Méthode       | Statut | Fichier : ligne                                                                                                                              | Module   |
+| ------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `toFixed`     | ✅     | `contrat.utils.ts:36`                                                                                                                        | Module 1 |
+| `toPrecision` | ✅     | `sinistres/stats-sinistres/stats-sinistres.ts:26` (taux de sinistralité à 3 chiffres significatifs, `Number()` contre la notation `6.48e+3`) | Module 8 |
+| `parseInt`    | ✅     | `guards/contrat-existe.guard.ts:10` (id de route `string` → `number`, base 10, `NaN` → redirection)                                          | Module 7 |
+| `parseFloat`  | ✅     | `models/sinistre.utils.ts:48` (`parserMontant` : `"1 299,99 €"` → `1299.99`, réutilisé par `versSinistre` et le validateur `montantValide`)  | Module 8 |
+| `Math.random` | ✅     | `contrat.utils.ts:50` (genererReference)                                                                                                     | Module 5 |
 
 ## Dates (5)
 
@@ -194,6 +194,25 @@ Ce module ne fait pas progresser le compteur de méthodes JS (Signal Forms = Ang
 
 - **Leçon** (`docs/08-pipes-directives-defer.md`, 12 sections) : ✅ rédigée — pipes intégrés (paramètres, chaînage), `LOCALE_ID` / `registerLocaleData` / `DEFAULT_CURRENCY_CODE`, pipe personnalisé (`@Pipe`, `PipeTransform`, pur / impur, pipe ou `computed`), les trois familles de directives, directive d'attribut (`host` + `input` avec alias), directive DOM (`ElementRef` + `afterNextRender`, autofocus), `@defer` (blocs, déclencheurs, règles), tableaux pile / file avec signals, `replace` + `parseFloat`, `toPrecision`
 - **Exemple générique** (`src/examples/08-pipes-directives-defer.example.ts` + spec, 18 tests passent) : ✅ rédigé (domaine boutique de vélos, pas assurance) — `TronquerPipe` (indexOf + substring), `MasquerTelephonePipe` (replace + slice), `SurbrillanceDirective`, `AutofocusDirective`, `ajouterAHistorique` (slice + unshift + pop), `FileCommandes` (push / unshift / shift), `parserPrix` (replace + parseFloat), `noteMoyenne` (toPrecision), `ExempleBoutique` (currency / date / titlecase / uppercase en `fr-FR`, `@defer (on viewport)` testé avec `DeferBlockBehavior.Manual`)
-- **Pratique** : ⏳ à faire (7 étapes, voir « Pour la pratique » de la leçon)
+- **Pratique** : ✅ terminée (7 étapes)
+  1. `LOCALE_ID` `fr-FR` + pipes intégrés (`currency`, `date`, `titlecase`) dans les listes
+  2. pipe personnalisé `masquerEmail` (`indexOf` / `substring` / `slice`) dans la barre du haut
+  3. directives `appSurbrillance` (contrats résiliés, liste des contrats) et autofocus (page de connexion)
+  4. `Historique` (`services/historique.ts`) : contrats consultés récemment — `unshift` + `pop`, affichés avec `slice(0, 3)`
+  5. `NotificationService` : file d'attente — `push` (info), `unshift` (erreur prioritaire), `shift` (fermer)
+  6. page Sinistres complète :
+     - `db.json` : collection `sinistres`, montants en texte (`"1 299,99 €"`) ; `SinistreDTO` (`Omit`) + `versSinistre`
+     - `parserMontant` (`replace` + `parseFloat`) + tests
+     - `SinistreService` : `httpResource` + `declarer()` (POST, `then` / `catch` / `finally`, notifications)
+     - `ListeSinistres` sur `/sinistres` (route parente `canActivateChild: [authGuard]`) : `p-table`, pipes `date` / `currency`, `p-tag` par statut ; liens Contrats / Sinistres dans la barre (`routerLinkActive`, `aria-current`)
+     - `DeclarationSinistre` sur `/sinistres/nouveau` : Reactive Forms typé, validateur `montantValide` (réutilise `parserMontant`) + tests, navigation dans le `.then`
+     - `StatsSinistres` dans un `@defer (on viewport)` avec `@placeholder` / `@loading` / `@error` : nombre, total, taux de sinistralité (`toPrecision(3)`)
+  7. mise à jour de cette table
 
-**Module 8 en cours.**
+**Méthodes validées dans ce module** : `indexOf`, `slice` / `substring` (chaînes, étape 2), `unshift`, `pop`, `slice` (tableau), `shift`, `replace`, `parseFloat`, `toPrecision`.
+
+**40 / 40 méthodes validées.** Suite de tests : 174 / 174.
+
+Remarque : `shift` n'est utilisé que dans `NotificationService`, écrit par Claude à l'étape 5 (et non par l'utilisateur) — à garder en tête pour la vérification du Module 9.
+
+**Module 8 terminé.**

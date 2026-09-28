@@ -58,8 +58,8 @@
       <app-stats-sinistres [sinistres]="sinistres()" [primeTotale]="primeTotales()" />
     } @placeholder {
       <p>Les statistiques s'afficheront en arrivant ici…</p>
-    } @loading (minimum 300ms) {
-      <p>Chargement des statistiques</p>
+    } @loading (minimum 1500ms) {
+      <p>Chargement des statistiques patienter s'il vous plait</p>
     } @error {
       <p>Impossible de charger les statistiques</p>
     }
