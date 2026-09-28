@@ -1,0 +1,23 @@
+<section class="assurlite-stats" aria-label="Statistiques des sinistres">
+  <dl class="assurlite-stats-grid">
+    <div class="assurlite-stat">
+      <dt>Sinistres déclarés</dt>
+      <dd>{{ nombre() }}</dd>
+    </div>
+    <div class="assurlite-stat">
+      <dt>Montant total</dt>
+      <dd>{{ montantTotal() | currency }}</dd>
+    </div>
+    <div class="assurlite-stat">
+      <dt>Taux de sinistralité</dt>
+      <dd>
+        @if (taux() !== null) {
+          {{ taux() | number }} %
+        } @else {
+          —
+        }
+      </dd>
+    </div>
+  </dl>
+  <p class="assurlite-stats-hint">Taux = montant des sinistres ÷ total des primes encaissées.</p>
+</section>

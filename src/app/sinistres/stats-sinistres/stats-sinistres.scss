@@ -1,0 +1,41 @@
+.assurlite-stats {
+  margin-top: 1.5rem;
+}
+
+.assurlite-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 0;
+
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.assurlite-stat {
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--p-content-border-color);
+  border-radius: var(--p-content-border-radius);
+  background: var(--p-content-background);
+
+  dt {
+    font-size: 0.8rem;
+    color: var(--p-text-muted-color);
+  }
+
+  dd {
+    margin: 0.35rem 0 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--p-primary-color);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+}
+
+.assurlite-stats-hint {
+  margin: 0.75rem 0 0;
+  font-size: 0.8rem;
+  color: var(--p-text-muted-color);
+}

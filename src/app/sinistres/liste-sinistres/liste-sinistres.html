@@ -54,6 +54,15 @@
         </ng-template>
       </p-table>
     </div>
+    @defer (on viewport) {
+      <app-stats-sinistres [sinistres]="sinistres()" [primeTotale]="primeTotales()" />
+    } @placeholder {
+      <p>Les statistiques s'afficheront en arrivant ici…</p>
+    } @loading (minimum 300ms) {
+      <p>Chargement des statistiques</p>
+    } @error {
+      <p>Impossible de charger les statistiques</p>
+    }
     <div class="assurlite-footer">
       <a routerLink="/sinistres/nouveau" pButton size="small">
         <i class="pi pi-plus" aria-hidden="true"></i>
