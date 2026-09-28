@@ -44,6 +44,13 @@ export const routes: Routes = [
     canActivateChild: [authGuard],
     children: [
       {
+        path:'nouveau',
+        loadComponent: () =>
+          import('./sinistres/declaration-sinistre/declaration-sinistre').then(
+            (m) => m.DeclarationSinistre,
+          ),
+      },
+      {
         path: '',
         loadComponent: () =>
           import('./sinistres/liste-sinistres/liste-sinistres').then((m) => m.ListeSinistres),

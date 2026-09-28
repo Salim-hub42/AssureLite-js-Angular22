@@ -1,0 +1,74 @@
+<div class="assurlite-page">
+  <header class="assurlite-header">
+    <span class="assurlite-header-icon" aria-hidden="true">
+      <i class="pi pi-exclamation-circle"></i>
+    </span>
+    <div>
+      <h1>AssurLite</h1>
+      <p class="assurlite-subtitle">Déclarer un sinistre</p>
+    </div>
+  </header>
+
+  <p-card>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="assurlite-form">
+      <div class="assurlite-form-grid">
+        <div class="assurlite-field">
+          <label for="contratId">N° de contrat</label>
+          <input
+            pInputText
+            fluid
+            id="contratId"
+            type="number"
+            inputmode="numeric"
+            formControlName="contratId"
+            [invalid]="form.controls.contratId.invalid && form.controls.contratId.touched"
+            [attr.aria-invalid]="form.controls.contratId.invalid && form.controls.contratId.touched"
+            aria-describedby="contratId-error"
+          />
+          @if (form.controls.contratId.hasError('required') && form.controls.contratId.touched) {
+            <small id="contratId-error" class="assurlite-field-error" role="alert">
+              <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+              Le n° de contrat est requis.
+            </small>
+          }
+        </div>
+
+        <div class="assurlite-field">
+          <label for="montant">Montant estimé</label>
+          <input
+            pInputText
+            fluid
+            id="montant"
+            type="text"
+            inputmode="decimal"
+            placeholder="ex. : 1 500,00 €"
+            formControlName="montant"
+            [invalid]="form.controls.montant.invalid && form.controls.montant.touched"
+            [attr.aria-invalid]="form.controls.montant.invalid && form.controls.montant.touched"
+            aria-describedby="montant-error"
+          />
+          @if (form.controls.montant.hasError('required') && form.controls.montant.touched) {
+            <small id="montant-error" class="assurlite-field-error" role="alert">
+              <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+              Le montant est requis.
+            </small>
+          }
+          @if (form.controls.montant.hasError('montantInvalide')) {
+            <small id="montant-error" class="assurlite-field-error" role="alert">
+              <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+              Montant invalide (ex. : 1 500,00 €).
+            </small>
+          }
+        </div>
+      </div>
+
+      <div class="assurlite-form-actions">
+        <a routerLink="/sinistres" pButton severity="secondary" text>Annuler</a>
+        <button pButton type="submit">
+          <i class="pi pi-send" aria-hidden="true"></i>
+          Déclarer le sinistre
+        </button>
+      </div>
+    </form>
+  </p-card>
+</div>

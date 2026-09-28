@@ -1,5 +1,5 @@
 .assurlite-page {
-  max-width: 760px;
+  max-width: 640px;
   margin: 0 auto;
   padding: 2.5rem 1.5rem;
 }
@@ -35,34 +35,49 @@
   color: var(--p-text-muted-color);
   font-size: 0.95rem;
 }
-
-.assurlite-table-wrapper {
-  border: 1px solid var(--p-content-border-color);
-  border-radius: var(--p-content-border-radius);
-  overflow: hidden;
+.assurlite-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-// Montants alignés à droite, chiffres de même largeur : les unités restent en colonne
-.assurlite-montant {
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
+.assurlite-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem 1rem;
+
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
+  }
 }
 
-.assurlite-empty-row {
-  text-align: center;
-  color: var(--p-text-muted-color);
-  padding: 1.5rem;
+.assurlite-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+
+  label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--p-text-color);
+  }
 }
 
-.assurlite-footer {
+.assurlite-field-error {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--p-red-700);
+
+  i {
+    font-size: 0.85rem;
+  }
+}
+
+.assurlite-form-actions {
   display: flex;
   justify-content: flex-end;
-  margin-top: 1.5rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--p-content-border-color);
-
-  a {
-    text-decoration: none;
-  }
+  gap: 0.5rem;
 }
