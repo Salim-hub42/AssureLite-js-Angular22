@@ -39,5 +39,17 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'sinistres',
+    canActivateChild: [authGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./sinistres/liste-sinistres/liste-sinistres').then((m) => m.ListeSinistres),
+      },
+    ],
+  },
+
   { path: '', redirectTo: 'contrats', pathMatch: 'full' },
 ];

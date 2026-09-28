@@ -22,6 +22,42 @@
   color: var(--p-primary-color);
 }
 
+.assurlite-topbar-nav {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.assurlite-topbar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--p-content-border-radius);
+  font-size: 0.9rem;
+  color: var(--p-text-muted-color);
+  text-decoration: none;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+
+  &:hover {
+    color: var(--p-primary-color);
+    background: rgba(26, 50, 88, 0.06);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #b8860b;
+    outline-offset: 2px;
+  }
+}
+
+// Classe posée par routerLinkActive sur le lien de la page affichée
+.assurlite-topbar-link-actif {
+  color: var(--p-primary-color);
+  font-weight: 600;
+  background: rgba(26, 50, 88, 0.08);
+}
+
 .assurlite-topbar-user {
   display: flex;
   align-items: center;

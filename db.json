@@ -32,8 +32,10 @@
     }
   ],
   "sinistres": [
-      {"id": 1, "contratId": 1, "dateDeclaration": "2026-09-12T10:00:00.000Z", "montant": "450,00 €", "statut": "accepte" },
-      {"id": 2, "contratId": 2, "dateDeclaration": "2026-09-20T14:30:00.000Z", "montant": "1 299,99 €", "statut": "declare" }
+      {"id": 1, "contratId": 1, "dateDeclaration": "2026-09-12T10:00:00.000Z", "montant": "450,00 €", "statut": "en_cours" },
+      {"id": 2, "contratId": 2, "dateDeclaration": "2026-09-20T14:30:00.000Z", "montant": "1 299,99 €", "statut": "declare" },
+      {"id": 3, "contratId": 3, "dateDeclaration": "2026-09-20T14:30:00.000Z", "montant": "10 299,99 €", "statut": "accepte" },
+       {"id": 4, "contratId": 4, "dateDeclaration": "2026-09-20T14:30:00.000Z", "montant": "99,99 €", "statut": "refuse" }
   ],
   "users": [
     {

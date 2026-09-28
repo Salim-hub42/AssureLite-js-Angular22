@@ -1,0 +1,58 @@
+<div class="assurlite-page">
+  <header class="assurlite-header">
+    <span class="assurlite-header-icon" aria-hidden="true"
+      ><i class="pi pi-exclamation-circle"></i
+    ></span>
+    <div>
+      <h1>AssurLite</h1>
+      <p class="assurlite-subtitle">Déclarations de sinistres</p>
+    </div>
+  </header>
+
+  <p-card>
+    <div class="assurlite-table-wrapper">
+      <p-table [value]="sinistres()" [stripedRows]="true" [rowHover]="true">
+        <ng-template #header>
+          <tr>
+            <th>N°</th>
+            <th>Contrat</th>
+            <th>Déclaré le</th>
+            <th class="assurlite-montant">Montant</th>
+            <th>Statut</th>
+          </tr>
+        </ng-template>
+
+        <ng-template #body let-sinistre>
+          <tr>
+            <td>{{ sinistre.id }}</td>
+            <td>Contrat n°{{ sinistre.contratId }}</td>
+            <td>{{ sinistre.dateDeclaration | date: 'dd/MM/yyyy' }}</td>
+            <td class="assurlite-montant">{{ sinistre.montant | currency }}</td>
+            <td>
+              @switch (sinistre.statut) {
+                @case ('declare') {
+                  <p-tag value="Déclaré" severity="info" icon="pi pi-inbox" />
+                }
+                @case ('en_cours') {
+                  <p-tag value="En cours" severity="warn" icon="pi pi-clock" />
+                }
+                @case ('accepte') {
+                  <p-tag value="Accepté" severity="success" icon="pi pi-check-circle" />
+                }
+                @default {
+                  <p-tag value="Refusé" severity="danger" icon="pi pi-times-circle" />
+                }
+              }
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template #emptymessage>
+          <tr>
+            <td colspan="5" class="assurlite-empty-row">Aucun sinistre</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </p-card>
+</div>

@@ -1,5 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from './services/auth-service';
 import { DevisService } from './services/devis-service';
 import { MasquerEmailPipe } from './pipes/masquer-email-pipe';
@@ -8,7 +8,7 @@ import { NotificationService } from './services/notification-service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MasquerEmailPipe, ButtonModule],
+  imports: [RouterOutlet, MasquerEmailPipe, ButtonModule, RouterLink, RouterLinkActive],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

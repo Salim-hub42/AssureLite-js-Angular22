@@ -1,0 +1,56 @@
+.assurlite-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+.assurlite-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+
+  h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    color: var(--p-primary-color);
+  }
+}
+
+.assurlite-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--p-primary-color);
+  color: var(--p-primary-contrast-color);
+  font-size: 1.4rem;
+}
+
+.assurlite-subtitle {
+  margin: 0.2rem 0 0;
+  color: var(--p-text-muted-color);
+  font-size: 0.95rem;
+}
+
+.assurlite-table-wrapper {
+  border: 1px solid var(--p-content-border-color);
+  border-radius: var(--p-content-border-radius);
+  overflow: hidden;
+}
+
+// Montants alignés à droite, chiffres de même largeur : les unités restent en colonne
+.assurlite-montant {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.assurlite-empty-row {
+  text-align: center;
+  color: var(--p-text-muted-color);
+  padding: 1.5rem;
+}
